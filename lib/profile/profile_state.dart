@@ -7,6 +7,7 @@ class ProfileState extends Equatable {
   final List<Medicine> availableMedicines;
   final Medicine? selectedMedicine;
   final String? notificationTimeError;
+  final String? inrRangeError;
 
   @override
   List<Object?> get props =>
@@ -18,6 +19,16 @@ class ProfileState extends Equatable {
       notificationsMode: NotificationsModeDisabled(),
       availableMedicines: Medicine.values);
 
+  const ProfileState({
+    required this.inrRange,
+    required this.otherMedicines,
+    required this.notificationsMode,
+    required this.availableMedicines,
+    this.selectedMedicine,
+    this.notificationTimeError,
+    this.inrRangeError,
+  });
+
   ProfileState copyWith({
     Range? inrRange,
     List<String>? otherMedicines,
@@ -25,6 +36,7 @@ class ProfileState extends Equatable {
     List<Medicine>? availableMedicines,
     Medicine? selectedMedicine,
     String? notificationTimeError,
+    String? inrRangeError,
   }) {
     return ProfileState(
       inrRange: inrRange ?? this.inrRange,
@@ -34,15 +46,7 @@ class ProfileState extends Equatable {
       selectedMedicine: selectedMedicine ?? this.selectedMedicine,
       notificationTimeError:
           notificationTimeError ?? this.notificationTimeError,
+      inrRangeError: inrRangeError ?? this.inrRangeError,
     );
   }
-
-  const ProfileState({
-    required this.inrRange,
-    required this.otherMedicines,
-    required this.notificationsMode,
-    required this.availableMedicines,
-    this.selectedMedicine,
-    this.notificationTimeError,
-  });
 }

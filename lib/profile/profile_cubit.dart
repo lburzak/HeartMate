@@ -48,4 +48,21 @@ class ProfileCubit extends Cubit<ProfileState> {
         otherMedicines:
             state.otherMedicines.where((element) => element != name).toList()));
   }
+
+  void setInrRange(double from, double to) {
+    if (from > to) {
+      emit(state.copyWith(
+          inrRangeError:
+              "Dolna granica zakresu nie może być wyższa niż górna."));
+      return;
+    }
+
+    if (from < 1.0 || to > 3.0) {
+      emit(state.copyWith(inrRangeError: "Nieprawidłowa wartość zakresu"));
+      return;
+    }
+
+    emit(state.copyWith(
+        inrRange: Range(from: from, to: to), inrRangeError: null));
+  }
 }
