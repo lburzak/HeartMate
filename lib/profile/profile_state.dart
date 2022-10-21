@@ -18,6 +18,8 @@ extension on int {
 
 abstract class NotificationsMode {
   const NotificationsMode();
+
+  NotificationsMode.enabled();
 }
 
 class NotificationsModeDisabled extends NotificationsMode {
@@ -32,14 +34,14 @@ class NotificationsModeEnabled extends NotificationsMode {
     required this.hour,
     required this.minute,
   }) {
-    if (!hour.isValidHour() || !minute.isValidHour()) {
-      throw ArgumentError("Hour or minute not valid");
+    if (!hour.isValidHour()) {
+      throw ArgumentError("Hour is not valid");
+    }
+
+    if (!minute.isValidMinute()) {
+      throw ArgumentError("Hour is not valid");
     }
   }
-
-  NotificationsModeEnabled.withDefaultTime()
-      : hour = 8,
-        minute = 00;
 }
 
 class ProfileState extends Equatable {
