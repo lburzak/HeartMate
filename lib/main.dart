@@ -1,3 +1,4 @@
+import 'package:apkainzynierka/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,14 +11,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const Scaffold(
-        body: SafeArea(child: Text("Hello")),
-      )
-    );
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const Scaffold(
+          body: ProfilePage(),
+        ));
   }
 }
-
