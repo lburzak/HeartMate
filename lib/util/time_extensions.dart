@@ -1,5 +1,5 @@
-extension on int {
-  bool isValidHour() => true;
+extension IntTime on int {
+  bool get isValidHour => true;
 
-  bool isValidMinute() => true;
+  bool get isValidMinute => true;
 }
