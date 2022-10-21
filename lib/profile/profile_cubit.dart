@@ -65,4 +65,8 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(state.copyWith(
         inrRange: Range(from: from, to: to), inrRangeError: null));
   }
+
+  void selectMedicine(Medicine medicine) {
+    emit(state.copyWith(selectedMedicine: medicine));
+  }
 }
