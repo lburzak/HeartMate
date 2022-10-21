@@ -2,7 +2,9 @@ import 'package:apkainzynierka/profile/profile_cubit.dart';
 import 'package:flutter/cupertino.dart';
 
 class ProfileView extends StatelessWidget {
-  const ProfileView(ProfileState state, {super.key});
+  final ProfileState state;
+
+  const ProfileView({super.key, required this.state});
 
   @override
   Widget build(BuildContext context) {
