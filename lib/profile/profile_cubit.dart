@@ -8,6 +8,9 @@ import 'notifications_mode.dart';
 
 part 'profile_state.dart';
 
+const lowestValidInr = 1.0;
+const highestValidInr = 3.0;
+
 class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit() : super(ProfileState.initial());
 
@@ -57,7 +60,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       return;
     }
 
-    if (from < 1.0 || to > 3.0) {
+    if (from < lowestValidInr || to > highestValidInr) {
       emit(state.copyWith(inrRangeError: "Nieprawidłowa wartość zakresu"));
       return;
     }
