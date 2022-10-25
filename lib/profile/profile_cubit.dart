@@ -1,9 +1,11 @@
+import 'package:apkainzynierka/profile/user_preferences.dart';
 import 'package:apkainzynierka/util/time_extensions.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../util/range.dart';
 import 'medicine.dart';
+import 'notification_manager.dart';
 import 'notifications_mode.dart';
 
 part 'profile_state.dart';
@@ -12,9 +14,25 @@ const lowestValidInr = 1.0;
 const highestValidInr = 3.0;
 
 class ProfileCubit extends Cubit<ProfileState> {
-  ProfileCubit() : super(ProfileState.initial());
+  final NotificationManager _notificationManager;
+  final UserPreferences _userPreferences;
 
-  void save() {}
+  ProfileCubit(this._notificationManager, this._userPreferences)
+      : super(ProfileState.initial());
+
+  void save() {
+    _userPreferences.update(
+        medicine: state.selectedMedicine,
+        otherMedicines: state.otherMedicines,
+        inrRange: state.inrRange);
+
+    if (state.notificationsMode is NotificationsModeEnabled) {
+      final notificationMode =
+          state.notificationsMode as NotificationsModeEnabled;
+      _notificationManager.rescheduleDailyNotification(
+          notificationMode.hour, notificationMode.minute);
+    }
+  }
 
   void enableNotifications() {
     emit(state.copyWith(notificationsMode: NotificationsMode.enabled()));

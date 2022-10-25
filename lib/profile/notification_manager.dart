@@ -1,3 +1,3 @@
 class NotificationManager {
-  void scheduleDailyNotification(int hour, int minute) {}
+  void rescheduleDailyNotification(int hour, int minute) {}
 }
