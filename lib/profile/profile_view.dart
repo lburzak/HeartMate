@@ -1,5 +1,5 @@
 import 'package:apkainzynierka/profile/profile_cubit.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class ProfileView extends StatelessWidget {
   final ProfileState state;

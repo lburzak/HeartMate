@@ -1,6 +1,6 @@
 import 'package:apkainzynierka/profile/profile_cubit.dart';
 import 'package:apkainzynierka/profile/profile_view.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfilePage extends StatelessWidget {
