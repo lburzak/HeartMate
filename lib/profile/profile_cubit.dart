@@ -91,4 +91,20 @@ class ProfileCubit extends Cubit<ProfileState> {
   void selectMedicine(Medicine medicine) {
     emit(state.copyWith(selectedMedicine: medicine));
   }
+
+  void setAge(int age) {
+    emit(state.copyWith(age: age));
+  }
+
+  void setHeight(int height) {
+    emit(state.copyWith(height: height));
+  }
+
+  void setWeight(int weight) {
+    emit(state.copyWith(weight: weight));
+  }
+
+  void setGender(Gender gender) {
+    emit(state.copyWith(gender: gender));
+  }
 }
