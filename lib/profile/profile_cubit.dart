@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../util/range.dart';
+import 'gender.dart';
 import 'medicine.dart';
 import 'notification_manager.dart';
 import 'notifications_mode.dart';
