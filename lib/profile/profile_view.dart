@@ -33,9 +33,11 @@ class ProfileView extends StatelessWidget {
                   onChanged: (text) {
                     context.read<ProfileCubit>().setAge(int.parse(text));
                   },
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     hintText: 'Wprowadź wiek',
-                    border: UnderlineInputBorder(),
+                    errorText: context
+                        .select((ProfileCubit cubit) => cubit.state.ageError),
+                    border: const UnderlineInputBorder(),
                     filled: true,
                   ),
                 ),
@@ -45,9 +47,11 @@ class ProfileView extends StatelessWidget {
                   onChanged: (text) {
                     context.read<ProfileCubit>().setWeight(int.parse(text));
                   },
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     hintText: 'Wprowadź wagę',
-                    border: UnderlineInputBorder(),
+                    errorText: context.select(
+                        (ProfileCubit cubit) => cubit.state.weightError),
+                    border: const UnderlineInputBorder(),
                     filled: true,
                   ),
                 ),
@@ -57,9 +61,11 @@ class ProfileView extends StatelessWidget {
                   onChanged: (text) {
                     context.read<ProfileCubit>().setHeight(int.parse(text));
                   },
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     hintText: 'Wprowadź wzrost',
-                    border: UnderlineInputBorder(),
+                    errorText: context.select(
+                        (ProfileCubit cubit) => cubit.state.heightError),
+                    border: const UnderlineInputBorder(),
                     filled: true,
                   ),
                 ),
@@ -96,26 +102,31 @@ class ProfileView extends StatelessWidget {
                 const SizedBox(height: 10),
                 TextFormField(
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     hintText: 'Wprowadź dolny zakres INR',
-                    border: UnderlineInputBorder(),
+                    errorText: context.select(
+                        (ProfileCubit cubit) => cubit.state.inrRangeError),
+                    border: const UnderlineInputBorder(),
                     filled: true,
                   ),
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     hintText: 'Wprowadź górny zakres INR',
-                    border: UnderlineInputBorder(),
+                    errorText: context.select(
+                        (ProfileCubit cubit) => cubit.state.inrRangeError),
+                    border: const UnderlineInputBorder(),
                     filled: true,
                   ),
                 ),
                 TextButton(
-                    onPressed: () {
-                      context.read<ProfileCubit>().save();
-                    },
-                    child: const Text("Save"))
+                    onPressed: context.select((ProfileCubit cubit) =>
+                        cubit.state.submitEnabled == true
+                            ? () => context.read<ProfileCubit>().save()
+                            : null),
+                    child: const Text("Zapisz"))
               ],
             ),
           ),
