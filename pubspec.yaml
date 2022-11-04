@@ -17,6 +17,7 @@ dependencies:
   equatable: ^2.0.5
   provider: ^6.0.4
   logger: ^1.1.0
+  flutter_picker: ^2.0.5
 
 dev_dependencies:
   flutter_test:
