@@ -6,4 +6,9 @@ class Range {
     required this.from,
     required this.to,
   });
+
+  @override
+  String toString() {
+    return 'Range{from: $from, to: $to}';
+  }
 }
