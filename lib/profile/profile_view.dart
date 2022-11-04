@@ -26,6 +26,7 @@ class ProfileView extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 TextFormField(
+                  keyboardType: TextInputType.number,
                   onChanged: (text) {
                     context.read<ProfileCubit>().setAge(int.parse(text));
                   },
@@ -37,6 +38,7 @@ class ProfileView extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
+                  keyboardType: TextInputType.number,
                   onChanged: (text) {
                     context.read<ProfileCubit>().setWeight(int.parse(text));
                   },
@@ -48,6 +50,7 @@ class ProfileView extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
+                  keyboardType: TextInputType.number,
                   onChanged: (text) {
                     context.read<ProfileCubit>().setHeight(int.parse(text));
                   },
