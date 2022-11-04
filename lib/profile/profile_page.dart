@@ -14,11 +14,14 @@ class ProfilePage extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider(create: (_) => UserPreferences()),
-        Provider(create: (_) => NotificationManager())
+        Provider(create: (_) => NotificationManager()),
+        ProxyProvider2<UserPreferences, NotificationManager, ProfileCubit>(
+          update: (_, userPreferences, notificationManager, __) =>
+              ProfileCubit(notificationManager, userPreferences),
+        )
       ],
       builder: (context, child) => BlocBuilder<ProfileCubit, ProfileState>(
-          builder: (context, state) => ProfileView(state: state),
-          bloc: ProfileCubit(context.read(), context.read())),
+          builder: (context, state) => ProfileView(state: state)),
     );
   }
 }
