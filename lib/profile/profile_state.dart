@@ -16,6 +16,14 @@ class ProfileState extends Equatable {
   final String? weightError;
   final String? heightError;
 
+  bool get submitEnabled => [
+        notificationTimeError,
+        inrRangeError,
+        ageError,
+        weightError,
+        heightError
+      ].every((prop) => prop == null);
+
   static ProfileState initial() => const ProfileState(
         inrRange: Range(from: 2, to: 3),
         otherMedicines: [],
