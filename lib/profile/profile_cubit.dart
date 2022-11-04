@@ -13,6 +13,9 @@ part 'profile_state.dart';
 
 const lowestValidInr = 1.0;
 const highestValidInr = 3.0;
+const validHeightRange = Range(from: 50, to: 250);
+const validAgeRange = Range(from: 0, to: 120);
+const validWeightRange = Range(from: 0, to: 300);
 
 class ProfileCubit extends Cubit<ProfileState> {
   final NotificationManager _notificationManager;
@@ -97,15 +100,27 @@ class ProfileCubit extends Cubit<ProfileState> {
   }
 
   void setAge(int age) {
-    emit(state.copyWith(age: age));
+    if (validAgeRange.includesInclusively(age)) {
+      emit(state.copyWith(age: age));
+    } else {
+      emit(state.copyWith(ageError: "Age is not within accepted range"));
+    }
   }
 
   void setHeight(int height) {
-    emit(state.copyWith(height: height));
+    if (validHeightRange.includesInclusively(height)) {
+      emit(state.copyWith(height: height));
+    } else {
+      emit(state.copyWith(heightError: "Height is not within accepted range"));
+    }
   }
 
   void setWeight(int weight) {
-    emit(state.copyWith(weight: weight));
+    if (validAgeRange.includesInclusively(weight)) {
+      emit(state.copyWith(weight: weight));
+    } else {
+      emit(state.copyWith(weightError: "Weight is not within accepted range"));
+    }
   }
 
   void setGender(Gender gender) {

@@ -12,21 +12,9 @@ class ProfileState extends Equatable {
   final int? weight;
   final int? height;
   final Gender? gender;
-
-  @override
-  List<Object?> get props => [
-        inrRange,
-        otherMedicines,
-        notificationsMode,
-        availableMedicines,
-        selectedMedicine,
-        notificationTimeError,
-        inrRangeError,
-        age,
-        weight,
-        height,
-        gender,
-      ];
+  final String? ageError;
+  final String? weightError;
+  final String? heightError;
 
   static ProfileState initial() => const ProfileState(
         inrRange: Range(from: 2, to: 3),
@@ -47,10 +35,13 @@ class ProfileState extends Equatable {
     this.selectedMedicine,
     this.notificationTimeError,
     this.inrRangeError,
-    required this.age,
-    required this.weight,
-    required this.height,
-    required this.gender,
+    this.age,
+    this.weight,
+    this.height,
+    this.gender,
+    this.ageError,
+    this.weightError,
+    this.heightError,
   });
 
   ProfileState copyWith({
@@ -65,6 +56,9 @@ class ProfileState extends Equatable {
     int? weight,
     int? height,
     Gender? gender,
+    String? ageError,
+    String? weightError,
+    String? heightError,
   }) {
     return ProfileState(
       inrRange: inrRange ?? this.inrRange,
@@ -79,6 +73,27 @@ class ProfileState extends Equatable {
       weight: weight ?? this.weight,
       height: height ?? this.height,
       gender: gender ?? this.gender,
+      ageError: ageError ?? this.ageError,
+      weightError: weightError ?? this.weightError,
+      heightError: heightError ?? this.heightError,
     );
   }
+
+  @override
+  List<Object?> get props => [
+        inrRange,
+        otherMedicines,
+        notificationsMode,
+        availableMedicines,
+        selectedMedicine,
+        notificationTimeError,
+        inrRangeError,
+        age,
+        weight,
+        height,
+        gender,
+        ageError,
+        weightError,
+        heightError,
+      ];
 }

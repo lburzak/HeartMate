@@ -1,6 +1,6 @@
 class Range {
-  final double from;
-  final double to;
+  final num from;
+  final num to;
 
   const Range({
     required this.from,
@@ -10,5 +10,9 @@ class Range {
   @override
   String toString() {
     return 'Range{from: $from, to: $to}';
+  }
+
+  bool includesInclusively(num value) {
+    return value >= from && value <= to;
   }
 }
