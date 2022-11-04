@@ -57,6 +57,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
 
     emit(state.copyWith(
+        notificationTimeError: null,
         notificationsMode:
             NotificationsMode.enabled(hour: hour, minute: minute)));
   }
@@ -101,7 +102,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   void setAge(int age) {
     if (validAgeRange.includesInclusively(age)) {
-      emit(state.copyWith(age: age));
+      emit(state.copyWith(age: age, heightError: null));
     } else {
       emit(state.copyWith(ageError: "Age is not within accepted range"));
     }
@@ -109,7 +110,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   void setHeight(int height) {
     if (validHeightRange.includesInclusively(height)) {
-      emit(state.copyWith(height: height));
+      emit(state.copyWith(height: height, heightError: null));
     } else {
       emit(state.copyWith(heightError: "Height is not within accepted range"));
     }
@@ -117,7 +118,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   void setWeight(int weight) {
     if (validAgeRange.includesInclusively(weight)) {
-      emit(state.copyWith(weight: weight));
+      emit(state.copyWith(weight: weight, weightError: null));
     } else {
       emit(state.copyWith(weightError: "Weight is not within accepted range"));
     }
