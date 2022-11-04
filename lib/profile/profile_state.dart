@@ -14,8 +14,19 @@ class ProfileState extends Equatable {
   final Gender? gender;
 
   @override
-  List<Object?> get props =>
-      [inrRange, notificationsMode, otherMedicines, selectedMedicine];
+  List<Object?> get props => [
+        inrRange,
+        otherMedicines,
+        notificationsMode,
+        availableMedicines,
+        selectedMedicine,
+        notificationTimeError,
+        inrRangeError,
+        age,
+        weight,
+        height,
+        gender,
+      ];
 
   static ProfileState initial() => const ProfileState(
         inrRange: Range(from: 2, to: 3),
