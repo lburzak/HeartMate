@@ -25,7 +25,11 @@ class ProfileCubit extends Cubit<ProfileState> {
     _userPreferences.update(
         medicine: state.selectedMedicine,
         otherMedicines: state.otherMedicines,
-        inrRange: state.inrRange);
+        inrRange: state.inrRange,
+        height: state.height,
+        weight: state.weight,
+        gender: state.gender,
+        age: state.age);
 
     if (state.notificationsMode is NotificationsModeEnabled) {
       final notificationMode =
