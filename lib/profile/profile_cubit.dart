@@ -124,7 +124,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
   }
 
-  void setGender(Gender gender) {
+  void setGender(Gender? gender) {
     emit(state.copyWith(gender: gender));
   }
 }
