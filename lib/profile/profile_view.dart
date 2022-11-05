@@ -18,6 +18,9 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ProfileLang lang = context.read<ProfileLang>();
+    final ProfileCubit cubit = context.read<ProfileCubit>();
+
     return Form(
       child: Align(
         alignment: Alignment.topCenter,
@@ -32,9 +35,7 @@ class ProfileView extends StatelessWidget {
               children: <Widget>[
                 TextFormField(
                   keyboardType: TextInputType.number,
-                  onChanged: (text) {
-                    context.read<ProfileCubit>().setAge(int.parse(text));
-                  },
+                  onChanged: (text) => cubit.setAge(int.parse(text)),
                   decoration: const InputDecoration(
                     hintText: 'Wprowadź wiek',
                     border: UnderlineInputBorder(),
@@ -44,9 +45,7 @@ class ProfileView extends StatelessWidget {
                 const SizedBox(height: 10),
                 TextFormField(
                   keyboardType: TextInputType.number,
-                  onChanged: (text) {
-                    context.read<ProfileCubit>().setWeight(int.parse(text));
-                  },
+                  onChanged: (text) => cubit.setWeight(int.parse(text)),
                   decoration: const InputDecoration(
                     hintText: 'Wprowadź wagę',
                     border: UnderlineInputBorder(),
@@ -56,9 +55,7 @@ class ProfileView extends StatelessWidget {
                 const SizedBox(height: 10),
                 TextFormField(
                   keyboardType: TextInputType.number,
-                  onChanged: (text) {
-                    context.read<ProfileCubit>().setHeight(int.parse(text));
-                  },
+                  onChanged: (text) => cubit.setHeight(int.parse(text)),
                   decoration: const InputDecoration(
                     hintText: 'Wprowadź wzrost',
                     border: UnderlineInputBorder(),
@@ -70,9 +67,7 @@ class ProfileView extends StatelessWidget {
                   children: [
                     const Text("Wybierz płeć: "),
                     DropdownButton<String>(
-                      value: context
-                          .read<ProfileLang>()
-                          .displayGender(state.gender),
+                      value: lang.displayGender(state.gender),
                       icon: const Icon(Icons.arrow_drop_down),
                       elevation: 16,
                       style: const TextStyle(color: Colors.blue),
@@ -80,13 +75,10 @@ class ProfileView extends StatelessWidget {
                         height: 2,
                         color: Colors.blue,
                       ),
-                      onChanged: (String? value) {
-                        context.read<ProfileCubit>().setGender(
-                            context.read<ProfileLang>().readGender(value));
-                      },
+                      onChanged: (String? value) =>
+                          cubit.setGender(lang.readGender(value)),
                       items: genderList
-                          .map((gender) =>
-                              context.read<ProfileLang>().displayGender(gender))
+                          .map((gender) => lang.displayGender(gender))
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
@@ -115,10 +107,7 @@ class ProfileView extends StatelessWidget {
                   ),
                 ),
                 TextButton(
-                    onPressed: () {
-                      context.read<ProfileCubit>().save();
-                    },
-                    child: const Text("Save"))
+                    onPressed: () => cubit.save(), child: const Text("Save"))
               ],
             ),
           ),
