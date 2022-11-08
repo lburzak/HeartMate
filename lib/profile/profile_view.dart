@@ -1,3 +1,4 @@
+import 'package:apkainzynierka/profile/medicine.dart';
 import 'package:apkainzynierka/profile/profile_cubit.dart';
 import 'package:apkainzynierka/profile/profile_lang.dart';
 import 'package:flutter/material.dart';
@@ -105,6 +106,31 @@ class ProfileView extends StatelessWidget {
                     border: UnderlineInputBorder(),
                     filled: true,
                   ),
+                ),
+                Row(
+                  children: [
+                    const Text("Wybierz lek: "),
+                    DropdownButton<String>(
+                      value: lang.displayMedicine(state.selectedMedicine),
+                      icon: const Icon(Icons.arrow_drop_down),
+                      elevation: 16,
+                      style: const TextStyle(color: Colors.blue),
+                      underline: Container(
+                        height: 2,
+                        color: Colors.blue,
+                      ),
+                      onChanged: (String? value) =>
+                          cubit.selectMedicine(lang.readMedicine(value)),
+                      items: <Medicine?>[null].followedBy(state.availableMedicines)
+                          .map((medicine) => lang.displayMedicine(medicine))
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  ],
                 ),
                 TextButton(
                     onPressed: () => cubit.save(), child: const Text("Save"))
