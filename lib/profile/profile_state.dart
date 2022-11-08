@@ -1,5 +1,6 @@
 part of 'profile_cubit.dart';
 
+@immutable
 class ProfileState extends Equatable {
   final Range inrRange;
   final List<String> otherMedicines;
