@@ -1,14 +1,14 @@
 import 'package:apkainzynierka/common/validation/number_validation.dart';
 import 'package:apkainzynierka/common/validation/string_validation.dart';
 import 'package:apkainzynierka/common/validation/validation_pipeline.dart';
-import 'package:apkainzynierka/profile/gender.dart';
-import 'package:apkainzynierka/profile/medicine.dart';
-import 'package:apkainzynierka/profile/notification_manager.dart';
-import 'package:apkainzynierka/profile/notifications_mode.dart';
+import 'package:apkainzynierka/profile/model/gender.dart';
+import 'package:apkainzynierka/profile/model/medicine.dart';
+import 'package:apkainzynierka/profile/model/notifications_mode.dart';
+import 'package:apkainzynierka/profile/model/range.dart';
 import 'package:apkainzynierka/profile/profile_lang.dart';
-import 'package:apkainzynierka/profile/profile_state.dart';
-import 'package:apkainzynierka/profile/range.dart';
-import 'package:apkainzynierka/profile/user_preferences.dart';
+import 'package:apkainzynierka/profile/service/notification_manager.dart';
+import 'package:apkainzynierka/profile/service/user_preferences.dart';
+import 'package:apkainzynierka/profile/state/profile_state.dart';
 import 'package:apkainzynierka/util/time_extensions.dart';
 import 'package:bloc/bloc.dart';
 

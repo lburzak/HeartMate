@@ -1,8 +1,7 @@
-import 'package:apkainzynierka/profile/range.dart';
+import 'package:apkainzynierka/profile/model/gender.dart';
+import 'package:apkainzynierka/profile/model/medicine.dart';
+import 'package:apkainzynierka/profile/model/range.dart';
 import 'package:logger/logger.dart';
-
-import 'gender.dart';
-import 'medicine.dart';
 
 class UserPreferences {
   void update(

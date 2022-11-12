@@ -1,9 +1,9 @@
-import 'package:apkainzynierka/profile/notification_manager.dart';
 import 'package:apkainzynierka/profile/profile_cubit.dart';
 import 'package:apkainzynierka/profile/profile_lang.dart';
-import 'package:apkainzynierka/profile/profile_state.dart';
 import 'package:apkainzynierka/profile/profile_view.dart';
-import 'package:apkainzynierka/profile/user_preferences.dart';
+import 'package:apkainzynierka/profile/service/notification_manager.dart';
+import 'package:apkainzynierka/profile/service/user_preferences.dart';
+import 'package:apkainzynierka/profile/state/profile_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';

@@ -1,9 +1,8 @@
+import 'package:apkainzynierka/profile/model/gender.dart';
+import 'package:apkainzynierka/profile/model/medicine.dart';
+import 'package:apkainzynierka/profile/model/notifications_mode.dart';
+import 'package:apkainzynierka/profile/model/range.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import 'gender.dart';
-import 'medicine.dart';
-import 'notifications_mode.dart';
-import 'range.dart';
 
 part 'profile_state.freezed.dart';
 

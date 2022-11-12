@@ -1,6 +1,6 @@
 import 'package:apkainzynierka/common/validation/validation_error.dart';
 import 'package:apkainzynierka/common/validation/validation_pipeline.dart';
-import 'package:apkainzynierka/profile/range.dart';
+import 'package:apkainzynierka/profile/model/range.dart';
 
 extension NumberValidation on ValidationPipeline<num> {
   ValidationPipeline<num> withinRange(Range range) {

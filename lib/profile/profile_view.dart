@@ -1,11 +1,10 @@
-import 'package:apkainzynierka/profile/medicine.dart';
+import 'package:apkainzynierka/profile/model/gender.dart';
+import 'package:apkainzynierka/profile/model/medicine.dart';
 import 'package:apkainzynierka/profile/profile_cubit.dart';
 import 'package:apkainzynierka/profile/profile_lang.dart';
-import 'package:apkainzynierka/profile/profile_state.dart';
+import 'package:apkainzynierka/profile/state/profile_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'gender.dart';
 
 class ProfileView extends StatelessWidget {
   final ProfileState state;

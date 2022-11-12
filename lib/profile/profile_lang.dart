@@ -1,6 +1,6 @@
 import 'package:apkainzynierka/common/validation/validation_error.dart';
-import 'package:apkainzynierka/profile/gender.dart';
-import 'package:apkainzynierka/profile/medicine.dart';
+import 'package:apkainzynierka/profile/model/gender.dart';
+import 'package:apkainzynierka/profile/model/medicine.dart';
 
 const male = "mężczyzna";
 const female = "kobieta";
