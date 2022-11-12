@@ -1,4 +1,4 @@
-import 'package:apkainzynierka/util/range.dart';
+import 'package:apkainzynierka/profile/range.dart';
 import 'package:logger/logger.dart';
 
 import 'gender.dart';

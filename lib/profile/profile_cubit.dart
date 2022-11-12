@@ -1,14 +1,16 @@
+import 'package:apkainzynierka/common/validation/number_validation.dart';
+import 'package:apkainzynierka/common/validation/string_validation.dart';
+import 'package:apkainzynierka/common/validation/validation_pipeline.dart';
+import 'package:apkainzynierka/profile/gender.dart';
+import 'package:apkainzynierka/profile/medicine.dart';
+import 'package:apkainzynierka/profile/notification_manager.dart';
+import 'package:apkainzynierka/profile/notifications_mode.dart';
 import 'package:apkainzynierka/profile/profile_lang.dart';
 import 'package:apkainzynierka/profile/profile_state.dart';
+import 'package:apkainzynierka/profile/range.dart';
 import 'package:apkainzynierka/profile/user_preferences.dart';
 import 'package:apkainzynierka/util/time_extensions.dart';
 import 'package:bloc/bloc.dart';
-
-import '../util/range.dart';
-import 'gender.dart';
-import 'medicine.dart';
-import 'notification_manager.dart';
-import 'notifications_mode.dart';
 
 const lowestValidInr = 1.0;
 const highestValidInr = 3.0;
@@ -128,68 +130,5 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   void setGender(Gender? gender) {
     emit(state.copyWith(gender: gender));
-  }
-}
-
-enum ValidationError {
-  outsideRange,
-  invalid,
-}
-
-class ValidationPipeline<T> {
-  T? value;
-  ValidationError? error;
-
-  ValidationPipeline.of(this.value);
-
-  ValidationPipeline({this.value, this.error});
-
-  void when(
-      {void Function(T value)? valid,
-      void Function(ValidationError error)? invalid}) {
-    final value = this.value;
-    final error = this.error;
-
-    if (error != null) {
-      invalid?.call(error);
-    } else if (value != null) {
-      valid?.call(value);
-    } else {
-      throw StateError("Both value and error are not null");
-    }
-  }
-}
-
-extension StringValidation on ValidationPipeline<String> {
-  ValidationPipeline<num> number() {
-    final temp = value;
-
-    if (temp == null) {
-      return ValidationPipeline(error: ValidationError.invalid);
-    }
-
-    int? height = int.tryParse(temp);
-
-    if (height == null) {
-      return ValidationPipeline(error: ValidationError.invalid);
-    }
-
-    return ValidationPipeline(value: height);
-  }
-}
-
-extension NumberValidation on ValidationPipeline<num> {
-  ValidationPipeline<num> withinRange(Range range) {
-    final value = this.value;
-
-    if (value == null) {
-      return ValidationPipeline(error: ValidationError.invalid);
-    }
-
-    if (range.includesInclusively(value)) {
-      return ValidationPipeline(value: value);
-    }
-
-    return ValidationPipeline(error: ValidationError.outsideRange);
   }
 }

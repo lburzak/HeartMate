@@ -1,9 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../util/range.dart';
 import 'gender.dart';
 import 'medicine.dart';
 import 'notifications_mode.dart';
+import 'range.dart';
 
 part 'profile_state.freezed.dart';
 
