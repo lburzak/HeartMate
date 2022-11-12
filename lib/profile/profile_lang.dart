@@ -1,3 +1,5 @@
+import 'package:apkainzynierka/profile/profile_cubit.dart';
+
 import 'gender.dart';
 
 const male = "mężczyzna";
@@ -24,6 +26,33 @@ class ProfileLang {
         return Gender.female;
       default:
         return null;
+    }
+  }
+
+  String heightError(ValidationError error) {
+    switch (error) {
+      case ValidationError.outsideRange:
+        return "Height is not within accepted range";
+      case ValidationError.invalid:
+        return "Height is not valid";
+    }
+  }
+
+  String weightError(ValidationError error) {
+    switch (error) {
+      case ValidationError.outsideRange:
+        return "Weight is not within accepted range";
+      case ValidationError.invalid:
+        return "Weight is not valid";
+    }
+  }
+
+  String ageError(ValidationError error) {
+    switch (error) {
+      case ValidationError.outsideRange:
+        return "Age is not within accepted range";
+      case ValidationError.invalid:
+        return "Age is not valid";
     }
   }
 }

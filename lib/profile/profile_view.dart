@@ -1,5 +1,6 @@
 import 'package:apkainzynierka/profile/profile_cubit.dart';
 import 'package:apkainzynierka/profile/profile_lang.dart';
+import 'package:apkainzynierka/profile/profile_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,30 +36,33 @@ class ProfileView extends StatelessWidget {
               children: <Widget>[
                 TextFormField(
                   keyboardType: TextInputType.number,
-                  onChanged: (text) => cubit.setAge(int.parse(text)),
-                  decoration: const InputDecoration(
+                  onChanged: (text) => cubit.setAge(text),
+                  decoration: InputDecoration(
                     hintText: 'Wprowadź wiek',
-                    border: UnderlineInputBorder(),
+                    errorText: state.ageError,
+                    border: const UnderlineInputBorder(),
                     filled: true,
                   ),
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
                   keyboardType: TextInputType.number,
-                  onChanged: (text) => cubit.setWeight(int.parse(text)),
-                  decoration: const InputDecoration(
+                  onChanged: (text) => cubit.setWeight(text),
+                  decoration: InputDecoration(
                     hintText: 'Wprowadź wagę',
-                    border: UnderlineInputBorder(),
+                    errorText: state.weightError,
+                    border: const UnderlineInputBorder(),
                     filled: true,
                   ),
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
                   keyboardType: TextInputType.number,
-                  onChanged: (text) => cubit.setHeight(int.parse(text)),
-                  decoration: const InputDecoration(
+                  onChanged: (text) => cubit.setHeight(text),
+                  decoration: InputDecoration(
                     hintText: 'Wprowadź wzrost',
-                    border: UnderlineInputBorder(),
+                    errorText: state.heightError,
+                    border: const UnderlineInputBorder(),
                     filled: true,
                   ),
                 ),
