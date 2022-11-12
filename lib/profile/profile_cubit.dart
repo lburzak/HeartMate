@@ -108,21 +108,24 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   void setAge(String input) {
     ValidationPipeline.of(input).number().withinRange(validAgeRange).when(
-        valid: (value) => emit(state.copyWith(ageError: null)),
+        valid: (value) =>
+            emit(state.copyWith(age: value.toInt(), ageError: null)),
         invalid: (error) =>
             emit(state.copyWith(ageError: _lang.ageError(error))));
   }
 
   void setHeight(String input) {
     ValidationPipeline.of(input).number().withinRange(validHeightRange).when(
-        valid: (value) => emit(state.copyWith(heightError: null)),
+        valid: (value) =>
+            emit(state.copyWith(height: value.toInt(), heightError: null)),
         invalid: (error) =>
             emit(state.copyWith(heightError: _lang.heightError(error))));
   }
 
   void setWeight(String input) {
     ValidationPipeline.of(input).number().withinRange(validWeightRange).when(
-        valid: (value) => emit(state.copyWith(weightError: null)),
+        valid: (value) =>
+            emit(state.copyWith(weight: value.toInt(), weightError: null)),
         invalid: (error) =>
             emit(state.copyWith(weightError: _lang.weightError(error))));
   }
