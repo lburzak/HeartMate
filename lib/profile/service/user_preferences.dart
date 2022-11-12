@@ -1,11 +1,10 @@
 import 'package:apkainzynierka/profile/model/gender.dart';
-import 'package:apkainzynierka/profile/model/medicine.dart';
 import 'package:apkainzynierka/profile/model/range.dart';
 import 'package:logger/logger.dart';
 
 class UserPreferences {
   void update(
-      {Medicine? medicine,
+      {String? medicine,
       List<String> otherMedicines = const [],
       Range? inrRange,
       int? age,

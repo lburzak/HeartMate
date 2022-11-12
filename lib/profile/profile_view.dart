@@ -1,5 +1,4 @@
 import 'package:apkainzynierka/profile/model/gender.dart';
-import 'package:apkainzynierka/profile/model/medicine.dart';
 import 'package:apkainzynierka/profile/profile_cubit.dart';
 import 'package:apkainzynierka/profile/profile_lang.dart';
 import 'package:apkainzynierka/profile/state/profile_state.dart';
@@ -109,7 +108,7 @@ class ProfileView extends StatelessWidget {
                   children: [
                     const Text("Wybierz lek: "),
                     DropdownButton<String>(
-                      value: lang.displayMedicine(state.selectedMedicine),
+                      value: state.selectedMedicine,
                       icon: const Icon(Icons.arrow_drop_down),
                       elevation: 16,
                       style: const TextStyle(color: Colors.blue),
@@ -117,11 +116,8 @@ class ProfileView extends StatelessWidget {
                         height: 2,
                         color: Colors.blue,
                       ),
-                      onChanged: (String? value) =>
-                          cubit.selectMedicine(lang.readMedicine(value)),
-                      items: <Medicine?>[null]
-                          .followedBy(state.availableMedicines)
-                          .map((medicine) => lang.displayMedicine(medicine))
+                      onChanged: (String? value) => cubit.selectMedicine(value),
+                      items: state.availableMedicines
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,

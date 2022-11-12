@@ -1,5 +1,4 @@
 import 'package:apkainzynierka/profile/model/gender.dart';
-import 'package:apkainzynierka/profile/model/medicine.dart';
 import 'package:apkainzynierka/profile/model/notifications_mode.dart';
 import 'package:apkainzynierka/profile/model/range.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -11,7 +10,7 @@ class ProfileState with _$ProfileState {
   const factory ProfileState(
       {int? age,
       String? ageError,
-      required List<Medicine> availableMedicines,
+      required List<String> availableMedicines,
       Gender? gender,
       int? height,
       String? heightError,
@@ -20,7 +19,7 @@ class ProfileState with _$ProfileState {
       String? notificationTimeError,
       required NotificationsMode notificationsMode,
       required List<String> otherMedicines,
-      Medicine? selectedMedicine,
+      String? selectedMedicine,
       int? weight,
       String? weightError}) = _ProfileState;
 }

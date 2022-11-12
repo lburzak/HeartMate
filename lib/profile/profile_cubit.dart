@@ -2,7 +2,6 @@ import 'package:apkainzynierka/common/validation/number_validation.dart';
 import 'package:apkainzynierka/common/validation/string_validation.dart';
 import 'package:apkainzynierka/common/validation/validation_pipeline.dart';
 import 'package:apkainzynierka/profile/model/gender.dart';
-import 'package:apkainzynierka/profile/model/medicine.dart';
 import 'package:apkainzynierka/profile/model/notifications_mode.dart';
 import 'package:apkainzynierka/profile/model/range.dart';
 import 'package:apkainzynierka/profile/profile_lang.dart';
@@ -25,7 +24,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   ProfileCubit(this._notificationManager, this._userPreferences, this._lang)
       : super(ProfileState(
-          availableMedicines: Medicine.values,
+          availableMedicines: ["Warfarin", "Acenokumarol", "Sintrom"],
           inrRange: const Range(from: 2, to: 3),
           notificationsMode: NotificationsMode.disabled(),
           otherMedicines: [],
@@ -103,7 +102,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         inrRange: Range(from: from, to: to), inrRangeError: null));
   }
 
-  void selectMedicine(Medicine medicine) {
+  void selectMedicine(String? medicine) {
     emit(state.copyWith(selectedMedicine: medicine));
   }
 
