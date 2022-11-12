@@ -128,7 +128,8 @@ class ProfileView extends StatelessWidget {
                   ],
                 ),
                 TextButton(
-                    onPressed: () => cubit.save(), child: const Text("Save"))
+                    onPressed: state.submitEnabled ? () => cubit.save() : null,
+                    child: const Text("Save"))
               ],
             ),
           ),

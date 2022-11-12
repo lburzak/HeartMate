@@ -25,11 +25,13 @@ class ProfileState with _$ProfileState {
 }
 
 extension SubmitVerification on ProfileState {
-  bool get submitEnabled => [
+  bool get submitEnabled =>
+      [
         notificationTimeError,
         inrRangeError,
         ageError,
         weightError,
-        heightError
-      ].every((prop) => prop == null);
+        heightError,
+      ].every((prop) => prop == null) &&
+      [age, weight, height].every((prop) => prop != null);
 }
