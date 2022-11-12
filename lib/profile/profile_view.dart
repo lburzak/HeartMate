@@ -10,11 +10,6 @@ import 'gender.dart';
 class ProfileView extends StatelessWidget {
   final ProfileState state;
   final List<Gender?> genderList = [null, Gender.male, Gender.female];
-  int weight = 0;
-  int age = 0;
-  int height = 0;
-  String gender = "";
-  String? dropdownValue;
 
   ProfileView({super.key, required this.state});
 
@@ -125,7 +120,8 @@ class ProfileView extends StatelessWidget {
                       ),
                       onChanged: (String? value) =>
                           cubit.selectMedicine(lang.readMedicine(value)),
-                      items: <Medicine?>[null].followedBy(state.availableMedicines)
+                      items: <Medicine?>[null]
+                          .followedBy(state.availableMedicines)
                           .map((medicine) => lang.displayMedicine(medicine))
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
