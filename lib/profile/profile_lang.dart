@@ -1,6 +1,5 @@
-import 'package:apkainzynierka/profile/profile_cubit.dart';
-
 import 'gender.dart';
+import 'medicine.dart';
 
 const male = "mężczyzna";
 const female = "kobieta";
@@ -26,6 +25,32 @@ class ProfileLang {
         return Gender.female;
       default:
         return null;
+    }
+  }
+
+  String displayMedicine(Medicine? medicine) {
+    switch (medicine) {
+      case Medicine.warfarin:
+        return "warfarin";
+      case Medicine.sintrom:
+        return "sintrom";
+      case Medicine.acenokumarol:
+        return "acenokumarol";
+      default:
+        return "wybierz lek";
+    }
+  }
+
+  Medicine readMedicine(String? value) {
+    switch (value) {
+      case "warfarin":
+        return Medicine.warfarin;
+      case "sintrom":
+        return Medicine.sintrom;
+      case "acenokumarol":
+        return Medicine.acenokumarol;
+      default:
+        return Medicine.warfarin;
     }
   }
 
