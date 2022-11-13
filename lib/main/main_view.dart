@@ -1,3 +1,6 @@
+import 'package:apkainzynierka/pages/journal_page.dart';
+import 'package:apkainzynierka/pages/therapy_page.dart';
+import 'package:apkainzynierka/profile/profile_page.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -27,17 +30,7 @@ class _MainViewState extends State<MainView> {
           onPageChanged: (index) {
             setState(() => _currentPageIndex = index);
           },
-          children: [
-            Container(
-              color: Colors.amber,
-            ),
-            Container(
-              color: Colors.blue,
-            ),
-            Container(
-              color: Colors.red,
-            ),
-          ],
+          children: const [TherapyPage(), JournalPage(), ProfilePage()],
         ),
       ),
       bottomNavigationBar: _buildBottomBar(
