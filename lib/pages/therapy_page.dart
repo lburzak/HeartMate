@@ -5,8 +5,8 @@ class TherapyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.amber,
+    return const Center(
+      child: Text("Terapia"),
     );
   }
 }

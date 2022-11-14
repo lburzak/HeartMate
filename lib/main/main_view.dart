@@ -54,12 +54,14 @@ Widget _buildBottomBar(
     BottomNavyBar(
       selectedIndex: currentPageIndex,
       onItemSelected: onItemSelected,
+      showElevation: true,
       items: [
         BottomNavyBarItem(
-            icon: const Icon(Icons.abc), title: const Text("One")),
+            icon: const Icon(Icons.medication), title: const Text("Terapia")),
         BottomNavyBarItem(
-            icon: const Icon(Icons.abc), title: const Text("Two")),
+            icon: const Icon(Icons.calendar_month),
+            title: const Text("Dziennik")),
         BottomNavyBarItem(
-            icon: const Icon(Icons.abc), title: const Text("Three")),
+            icon: const Icon(Icons.person), title: const Text("Profil")),
       ],
     );
