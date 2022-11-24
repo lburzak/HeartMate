@@ -8,7 +8,16 @@ class TodayDosageRouter extends Router<TodayDosageNavigationEvent> {
 
   @override
   void route(TodayDosageNavigationEvent event, BuildContext context) {
-    showModalBottomSheet(
-        context: context, builder: (_) => const CustomDosageView());
+    switch (event.runtimeType) {
+      case OpenCustomDosageScreen:
+        showModalBottomSheet(
+            context: context, builder: (_) => const CustomDosageView());
+        return;
+      case OpenScheduleWizard:
+        showModalBottomSheet(
+          context: context,
+          builder: (_) => const Text("Schedule wizard"),
+        );
+    }
   }
 }

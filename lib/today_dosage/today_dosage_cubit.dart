@@ -7,9 +7,14 @@ class TodayDosageCubit extends Cubit<TodayDosageState> {
 
   TodayDosageCubit(this.navigationEventSink)
       : super(const TodayDosageState(
-            taken: false, potency: 0, custom: false, scheduleUndefined: false));
+            taken: false, potency: 0, custom: false, scheduleUndefined: true));
 
   void toggleTaken() {
+    if (state.scheduleUndefined) {
+      navigationEventSink.add(OpenScheduleWizard());
+      return;
+    }
+
     emit(state.copyWith(taken: !state.taken));
   }
 
