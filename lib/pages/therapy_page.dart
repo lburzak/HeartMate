@@ -4,6 +4,7 @@ import 'package:apkainzynierka/data/local_dose_repository.dart';
 import 'package:apkainzynierka/data/local_schedule_repository.dart';
 import 'package:apkainzynierka/domain/repository/dose_repository.dart';
 import 'package:apkainzynierka/domain/repository/schedule_repository.dart';
+import 'package:apkainzynierka/domain/usecase/get_today_dosage.dart';
 import 'package:apkainzynierka/domain/usecase/report_dose_taken.dart';
 import 'package:apkainzynierka/domain/usecase/revert_today_dose.dart';
 import 'package:apkainzynierka/today_dosage/state/today_dosage_state.dart';
@@ -56,6 +57,9 @@ class _TherapyPageState extends State<TherapyPage> {
           ),
           Provider(
             create: (context) => RevertTodayDose(context.read()),
+          ),
+          Provider(
+            create: (context) => GetTodayDosage(context.read()),
           )
         ],
         builder: (_, __) => MultiProvider(
@@ -66,7 +70,11 @@ class _TherapyPageState extends State<TherapyPage> {
               ),
               BlocProvider(
                 create: (context) => TodayDosageCubit(
-                    context.read(), context.read(), context.read()),
+                    context.read(),
+                    context.read(),
+                    context.read(),
+                    context.read(),
+                    context.read()),
               ),
             ],
             builder: (context, child) =>
