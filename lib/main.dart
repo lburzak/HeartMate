@@ -1,8 +1,10 @@
 import 'package:apkainzynierka/main/main_view.dart';
 import 'package:apkainzynierka/theme/theme_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
+  Provider.debugCheckInvalidValueType = null;
   runApp(const MyApp());
 }
 
