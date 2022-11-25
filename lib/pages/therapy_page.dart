@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:apkainzynierka/data/database.dart';
 import 'package:apkainzynierka/data/local_dose_repository.dart';
 import 'package:apkainzynierka/data/local_schedule_repository.dart';
 import 'package:apkainzynierka/domain/repository/dose_repository.dart';
@@ -36,55 +37,58 @@ class _TherapyPageState extends State<TherapyPage> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        Provider<ScheduleRepository>(
-          create: (context) => LocalScheduleRepository(),
-        ),
-        Provider<DoseRepository>(
-          create: (context) => LocalDoseRepository(),
-        )
-      ],
-      builder: (_, __) => MultiProvider(
+      providers: [Provider(create: (context) => BoxDatabase())],
+      builder: (context, child) => MultiProvider(
         providers: [
-          Provider<Stream<TodayDosageNavigationEvent>>.value(
-              value: _navigationEventBus.stream),
-          Provider<Sink<TodayDosageNavigationEvent>>.value(
-              value: _navigationEventBus.sink),
-          Provider<Logger>(create: (context) => Logger()),
-          Provider(
-            create: (context) =>
-                ReportDoseTaken((context.read()), context.read()),
+          Provider<ScheduleRepository>(
+            create: (context) => LocalScheduleRepository(),
           ),
-          Provider(
-            create: (context) => RevertTodayDose(context.read()),
-          ),
-          Provider(
-            create: (context) => GetTodayDosage(context.read()),
+          Provider<DoseRepository>(
+            create: (context) => LocalDoseRepository(context.read()),
           )
         ],
         builder: (_, __) => MultiProvider(
-            providers: [
-              Provider<TodayDosageRouter>(
-                create: (context) =>
-                    TodayDosageRouter(context.read(), context.read(), context),
-              ),
-              BlocProvider(
-                create: (context) => TodayDosageCubit(
-                    context.read(),
-                    context.read(),
-                    context.read(),
-                    context.read(),
-                    context.read()),
-              ),
-            ],
-            builder: (context, child) =>
-                BlocBuilder<TodayDosageCubit, TodayDosageState>(
-                    builder: (context, state) => SafeArea(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [TodayDosageView(state)],
-                          ),
-                        ))),
+          providers: [
+            Provider<Stream<TodayDosageNavigationEvent>>.value(
+                value: _navigationEventBus.stream),
+            Provider<Sink<TodayDosageNavigationEvent>>.value(
+                value: _navigationEventBus.sink),
+            Provider<Logger>(create: (context) => Logger()),
+            Provider(
+              create: (context) =>
+                  ReportDoseTaken((context.read()), context.read()),
+            ),
+            Provider(
+              create: (context) => RevertTodayDose(context.read()),
+            ),
+            Provider(
+              create: (context) => GetTodayDosage(context.read()),
+            )
+          ],
+          builder: (_, __) => MultiProvider(
+              providers: [
+                Provider<TodayDosageRouter>(
+                  create: (context) => TodayDosageRouter(
+                      context.read(), context.read(), context),
+                ),
+                BlocProvider(
+                  create: (context) => TodayDosageCubit(
+                      context.read(),
+                      context.read(),
+                      context.read(),
+                      context.read(),
+                      context.read()),
+                ),
+              ],
+              builder: (context, child) =>
+                  BlocBuilder<TodayDosageCubit, TodayDosageState>(
+                      builder: (context, state) => SafeArea(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [TodayDosageView(state)],
+                            ),
+                          ))),
+        ),
       ),
     );
   }

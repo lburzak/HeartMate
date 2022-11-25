@@ -1,12 +1,13 @@
+import 'package:apkainzynierka/data/database.dart';
 import 'package:apkainzynierka/domain/model/dose.dart';
 import 'package:apkainzynierka/domain/repository/dose_repository.dart';
 import 'package:apkainzynierka/domain/repository/resource_error.dart';
 import 'package:hive/hive.dart';
 
-const _boxNameDoses = "doses";
-
 class LocalDoseRepository extends DoseRepository {
-  late Box<Dose> doses = Hive.box(_boxNameDoses);
+  final Box<Dose> doses;
+
+  LocalDoseRepository(BoxDatabase database) : doses = database.dosesBox;
 
   @override
   void insertDoseTaken(DateTime dateTime, double potency) {
