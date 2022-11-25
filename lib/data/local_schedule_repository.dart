@@ -3,13 +3,11 @@ import 'package:apkainzynierka/domain/repository/schedule_repository.dart';
 class LocalScheduleRepository extends ScheduleRepository {
   @override
   double getDosageForDay(int scheduleId, DateTime dateTime) {
-    // TODO: implement getDosageForDay
-    throw UnimplementedError();
+    return 1.5;
   }
 
   @override
   int? getScheduleIdForDay(DateTime dateTime) {
-    // TODO: implement getScheduleIdForDay
-    throw UnimplementedError();
+    return 1;
   }
 }
