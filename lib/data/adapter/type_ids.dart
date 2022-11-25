@@ -1,0 +1,1 @@
+const typeIdDose = 0;
