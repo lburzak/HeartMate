@@ -24,6 +24,7 @@ dependencies:
   hive: ^2.2.3
   json_annotation: ^4.7.0
   hive_flutter: ^1.1.0
+  syncfusion_flutter_charts: ^20.3.59
 
 dev_dependencies:
   flutter_test:
