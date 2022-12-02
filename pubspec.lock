@@ -326,6 +326,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.5.4"
+  kiwi:
+    dependency: "direct main"
+    description:
+      name: kiwi
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.3"
+  kiwi_generator:
+    dependency: "direct dev"
+    description:
+      name: kiwi_generator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.3"
   lints:
     dependency: transitive
     description:
