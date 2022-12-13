@@ -10,4 +10,29 @@ class LocalScheduleRepository extends ScheduleRepository {
   int? getScheduleIdForDay(DateTime dateTime) {
     return 1;
   }
+
+  @override
+  void createSchedule(
+      {required DateTime startDate,
+      required DateTime endDate,
+      required List<double> dosageCycle}) {
+    // TODO: implement createSchedule
+  }
+
+  @override
+  List<int> findScheduleIdsWithinPeriod() {
+    // TODO: implement findScheduleIdsWithinPeriod
+    return [0];
+  }
+
+  @override
+  bool scheduleWithinPeriodExists(DateTime periodStart, DateTime periodEnd) {
+    // TODO: implement scheduleWithinPeriodExists
+    return true;
+  }
+
+  @override
+  void updateScheduleEndDate(int scheduleId, DateTime startDate) {
+    // TODO: implement updateScheduleEndDate
+  }
 }
