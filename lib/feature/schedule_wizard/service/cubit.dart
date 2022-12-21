@@ -83,7 +83,12 @@ class ScheduleWizardCubit extends Cubit<ScheduleWizardState> {
   }
 
   static List<double> _initDosages(ScheduleType scheduleType) {
-    return List.empty();
+    switch (scheduleType) {
+      case ScheduleType.daily:
+        return List.generate(1, (index) => 0);
+      case ScheduleType.weekly:
+        return List.generate(7, (index) => 0);
+    }
   }
 }
 
