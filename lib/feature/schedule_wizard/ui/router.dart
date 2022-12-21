@@ -1,13 +1,15 @@
 import 'dart:async';
 
 import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_overlap_answer.dart';
+import 'package:apkainzynierka/feature/schedule_wizard/service/router.dart';
 import 'package:flutter/material.dart';
 
-class ScheduleWizardRouter {
+class MaterialScheduleWizardRouter implements ScheduleWizardRouter {
   final BuildContext _context;
 
-  ScheduleWizardRouter(this._context);
+  MaterialScheduleWizardRouter(this._context);
 
+  @override
   Future<ScheduleOverlapAnswer> promptScheduleOverlap() {
     return showDialog<ScheduleOverlapAnswer>(
         context: _context,

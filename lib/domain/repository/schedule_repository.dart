@@ -5,7 +5,8 @@ abstract class ScheduleRepository {
 
   bool scheduleWithinPeriodExists(DateTime periodStart, DateTime periodEnd);
 
-  List<int> findScheduleIdsWithinPeriod();
+  List<int> findScheduleIdsWithinPeriod(
+      {required DateTime periodStart, required DateTime periodEnd});
 
   void updateScheduleEndDate(int scheduleId, DateTime startDate);
 

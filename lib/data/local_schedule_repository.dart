@@ -20,9 +20,10 @@ class LocalScheduleRepository extends ScheduleRepository {
   }
 
   @override
-  List<int> findScheduleIdsWithinPeriod() {
+  List<int> findScheduleIdsWithinPeriod(
+      {required DateTime periodStart, required DateTime periodEnd}) {
     // TODO: implement findScheduleIdsWithinPeriod
-    return [0];
+    throw UnimplementedError();
   }
 
   @override

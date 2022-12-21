@@ -1,17 +1,20 @@
-import 'package:apkainzynierka/domain/repository/schedule_repository.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_overlap_answer.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_type.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_wizard_state.dart';
-import 'package:apkainzynierka/feature/schedule_wizard/schedule_wizard_router.dart';
+import 'package:apkainzynierka/feature/schedule_wizard/service/router.dart';
+import 'package:apkainzynierka/feature/schedule_wizard/usecase/create_schedule.dart';
+import 'package:apkainzynierka/feature/schedule_wizard/usecase/push_schedules_outside_period.dart';
 import 'package:bloc/bloc.dart';
 
 const _initialScheduleType = ScheduleType.daily;
 
 class ScheduleWizardCubit extends Cubit<ScheduleWizardState> {
-  final ScheduleRepository _scheduleRepository;
   final ScheduleWizardRouter _router;
+  final CreateSchedule _createSchedule;
+  final PushSchedulesOutsidePeriod _pushSchedulesOutsidePeriod;
 
-  ScheduleWizardCubit(this._scheduleRepository, this._router)
+  ScheduleWizardCubit(
+      this._router, this._createSchedule, this._pushSchedulesOutsidePeriod)
       : super(ScheduleWizardState(
             scheduleType: _initialScheduleType,
             startDate: Date.today(),
@@ -57,19 +60,17 @@ class ScheduleWizardCubit extends Cubit<ScheduleWizardState> {
       return;
     }
 
-    if (_scheduleRepository.scheduleWithinPeriodExists(
-        state.startDate, state.endDate)) {
+    try {
+      _createSchedule(
+          startDate: state.startDate,
+          endDate: state.endDate,
+          dosages: state.dosages);
+    } on ScheduleOverlapException {
       _router
           .promptScheduleOverlap()
           .then(_handleScheduleOverlap)
           .then((_) => save());
-      return;
     }
-
-    _scheduleRepository.createSchedule(
-        startDate: state.startDate,
-        endDate: state.endDate,
-        dosageCycle: state.dosages);
   }
 
   void _handleScheduleOverlap(ScheduleOverlapAnswer answer) {
@@ -77,8 +78,8 @@ class ScheduleWizardCubit extends Cubit<ScheduleWizardState> {
       return;
     }
 
-    final scheduleId = _scheduleRepository.findScheduleIdsWithinPeriod()[0];
-    _scheduleRepository.updateScheduleEndDate(scheduleId, state.startDate);
+    _pushSchedulesOutsidePeriod(
+        periodStart: state.startDate, periodEnd: state.endDate);
   }
 
   static List<double> _initDosages(ScheduleType scheduleType) {
