@@ -27,23 +27,24 @@ class ScheduleWizardView extends StatelessWidget {
             print(selectedDate);
           },
         ),
-        const _ScheduleTypeSelector()
+        _ScheduleTypeSelector(
+          selectedType: state.scheduleType,
+          onTypeSelected: (type) => cubit.setScheduleType(type!),
+        )
       ],
     );
   }
 }
 
-class _ScheduleTypeSelector extends StatefulWidget {
+class _ScheduleTypeSelector extends StatelessWidget {
+  final ScheduleType selectedType;
+  final void Function(ScheduleType? type) onTypeSelected;
+
   const _ScheduleTypeSelector({
     Key? key,
+    required this.selectedType,
+    required this.onTypeSelected,
   }) : super(key: key);
-
-  @override
-  State<_ScheduleTypeSelector> createState() => _ScheduleTypeSelectorState();
-}
-
-class _ScheduleTypeSelectorState extends State<_ScheduleTypeSelector> {
-  ScheduleType selectedType = ScheduleType.daily;
 
   @override
   Widget build(BuildContext context) {
@@ -52,20 +53,12 @@ class _ScheduleTypeSelectorState extends State<_ScheduleTypeSelector> {
         _ScheduleTypeOption(
           scheduleType: ScheduleType.daily,
           selectedScheduleType: selectedType,
-          onChanged: (_) {
-            setState(() {
-              selectedType = ScheduleType.daily;
-            });
-          },
+          onChanged: onTypeSelected,
         ),
         _ScheduleTypeOption(
           scheduleType: ScheduleType.weekly,
           selectedScheduleType: selectedType,
-          onChanged: (_) {
-            setState(() {
-              selectedType = ScheduleType.weekly;
-            });
-          },
+          onChanged: onTypeSelected,
         ),
       ],
     );

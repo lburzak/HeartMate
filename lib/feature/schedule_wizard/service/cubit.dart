@@ -51,6 +51,8 @@ class ScheduleWizardCubit extends Cubit<ScheduleWizardState> {
     emit(state.copyWith(endDate: dateTime, endDateError: null));
   }
 
+  void setScheduleType(ScheduleType type) {}
+
   void save() {
     if (state.startDateError != null) {
       return;
