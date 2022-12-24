@@ -6,9 +6,21 @@ class ReportInrCubit extends Cubit<ReportInrState> {
   final ReportInr _reportInr;
 
   ReportInrCubit(this._reportInr)
-      : super(const ReportInrState(inr: 0.0, error: null));
+      : super(const ReportInrState(inr: null, error: null));
 
   void setInr(double value) {
-    _reportInr(value);
+    if (value < 0) {
+      emit(state.copyWith(error: "Nieprawidłowa wartość"));
+      return;
+    }
+
+    emit(state.copyWith(error: null, inr: value));
+  }
+
+  void submit() {
+    final inr = state.inr;
+    if (inr != null) {
+      _reportInr(inr);
+    }
   }
 }

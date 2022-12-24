@@ -16,8 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ReportInrState {
-  double get inr => throw _privateConstructorUsedError;
-
+  double? get inr => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -30,9 +29,8 @@ abstract class $ReportInrStateCopyWith<$Res> {
   factory $ReportInrStateCopyWith(
           ReportInrState value, $Res Function(ReportInrState) then) =
       _$ReportInrStateCopyWithImpl<$Res, ReportInrState>;
-
   @useResult
-  $Res call({double inr, String? error});
+  $Res call({double? inr, String? error});
 }
 
 /// @nodoc
@@ -42,21 +40,20 @@ class _$ReportInrStateCopyWithImpl<$Res, $Val extends ReportInrState>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? inr = null,
+    Object? inr = freezed,
     Object? error = freezed,
   }) {
     return _then(_value.copyWith(
-      inr: null == inr
+      inr: freezed == inr
           ? _value.inr
           : inr // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -71,10 +68,9 @@ abstract class _$$_ReportInrStateCopyWith<$Res>
   factory _$$_ReportInrStateCopyWith(
           _$_ReportInrState value, $Res Function(_$_ReportInrState) then) =
       __$$_ReportInrStateCopyWithImpl<$Res>;
-
   @override
   @useResult
-  $Res call({double inr, String? error});
+  $Res call({double? inr, String? error});
 }
 
 /// @nodoc
@@ -88,14 +84,14 @@ class __$$_ReportInrStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? inr = null,
+    Object? inr = freezed,
     Object? error = freezed,
   }) {
     return _then(_$_ReportInrState(
-      inr: null == inr
+      inr: freezed == inr
           ? _value.inr
           : inr // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -110,7 +106,7 @@ class _$_ReportInrState implements _ReportInrState {
   const _$_ReportInrState({required this.inr, required this.error});
 
   @override
-  final double inr;
+  final double? inr;
   @override
   final String? error;
 
@@ -140,15 +136,13 @@ class _$_ReportInrState implements _ReportInrState {
 
 abstract class _ReportInrState implements ReportInrState {
   const factory _ReportInrState(
-      {required final double inr,
+      {required final double? inr,
       required final String? error}) = _$_ReportInrState;
 
   @override
-  double get inr;
-
+  double? get inr;
   @override
   String? get error;
-
   @override
   @JsonKey(ignore: true)
   _$$_ReportInrStateCopyWith<_$_ReportInrState> get copyWith =>
