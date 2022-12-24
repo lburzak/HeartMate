@@ -1,0 +1,1 @@
+enum ScheduleOverlapAnswer { cancel, reschedule }
