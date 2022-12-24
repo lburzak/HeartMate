@@ -1,3 +1,3 @@
 abstract class InrMeasurementRepository {
-  void insert({double inr, DateTime measurementDateTime});
+  void update({required double inr, required DateTime measurementDateTime});
 }

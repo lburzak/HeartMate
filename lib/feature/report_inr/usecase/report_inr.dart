@@ -6,6 +6,6 @@ class ReportInr {
   ReportInr(this._repository);
 
   void call(double value) {
-    _repository.insert(inr: value, measurementDateTime: DateTime.now());
+    _repository.update(inr: value, measurementDateTime: DateTime.now());
   }
 }
