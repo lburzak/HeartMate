@@ -8,7 +8,7 @@ abstract class ScheduleRepository {
   List<int> findScheduleIdsWithinPeriod(
       {required DateTime periodStart, required DateTime periodEnd});
 
-  void updateScheduleEndDate(int scheduleId, DateTime startDate);
+  void updateScheduleEndDate(int scheduleId, DateTime endDate);
 
   void createSchedule(
       {required DateTime startDate,
