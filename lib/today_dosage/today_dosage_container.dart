@@ -15,11 +15,12 @@ import 'package:flutter/material.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:logger/logger.dart';
 
-KiwiContainer buildTodayDosageContainer({required BuildContext context}) {
+KiwiContainer buildTodayDosageContainer(BuildContext context,
+    {required BoxDatabase boxDatabase}) {
   final navigationEventBus = StreamController<TodayDosageNavigationEvent>();
   final c = KiwiContainer.scoped();
 
-  c.registerSingleton((r) => BoxDatabase());
+  c.registerInstance(boxDatabase);
 
   c.registerFactory((r) => TodayDosageCubit(r(), r(), r(), r(), r()));
   c.registerFactory((r) => TodayDosageRouter(r(), r(), r()));
@@ -30,7 +31,8 @@ KiwiContainer buildTodayDosageContainer({required BuildContext context}) {
 
   c.registerFactory((r) => Logger());
 
-  c.registerFactory<ScheduleRepository>((r) => LocalScheduleRepository());
+  c.registerFactory<ScheduleRepository>(
+      (r) => LocalScheduleRepository(r.resolve()));
   c.registerFactory<DoseRepository>((r) => LocalDoseRepository(r()));
 
   c.registerInstance<Sink<TodayDosageNavigationEvent>>(navigationEventBus.sink);

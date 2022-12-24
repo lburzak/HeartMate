@@ -1,3 +1,4 @@
+import 'package:apkainzynierka/data/database.dart';
 import 'package:apkainzynierka/today_dosage/state/today_dosage_state.dart';
 import 'package:apkainzynierka/today_dosage/today_dosage_container.dart';
 import 'package:apkainzynierka/today_dosage/today_dosage_cubit.dart';
@@ -21,7 +22,8 @@ class _TherapyPageState extends State<TherapyPage> {
   @override
   void initState() {
     super.initState();
-    dailyDosageContainer = buildTodayDosageContainer(context: context);
+    dailyDosageContainer = buildTodayDosageContainer(context,
+        boxDatabase: context.read<BoxDatabase>());
   }
 
   @override
