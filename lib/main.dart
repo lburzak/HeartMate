@@ -16,6 +16,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo', theme: darkTheme, home: MainView());
+        title: 'Flutter Demo',
+        theme: darkTheme,
+        home: Provider(
+            create: (context) => BoxDatabase(), child: const MainView()));
   }
 }
