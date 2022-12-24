@@ -14,6 +14,10 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+Schedule _$ScheduleFromJson(Map<String, dynamic> json) {
+  return _Schedule.fromJson(json);
+}
+
 /// @nodoc
 mixin _$Schedule {
   int get id => throw _privateConstructorUsedError;
@@ -21,6 +25,7 @@ mixin _$Schedule {
   DateTime get effectiveTo => throw _privateConstructorUsedError;
   List<double> get dosageScheme => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $ScheduleCopyWith<Schedule> get copyWith =>
       throw _privateConstructorUsedError;
@@ -129,7 +134,7 @@ class __$$_ScheduleCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$_Schedule implements _Schedule {
   const _$_Schedule(
       {required this.id,
@@ -137,6 +142,9 @@ class _$_Schedule implements _Schedule {
       required this.effectiveTo,
       required final List<double> dosageScheme})
       : _dosageScheme = dosageScheme;
+
+  factory _$_Schedule.fromJson(Map<String, dynamic> json) =>
+      _$$_ScheduleFromJson(json);
 
   @override
   final int id;
@@ -170,6 +178,7 @@ class _$_Schedule implements _Schedule {
                 .equals(other._dosageScheme, _dosageScheme));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, effectiveFrom, effectiveTo,
       const DeepCollectionEquality().hash(_dosageScheme));
@@ -179,6 +188,13 @@ class _$_Schedule implements _Schedule {
   @pragma('vm:prefer-inline')
   _$$_ScheduleCopyWith<_$_Schedule> get copyWith =>
       __$$_ScheduleCopyWithImpl<_$_Schedule>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_ScheduleToJson(
+      this,
+    );
+  }
 }
 
 abstract class _Schedule implements Schedule {
@@ -187,6 +203,8 @@ abstract class _Schedule implements Schedule {
       required final DateTime effectiveFrom,
       required final DateTime effectiveTo,
       required final List<double> dosageScheme}) = _$_Schedule;
+
+  factory _Schedule.fromJson(Map<String, dynamic> json) = _$_Schedule.fromJson;
 
   @override
   int get id;

@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'schedule.freezed.dart';
+part 'schedule.g.dart';
 
 @freezed
 class Schedule with _$Schedule {
@@ -9,4 +10,7 @@ class Schedule with _$Schedule {
       required DateTime effectiveFrom,
       required DateTime effectiveTo,
       required List<double> dosageScheme}) = _Schedule;
+
+  factory Schedule.fromJson(Map<String, Object?> json) =>
+      _$ScheduleFromJson(json);
 }

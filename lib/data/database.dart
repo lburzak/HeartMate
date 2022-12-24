@@ -1,4 +1,5 @@
 import 'package:apkainzynierka/data/adapter/dose_adapter.dart';
+import 'package:apkainzynierka/data/adapter/schedule_adapter.dart';
 import 'package:apkainzynierka/domain/model/dose.dart';
 import 'package:apkainzynierka/domain/model/schedule.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -11,6 +12,7 @@ class BoxDatabase {
   static Future<void> init() async {
     await Hive.initFlutter();
     Hive.registerAdapter(DoseAdapter());
+    Hive.registerAdapter(ScheduleAdapter());
     await Hive.openBox<Dose>(_boxNameDoses);
     await Hive.openBox<Schedule>(_boxNameSchedules);
     await Hive.openBox<int>(_boxNameLastIds);
