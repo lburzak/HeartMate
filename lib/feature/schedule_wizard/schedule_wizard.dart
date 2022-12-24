@@ -7,7 +7,6 @@ import 'package:apkainzynierka/feature/schedule_wizard/service/router.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/ui/router.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/ui/view.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/usecase/create_schedule.dart';
-import 'package:apkainzynierka/feature/schedule_wizard/usecase/push_schedules_outside_period.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
@@ -39,13 +38,11 @@ KiwiContainer _buildContainer(BuildContext context,
 
   c.registerInstance(boxDatabase);
 
-  c.registerFactory(
-      (r) => ScheduleWizardCubit(r.resolve(), r.resolve(), r.resolve()));
+  c.registerFactory((r) => ScheduleWizardCubit(r.resolve(), r.resolve()));
 
   c.registerFactory<ScheduleWizardRouter>(
       (r) => MaterialScheduleWizardRouter(context));
   c.registerFactory((r) => CreateSchedule(r.resolve()));
-  c.registerFactory((r) => PushSchedulesOutsidePeriod(r.resolve()));
 
   c.registerFactory<ScheduleRepository>(
       (r) => LocalScheduleRepository(r.resolve()));
