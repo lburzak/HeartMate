@@ -3,7 +3,7 @@ import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_wizard_sta
 import 'package:apkainzynierka/feature/schedule_wizard/service/cubit.dart';
 import 'package:flutter/material.dart';
 
-class ScheduleWizardView extends StatelessWidget {
+class ScheduleWizardView extends StatefulWidget {
   final ScheduleWizardState state;
   final ScheduleWizardCubit cubit;
 
@@ -11,26 +11,68 @@ class ScheduleWizardView extends StatelessWidget {
       {super.key, required this.cubit, required this.state});
 
   @override
+  State<ScheduleWizardView> createState() => _ScheduleWizardViewState();
+}
+
+class _ScheduleWizardViewState extends State<ScheduleWizardView> {
+  double _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      if (_counter >= 0) {
+        _counter += 0.25;
+      }
+    });
+  }
+
+  void _decrementCounter() {
+    setState(() {
+      if (_counter > 0) {
+        _counter -= 0.25;
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         const SafeArea(child: Text("Nowy harmonogram")),
         _CalendarField(
-          dateTime: state.startDate,
+          dateTime: widget.state.startDate,
           onDateSelected: (DateTime selectedDate) {
             print(selectedDate.day);
           },
         ),
         _CalendarField(
-          dateTime: state.endDate,
+          dateTime: widget.state.endDate,
           onDateSelected: (DateTime selectedDate) {
             print(selectedDate);
           },
         ),
         _ScheduleTypeSelector(
-          selectedType: state.scheduleType,
-          onTypeSelected: (type) => cubit.setScheduleType(type!),
-        )
+          selectedType: widget.state.scheduleType,
+          onTypeSelected: (type) => widget.cubit.setScheduleType(type!),
+        ),
+        Row(
+          children: [
+            const Text("Codziennie"),
+            FloatingActionButton(
+              onPressed: _decrementCounter,
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.blue,
+              child: const Icon(Icons.remove),
+            ),
+            Text('$_counter' " mg"),
+            FloatingActionButton(
+              onPressed: _incrementCounter,
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.blue,
+              child: const Icon(Icons.add),
+            ),
+          ],
+        ),
+        ElevatedButton(onPressed: () {}, child: const Text("zapisz"))
       ],
     );
   }
@@ -93,18 +135,18 @@ class _ScheduleTypeOption extends StatelessWidget {
   Widget _createTitle() {
     switch (scheduleType) {
       case ScheduleType.daily:
-        return Text("Cykl dzienny");
+        return const Text("Cykl dzienny");
       case ScheduleType.weekly:
-        return Text("Cykl tygodniowy");
+        return const Text("Cykl tygodniowy");
     }
   }
 
   Widget _createDescription() {
     switch (scheduleType) {
       case ScheduleType.daily:
-        return Text("Przyjmujesz  taką samą dawkę każdego dnia");
+        return const Text("Przyjmujesz taką samą dawkę każdego dnia");
       case ScheduleType.weekly:
-        return Text("Określ dawkę dla każdego dnia tygodnia");
+        return const Text("Określ dawkę dla każdego dnia tygodnia");
     }
   }
 }
