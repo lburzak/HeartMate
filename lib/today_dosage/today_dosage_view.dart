@@ -88,7 +88,44 @@ class _TodayDosageViewState extends State<TodayDosageView>
             padding: const EdgeInsets.all(8.0),
             child: SizedBox.expand(
                 child: ElevatedButton(
-                    onPressed: () => cubit.toString(),
+                    onPressed: () {
+                      showModalBottomSheet<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return SizedBox(
+                            height: 200,
+                            child: Center(
+                              child: Column(
+                                children: <Widget>[
+                                  const SizedBox(height: 10),
+                                  const Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text('Dodaj pomiar'),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  TextFormField(
+                                    keyboardType: TextInputType.number,
+                                    decoration: const InputDecoration(
+                                      hintText: 'Wprowadź wartość pomiaru INR',
+                                      border: OutlineInputBorder(),
+                                      filled: true,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: ElevatedButton(
+                                      child: const Text('Dodaj'),
+                                      onPressed: () => Navigator.pop(context),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
                     child: const Text("Dodaj pomiar INR"))),
           ),
         ),
