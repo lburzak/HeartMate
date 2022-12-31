@@ -1,0 +1,1 @@
+enum Illness { artificialValve, other }

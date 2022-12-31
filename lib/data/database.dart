@@ -1,6 +1,7 @@
 import 'package:apkainzynierka/data/adapter/dose_adapter.dart';
 import 'package:apkainzynierka/data/adapter/schedule_adapter.dart';
 import 'package:apkainzynierka/domain/model/dose.dart';
+import 'package:apkainzynierka/domain/model/profile.dart';
 import 'package:apkainzynierka/domain/model/schedule.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -8,6 +9,7 @@ const _boxNameDoses = "doses";
 const _boxNameSchedules = "schedules";
 const _boxNameLastIds = "lastIds";
 const _boxNameInrMeasurements = "inrMeasurements";
+const _boxNameProfiles = "profiles";
 
 class BoxDatabase {
   static Future<void> init() async {
@@ -17,6 +19,7 @@ class BoxDatabase {
     await Hive.openBox<Dose>(_boxNameDoses);
     await Hive.openBox<Schedule>(_boxNameSchedules);
     await Hive.openBox<int>(_boxNameLastIds);
+    await Hive.openBox<Profile>(_boxNameProfiles);
     await Hive.openBox<double>(_boxNameInrMeasurements);
   }
 
@@ -28,6 +31,8 @@ class BoxDatabase {
       Hive.box<double>(_boxNameInrMeasurements);
 
   Box<int> get lastIdsBox => Hive.box<int>(_boxNameLastIds);
+
+  Box<Profile> get profilesBox => Hive.box<Profile>(_boxNameProfiles);
 
   int getNextId(Type type) {
     final key = type.toString();
