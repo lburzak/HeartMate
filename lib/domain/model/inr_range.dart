@@ -10,4 +10,8 @@ class InrRange with _$InrRange {
 
   factory InrRange.fromJson(Map<String, dynamic> json) =>
       _$InrRangeFromJson(json);
+
+  bool includes(double value) {
+    return value >= from && value <= to;
+  }
 }
