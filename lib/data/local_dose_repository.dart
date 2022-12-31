@@ -1,4 +1,5 @@
 import 'package:apkainzynierka/data/database.dart';
+import 'package:apkainzynierka/data/day_encoding.dart';
 import 'package:apkainzynierka/domain/model/dose.dart';
 import 'package:apkainzynierka/domain/repository/dose_repository.dart';
 import 'package:apkainzynierka/domain/repository/resource_error.dart';
@@ -35,8 +36,4 @@ class LocalDoseRepository extends DoseRepository {
   Dose? findDoseForDay(DateTime dateTime) {
     return doses.get(dateTime.encodeDay());
   }
-}
-
-extension _DayEncoding on DateTime {
-  int encodeDay() => (year - 1970) * month * day;
 }
