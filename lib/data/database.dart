@@ -1,6 +1,7 @@
 import 'package:apkainzynierka/data/adapter/dose_adapter.dart';
 import 'package:apkainzynierka/data/adapter/schedule_adapter.dart';
 import 'package:apkainzynierka/domain/model/dose.dart';
+import 'package:apkainzynierka/domain/model/inr_measurement.dart';
 import 'package:apkainzynierka/domain/model/profile.dart';
 import 'package:apkainzynierka/domain/model/schedule.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -20,15 +21,15 @@ class BoxDatabase {
     await Hive.openBox<Schedule>(_boxNameSchedules);
     await Hive.openBox<int>(_boxNameLastIds);
     await Hive.openBox<Profile>(_boxNameProfiles);
-    await Hive.openBox<double>(_boxNameInrMeasurements);
+    await Hive.openBox<InrMeasurement>(_boxNameInrMeasurements);
   }
 
   Box<Dose> get dosesBox => Hive.box<Dose>(_boxNameDoses);
 
   Box<Schedule> get schedulesBox => Hive.box<Schedule>(_boxNameSchedules);
 
-  Box<double> get inrMeasurementsBox =>
-      Hive.box<double>(_boxNameInrMeasurements);
+  Box<InrMeasurement> get inrMeasurementsBox =>
+      Hive.box<InrMeasurement>(_boxNameInrMeasurements);
 
   Box<int> get lastIdsBox => Hive.box<int>(_boxNameLastIds);
 
