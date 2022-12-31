@@ -14,11 +14,16 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
+InrMeasurement _$InrMeasurementFromJson(Map<String, dynamic> json) {
+  return _InrMeasurement.fromJson(json);
+}
+
 /// @nodoc
 mixin _$InrMeasurement {
   DateTime get reportDate => throw _privateConstructorUsedError;
   double get inr => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $InrMeasurementCopyWith<InrMeasurement> get copyWith =>
       throw _privateConstructorUsedError;
@@ -101,9 +106,12 @@ class __$$_InrMeasurementCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$_InrMeasurement implements _InrMeasurement {
   const _$_InrMeasurement({required this.reportDate, required this.inr});
+
+  factory _$_InrMeasurement.fromJson(Map<String, dynamic> json) =>
+      _$$_InrMeasurementFromJson(json);
 
   @override
   final DateTime reportDate;
@@ -125,6 +133,7 @@ class _$_InrMeasurement implements _InrMeasurement {
             (identical(other.inr, inr) || other.inr == inr));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, reportDate, inr);
 
@@ -133,12 +142,22 @@ class _$_InrMeasurement implements _InrMeasurement {
   @pragma('vm:prefer-inline')
   _$$_InrMeasurementCopyWith<_$_InrMeasurement> get copyWith =>
       __$$_InrMeasurementCopyWithImpl<_$_InrMeasurement>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_InrMeasurementToJson(
+      this,
+    );
+  }
 }
 
 abstract class _InrMeasurement implements InrMeasurement {
   const factory _InrMeasurement(
       {required final DateTime reportDate,
       required final double inr}) = _$_InrMeasurement;
+
+  factory _InrMeasurement.fromJson(Map<String, dynamic> json) =
+      _$_InrMeasurement.fromJson;
 
   @override
   DateTime get reportDate;
