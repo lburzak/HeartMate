@@ -1,4 +1,7 @@
 import 'package:apkainzynierka/data/adapter/dose_adapter.dart';
+import 'package:apkainzynierka/data/adapter/inr_measurement_adapter.dart';
+import 'package:apkainzynierka/data/adapter/inr_range_adapter.dart';
+import 'package:apkainzynierka/data/adapter/profile_adapter.dart';
 import 'package:apkainzynierka/data/adapter/schedule_adapter.dart';
 import 'package:apkainzynierka/domain/model/dose.dart';
 import 'package:apkainzynierka/domain/model/inr_measurement.dart';
@@ -17,6 +20,9 @@ class BoxDatabase {
     await Hive.initFlutter();
     Hive.registerAdapter(DoseAdapter());
     Hive.registerAdapter(ScheduleAdapter());
+    Hive.registerAdapter(ProfileAdapter());
+    Hive.registerAdapter(InrRangeAdapter());
+    Hive.registerAdapter(InrMeasurementAdapter());
     await Hive.openBox<Dose>(_boxNameDoses);
     await Hive.openBox<Schedule>(_boxNameSchedules);
     await Hive.openBox<int>(_boxNameLastIds);
