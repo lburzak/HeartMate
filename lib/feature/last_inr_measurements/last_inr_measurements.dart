@@ -17,8 +17,8 @@ class LastInrMeasurements extends StatelessWidget {
   Widget build(BuildContext context) {
     final container = _buildContainer(boxDatabase: context.read());
 
-    return BlocProvider<LastInrMeasurementsCubit>.value(
-      value: container.resolve(),
+    return BlocProvider<LastInrMeasurementsCubit>(
+      create: (context) => container.resolve(),
       child: BlocBuilder<LastInrMeasurementsCubit, LastInrMeasurementsState>(
           builder: (context, state) =>
               InrChart(state: state, cubit: context.read())),
