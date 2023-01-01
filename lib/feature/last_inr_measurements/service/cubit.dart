@@ -49,6 +49,6 @@ extension _InrMeasurementMapping on InrMeasurement {
   Measurement toMeasurement(InrRange therapeuticRange) => Measurement(
       value: inr,
       reportedAt: reportDate,
-      isOutsideTherapeuticRange: therapeuticRange.includes(inr),
+      isOutsideTherapeuticRange: !therapeuticRange.includes(inr),
       isSelected: false);
 }
