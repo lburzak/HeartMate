@@ -11,6 +11,10 @@ class LocalProfileRepository extends ProfileRepository {
 
   @override
   Profile getCurrent() {
+    if (profiles.isEmpty) {
+      throw StateError("No profile");
+    }
+
     final profile = profiles.getAt(0);
 
     if (profile == null) {
