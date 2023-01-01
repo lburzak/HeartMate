@@ -1,11 +1,11 @@
 import 'package:apkainzynierka/common/navigation/navigation_handler.dart';
+import 'package:apkainzynierka/feature/last_inr_measurements/last_inr_measurements.dart';
 import 'package:apkainzynierka/today_dosage/state/today_dosage_state.dart';
 import 'package:apkainzynierka/today_dosage/today_dosage_cubit.dart';
 import 'package:apkainzynierka/today_dosage/today_dosage_router.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart' hide Router;
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class TodayDosageView extends StatefulWidget {
   final TodayDosageState state;
@@ -63,8 +63,13 @@ class _TodayDosageViewState extends State<TodayDosageView>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: List.generate(
                   7,
-                  (index) =>
-                      Column(children: const [Text("Pn"),SizedBox(height: 5,), DailyDosageCircle()]))),
+                  (index) => Column(children: const [
+                        Text("Pn"),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        DailyDosageCircle()
+                      ]))),
         )),
         SizedBox(
           height: 80,
@@ -76,39 +81,7 @@ class _TodayDosageViewState extends State<TodayDosageView>
                     child: const Text("Dostosuj harmonogram"))),
           ),
         ),
-        SizedBox(
-            height: 150,
-            child: SfCartesianChart(
-                // Initialize category axis
-                primaryXAxis: CategoryAxis(),
-                primaryYAxis: NumericAxis(minimum: 0, maximum: 5, interval: 1),
-                series: <ChartSeries<_ChartData, String>>[
-                  ColumnSeries<_ChartData, String>(
-                      dataSource: [
-                        _ChartData('10.09', 2),
-                        _ChartData('24.09', 2.4),
-                        _ChartData('10.10', 3.1),
-                        _ChartData('24.10', 2.8),
-                        _ChartData('10.11', 3),
-                        _ChartData('10.11', 2),
-                        _ChartData('24.13', 2.4),
-                        _ChartData('10.15', 3.1),
-                        _ChartData('24.16', 2.8),
-                        _ChartData('10.17', 3.7),
-                        _ChartData('10.18', 2.5),
-                        _ChartData('24.19', 2.41),
-                        _ChartData('10.20', 3.13),
-                        _ChartData('24.21', 2.65),
-                        _ChartData('10.22', 3.3)
-                      ],
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          topRight: Radius.circular(10)),
-                      xValueMapper: (_ChartData data, _) => data.x,
-                      yValueMapper: (_ChartData data, _) => data.y,
-                      name: 'Wykres pomiarów INR',
-                      color: Colors.amber)
-                ])),
+        const SizedBox(height: 150, child: LastInrMeasurements()),
         SizedBox(
           height: 80,
           child: Padding(
@@ -155,11 +128,4 @@ class DailyDosageCircle extends StatelessWidget {
       ),
     );
   }
-}
-
-class _ChartData {
-  _ChartData(this.x, this.y);
-
-  final String x;
-  final double y;
 }
