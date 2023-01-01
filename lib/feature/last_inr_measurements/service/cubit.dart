@@ -38,7 +38,10 @@ class LastInrMeasurementsCubit extends Cubit<LastInrMeasurementsState> {
         .map((e) => e.toMeasurement(therapeuticInrRange))
         .toList();
 
-    emit(state.copyWith(measurements: measurements));
+    emit(state.copyWith(
+        measurements: measurements,
+        therapeuticInrTop: therapeuticInrRange.to,
+        therapeuticInrBottom: therapeuticInrRange.from));
   }
 }
 
