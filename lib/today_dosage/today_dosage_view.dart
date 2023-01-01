@@ -1,11 +1,13 @@
 import 'package:apkainzynierka/common/navigation/navigation_handler.dart';
+import 'package:apkainzynierka/data/database.dart';
 import 'package:apkainzynierka/feature/last_inr_measurements/last_inr_measurements.dart';
+import 'package:apkainzynierka/feature/report_inr/report_inr.dart';
 import 'package:apkainzynierka/today_dosage/state/today_dosage_state.dart';
 import 'package:apkainzynierka/today_dosage/today_dosage_cubit.dart';
 import 'package:apkainzynierka/today_dosage/today_dosage_router.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart' hide Router;
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 class TodayDosageView extends StatefulWidget {
   final TodayDosageState state;
@@ -91,38 +93,11 @@ class _TodayDosageViewState extends State<TodayDosageView>
                     onPressed: () {
                       showModalBottomSheet<void>(
                         context: context,
-                        builder: (BuildContext context) {
-                          return SizedBox(
-                            height: 200,
-                            child: Center(
-                              child: Column(
-                                children: <Widget>[
-                                  const SizedBox(height: 10),
-                                  const Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Text('Dodaj pomiar'),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  TextFormField(
-                                    keyboardType: TextInputType.number,
-                                    decoration: const InputDecoration(
-                                      hintText: 'Wprowadź wartość pomiaru INR',
-                                      border: OutlineInputBorder(),
-                                      filled: true,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Align(
-                                    alignment: Alignment.bottomRight,
-                                    child: ElevatedButton(
-                                      child: const Text('Dodaj'),
-                                      onPressed: () => Navigator.pop(context),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
+                        builder: (BuildContext _) {
+                          return Provider<BoxDatabase>.value(
+                              value: context.read(),
+                              builder: (context, child) =>
+                                  const ReportInrDialog());
                         },
                       );
                     },
