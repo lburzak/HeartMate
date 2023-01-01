@@ -1,12 +1,14 @@
 import 'package:apkainzynierka/feature/last_inr_measurements/model/measurement.dart';
 import 'package:apkainzynierka/feature/last_inr_measurements/model/state.dart';
+import 'package:apkainzynierka/feature/last_inr_measurements/service/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class InrChart extends StatelessWidget {
   final LastInrMeasurementsState state;
+  final LastInrMeasurementsCubit cubit;
 
-  const InrChart({super.key, required this.state});
+  const InrChart({super.key, required this.state, required this.cubit});
 
   @override
   Widget build(BuildContext context) {
@@ -30,22 +32,32 @@ class InrChart extends StatelessWidget {
                   topLeft: Radius.circular(10), topRight: Radius.circular(10)),
               xValueMapper: (datum, index) => datum.reportedAt,
               yValueMapper: (datum, index) => datum.value,
-              pointColorMapper: (datum, index) {
-                if (datum.isSelected) {
-                  return Colors.orange;
-                }
-
-                if (datum.isOutsideTherapeuticRange) {
-                  return Colors.red;
-                }
-
-                return null;
-              },
-              onPointTap: (pointInteractionDetails) {
-                print(pointInteractionDetails.pointIndex);
-              },
+              pointColorMapper: (datum, index) => _getBarColor(datum),
+              onPointTap: _onPointTap,
               color: Colors.blue)
         ]);
+  }
+
+  void _onPointTap(ChartPointDetails details) {
+    final index = details.pointIndex;
+
+    if (index == null) {
+      return;
+    }
+
+    cubit.selectMeasurement(index);
+  }
+
+  Color? _getBarColor(Measurement measurement) {
+    if (measurement.isSelected) {
+      return Colors.orange;
+    }
+
+    if (measurement.isOutsideTherapeuticRange) {
+      return Colors.red;
+    }
+
+    return null;
   }
 
   PlotBand _createLineBand(double value) {

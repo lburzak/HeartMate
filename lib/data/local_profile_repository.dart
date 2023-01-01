@@ -11,6 +11,10 @@ class LocalProfileRepository extends ProfileRepository {
 
   @override
   Profile getCurrent() {
+    if (profiles.isEmpty) {
+      throw StateError("No profile");
+    }
+
     final profile = profiles.getAt(0);
 
     if (profile == null) {
@@ -22,6 +26,10 @@ class LocalProfileRepository extends ProfileRepository {
 
   @override
   void update(Profile profile) {
-    profiles.putAt(0, profile);
+    if (profiles.isEmpty) {
+      profiles.add(profile);
+    } else {
+      profiles.putAt(0, profile);
+    }
   }
 }

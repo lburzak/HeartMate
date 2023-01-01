@@ -38,7 +38,10 @@ class LastInrMeasurementsCubit extends Cubit<LastInrMeasurementsState> {
         .map((e) => e.toMeasurement(therapeuticInrRange))
         .toList();
 
-    emit(state.copyWith(measurements: measurements));
+    emit(state.copyWith(
+        measurements: measurements,
+        therapeuticInrTop: therapeuticInrRange.to,
+        therapeuticInrBottom: therapeuticInrRange.from));
   }
 }
 
@@ -46,6 +49,6 @@ extension _InrMeasurementMapping on InrMeasurement {
   Measurement toMeasurement(InrRange therapeuticRange) => Measurement(
       value: inr,
       reportedAt: reportDate,
-      isOutsideTherapeuticRange: therapeuticRange.includes(inr),
+      isOutsideTherapeuticRange: !therapeuticRange.includes(inr),
       isSelected: false);
 }
