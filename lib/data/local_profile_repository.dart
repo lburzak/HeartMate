@@ -26,6 +26,10 @@ class LocalProfileRepository extends ProfileRepository {
 
   @override
   void update(Profile profile) {
-    profiles.putAt(0, profile);
+    if (profiles.isEmpty) {
+      profiles.add(profile);
+    } else {
+      profiles.putAt(0, profile);
+    }
   }
 }
