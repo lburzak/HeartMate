@@ -29,11 +29,13 @@ class LastInrMeasurements extends StatelessWidget {
 KiwiContainer _buildContainer({required BoxDatabase boxDatabase}) {
   KiwiContainer c = KiwiContainer.scoped();
 
+  c.registerInstance(boxDatabase);
   c.registerFactory((r) => LastInrMeasurementsCubit(r.resolve(), r.resolve()));
-  c.registerFactory<InrMeasurementRepository>(
-      (r) => LocalInrMeasurementRepository(boxDatabase.inrMeasurementsBox));
+  c.registerFactory<InrMeasurementRepository>((r) =>
+      LocalInrMeasurementRepository(
+          r.resolve<BoxDatabase>().inrMeasurementsBox));
   c.registerFactory<ProfileRepository>(
-      (r) => LocalProfileRepository(boxDatabase));
+      (r) => LocalProfileRepository(r.resolve()));
 
   return c;
 }
