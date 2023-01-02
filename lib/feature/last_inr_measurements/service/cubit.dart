@@ -1,3 +1,4 @@
+import 'package:apkainzynierka/domain/event/inr_reported_event.dart';
 import 'package:apkainzynierka/domain/model/inr_measurement.dart';
 import 'package:apkainzynierka/domain/model/inr_range.dart';
 import 'package:apkainzynierka/domain/repository/inr_measurement_repository.dart';
@@ -5,15 +6,21 @@ import 'package:apkainzynierka/domain/repository/profile_repository.dart';
 import 'package:apkainzynierka/feature/last_inr_measurements/model/measurement.dart';
 import 'package:apkainzynierka/feature/last_inr_measurements/model/state.dart';
 import 'package:bloc/bloc.dart';
+import 'package:event_bus/event_bus.dart';
 
 class LastInrMeasurementsCubit extends Cubit<LastInrMeasurementsState> {
   final InrMeasurementRepository _measurementRepository;
   final ProfileRepository _profileRepository;
+  final EventBus _eventBus;
 
-  LastInrMeasurementsCubit(this._measurementRepository, this._profileRepository)
+  LastInrMeasurementsCubit(
+      this._measurementRepository, this._profileRepository, this._eventBus)
       : super(const LastInrMeasurementsState(
             therapeuticInrBottom: 0, therapeuticInrTop: 0, measurements: [])) {
     _fetchData();
+    _eventBus.on<InrReportedEvent>().listen((event) {
+      _fetchData();
+    });
   }
 
   void selectMeasurement(int index) {

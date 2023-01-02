@@ -8,6 +8,7 @@ import 'package:apkainzynierka/domain/repository/schedule_repository.dart';
 import 'package:apkainzynierka/domain/usecase/get_today_dosage.dart';
 import 'package:apkainzynierka/domain/usecase/report_dose_taken.dart';
 import 'package:apkainzynierka/domain/usecase/revert_today_dose.dart';
+import 'package:apkainzynierka/main.dart';
 import 'package:apkainzynierka/today_dosage/today_dosage_cubit.dart';
 import 'package:apkainzynierka/today_dosage/today_dosage_navigation_event.dart';
 import 'package:apkainzynierka/today_dosage/today_dosage_router.dart';
@@ -15,12 +16,12 @@ import 'package:flutter/material.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:logger/logger.dart';
 
-KiwiContainer buildTodayDosageContainer(BuildContext context,
-    {required BoxDatabase boxDatabase}) {
+KiwiContainer buildTodayDosageContainer(
+    BuildContext context, AppContainer appContainer) {
   final navigationEventBus = StreamController<TodayDosageNavigationEvent>();
   final c = KiwiContainer.scoped();
 
-  c.registerInstance(boxDatabase);
+  c.registerInstance<BoxDatabase>(appContainer.resolve());
 
   c.registerFactory((r) => TodayDosageCubit(r(), r(), r(), r(), r()));
   c.registerFactory((r) => TodayDosageRouter(r(), r(), r()));
