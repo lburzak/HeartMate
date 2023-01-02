@@ -6,6 +6,8 @@ import 'package:apkainzynierka/domain/repository/profile_repository.dart';
 import 'package:apkainzynierka/feature/last_inr_measurements/model/state.dart';
 import 'package:apkainzynierka/feature/last_inr_measurements/service/cubit.dart';
 import 'package:apkainzynierka/feature/last_inr_measurements/ui/view.dart';
+import 'package:apkainzynierka/main.dart';
+import 'package:event_bus/event_bus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
@@ -15,7 +17,7 @@ class LastInrMeasurements extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final container = _buildContainer(boxDatabase: context.read());
+    final container = _buildContainer(context.read());
 
     return BlocProvider<LastInrMeasurementsCubit>(
       create: (context) => container.resolve(),
@@ -26,11 +28,13 @@ class LastInrMeasurements extends StatelessWidget {
   }
 }
 
-KiwiContainer _buildContainer({required BoxDatabase boxDatabase}) {
+KiwiContainer _buildContainer(AppContainer appContainer) {
   KiwiContainer c = KiwiContainer.scoped();
 
-  c.registerInstance(boxDatabase);
-  c.registerFactory((r) => LastInrMeasurementsCubit(r.resolve(), r.resolve()));
+  c.registerInstance<BoxDatabase>(appContainer.resolve());
+  c.registerInstance<EventBus>(appContainer.resolve());
+  c.registerFactory(
+      (r) => LastInrMeasurementsCubit(r.resolve(), r.resolve(), r.resolve()));
   c.registerFactory<InrMeasurementRepository>((r) =>
       LocalInrMeasurementRepository(
           r.resolve<BoxDatabase>().inrMeasurementsBox));
