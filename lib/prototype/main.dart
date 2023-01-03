@@ -12,7 +12,7 @@ import 'main.mocks.dart';
 void main() => testWidget(() => ScheduleWizardView(
       cubit: MockScheduleWizardCubit(),
       state: ScheduleWizardState(
-          scheduleType: ScheduleType.daily,
+          scheduleType: ScheduleType.weekly,
           startDate: DateTime.now(),
           endDate: DateTime.now(),
           dosages: [1.5]),
