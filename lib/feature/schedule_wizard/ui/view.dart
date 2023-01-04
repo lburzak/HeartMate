@@ -2,6 +2,7 @@ import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_type.dart'
 import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_wizard_state.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/service/cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ScheduleWizardView extends StatelessWidget {
   final ScheduleWizardState state;
@@ -15,11 +16,14 @@ class ScheduleWizardView extends StatelessWidget {
     return Column(
       children: [
         const SafeArea(child: Text("Nowy harmonogram")),
-        _CalendarField(
-          dateTime: state.startDate,
-          onDateSelected: (DateTime selectedDate) {
-            print(selectedDate.day);
-          },
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: _CalendarField(
+            dateTime: state.startDate,
+            onDateSelected: (DateTime selectedDate) {
+              cubit.setStartDate(selectedDate);
+            },
+          ),
         ),
         _ScheduleTypeSelector(
           selectedType: state.scheduleType,
@@ -192,8 +196,11 @@ class _ScheduleTypeOption extends StatelessWidget {
 class _CalendarField extends StatelessWidget {
   final DateTime dateTime;
   final void Function(DateTime selectedDate) onDateSelected;
+  final DateFormat formatter = DateFormat("dd.MM.y");
 
-  const _CalendarField({
+  String get dateTimeFormatted => formatter.format(dateTime);
+
+  _CalendarField({
     Key? key,
     required this.dateTime,
     required this.onDateSelected,
@@ -201,10 +208,29 @@ class _CalendarField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-        child: Text(dateTime.toString()),
-        onPressed: () {
-          onDateSelected(DateTime.now());
-        });
+    return FormField<int>(
+        builder: (field) => GestureDetector(
+            onTap: () {
+              showDatePicker(
+                context: context,
+                initialDate: dateTime,
+                firstDate: DateTime.now(),
+                lastDate: DateTime(2050),
+              ).then((value) {
+                if (value == null) {
+                  return;
+                }
+
+                onDateSelected(value);
+              });
+            },
+            child: InputDecorator(
+              decoration: const InputDecoration(
+                labelText: "Data rozpoczęcia",
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue)),
+              ),
+              child: Text(dateTimeFormatted),
+            )));
   }
 }
