@@ -63,8 +63,13 @@ class _TodayDosageViewState extends State<TodayDosageView>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: List.generate(
                   7,
-                  (index) =>
-                      Column(children: const [Text("Pn"),SizedBox(height: 5,), DailyDosageCircle()]))),
+                  (index) => Column(children: const [
+                        Text("Pn"),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        DailyDosageCircle()
+                      ]))),
         )),
         SizedBox(
           height: 80,
