@@ -12,26 +12,34 @@ class TodayDosageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 90,
+      height: 140,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: DottedBorder(
-          color: state.taken ? Colors.transparent : Colors.white,
+          color: borderColor,
           strokeCap: StrokeCap.round,
           dashPattern: const [8, 8],
           strokeWidth: state.taken ? 0 : 4,
           child: SizedBox.expand(
             child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: getBackgroundColor(), elevation: 0),
+                    backgroundColor: backgroundColor, elevation: 0),
                 onLongPress: () => cubit.showCustomDosageScreen(),
                 onPressed: () => cubit.toggleTaken(),
-                child: Text(
-                  "Dzisiejsza dawka\n\n"
-                  " ${state.taken ? "Przyjęto dawkę" : "Przyjmij dawkę"}"
-                  " ${state.potency}"
-                  " mg",
-                  textAlign: TextAlign.center,
+                child: Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Dzisiejsza dawka"),
+                      const SizedBox(height: 10),
+                      Text(
+                        hintText,
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
                 )),
           ),
         ),
@@ -39,14 +47,35 @@ class TodayDosageView extends StatelessWidget {
     );
   }
 
-  Color getBackgroundColor() {
+  String get hintText {
     if (state.scheduleUndefined) {
-      return Colors.amber;
+      return "Brak harmonogramu!";
+    }
+
+    if (state.taken) {
+      return "Przyjęto dawkę ${state.potency}";
+    } else {
+      return "Przyjmij dawkę ${state.potency}";
+    }
+  }
+
+  Color get backgroundColor {
+    if (state.scheduleUndefined) {
+      return const Color(0xffAD6902);
     }
 
     if (state.taken) {
       return Colors.green;
     }
+
+    return Colors.transparent;
+  }
+
+  Color get borderColor {
+    if (!state.taken && !state.scheduleUndefined) {
+      return Colors.white;
+    }
+
     return Colors.transparent;
   }
 }
