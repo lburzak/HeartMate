@@ -14,16 +14,18 @@ void main() async {
   runApp(const MyApp());
 }
 
+AppContainer _appContainer = AppContainer();
+
 final _router = GoRouter(routes: [
   GoRoute(
     path: '/',
     builder: (context, state) => Provider<AppContainer>(
-        create: (context) => AppContainer(), child: const MainView()),
+        create: (context) => _appContainer, child: const MainView()),
   ),
   GoRoute(
     path: '/schedules/current',
     builder: (context, state) => Provider<AppContainer>(
-        create: (context) => AppContainer(), child: const ScheduleWizardPage()),
+        create: (context) => _appContainer, child: const ScheduleWizardPage()),
   )
 ]);
 
