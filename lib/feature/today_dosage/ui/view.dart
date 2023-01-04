@@ -1,5 +1,5 @@
-import 'package:apkainzynierka/today_dosage/model/state.dart';
-import 'package:apkainzynierka/today_dosage/service/cubit.dart';
+import 'package:apkainzynierka/feature/today_dosage/model/state.dart';
+import 'package:apkainzynierka/feature/today_dosage/service/cubit.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart' hide Router;
 

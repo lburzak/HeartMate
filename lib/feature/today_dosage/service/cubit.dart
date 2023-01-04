@@ -3,8 +3,8 @@ import 'package:apkainzynierka/domain/repository/schedule_repository.dart';
 import 'package:apkainzynierka/domain/usecase/get_today_dosage.dart';
 import 'package:apkainzynierka/domain/usecase/report_dose_taken.dart';
 import 'package:apkainzynierka/domain/usecase/revert_today_dose.dart';
-import 'package:apkainzynierka/today_dosage/model/state.dart';
-import 'package:apkainzynierka/today_dosage/service/router.dart';
+import 'package:apkainzynierka/feature/today_dosage/model/state.dart';
+import 'package:apkainzynierka/feature/today_dosage/service/router.dart';
 import 'package:bloc/bloc.dart';
 
 class TodayDosageCubit extends Cubit<TodayDosageState> {
