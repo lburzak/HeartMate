@@ -2,7 +2,6 @@ import 'package:apkainzynierka/today_dosage/model/state.dart';
 import 'package:apkainzynierka/today_dosage/service/cubit.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart' hide Router;
-import 'package:provider/provider.dart';
 
 class TodayDosageView extends StatelessWidget {
   final TodayDosageState state;
@@ -12,10 +11,6 @@ class TodayDosageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<TodayDosageCubit>();
-    const state = TodayDosageState(
-        taken: true, potency: 2, custom: false, scheduleUndefined: true);
-    //const state = widget.state;
     return SizedBox(
       height: 90,
       child: Padding(
@@ -36,10 +31,6 @@ class TodayDosageView extends StatelessWidget {
                   " ${state.taken ? "Przyjęto dawkę" : "Przyjmij dawkę"}"
                   " ${state.potency}"
                   " mg",
-                  // style: const TextStyle(
-                  //   fontSize: 16.0,
-                  //   fontStyle: FontStyle.italic,
-                  // ),
                   textAlign: TextAlign.center,
                 )),
           ),
