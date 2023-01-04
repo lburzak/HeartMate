@@ -2,8 +2,10 @@ import 'package:apkainzynierka/data/database.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/schedule_wizard_page.dart';
 import 'package:apkainzynierka/main/main_view.dart';
 import 'package:apkainzynierka/theme/theme_constants.dart';
+import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -16,12 +18,13 @@ final _router = GoRouter(routes: [
   GoRoute(
     path: '/',
     builder: (context, state) =>
-        Provider(create: (context) => BoxDatabase(), child: const MainView()),
+        Provider<AppContainer>(
+            create: (context) => AppContainer(), child: const MainView()),
   ),
   GoRoute(
     path: '/schedules/current',
-    builder: (context, state) => Provider(
-        create: (context) => BoxDatabase(), child: const ScheduleWizardPage()),
+    builder: (context, state) => Provider<AppContainer>(
+        create: (context) => AppContainer(), child: const ScheduleWizardPage()),
   )
 ]);
 
@@ -35,5 +38,12 @@ class MyApp extends StatelessWidget {
       theme: darkTheme,
       routerConfig: _router,
     );
+  }
+}
+
+class AppContainer extends KiwiContainer {
+  AppContainer() : super.scoped() {
+    registerSingleton((r) => BoxDatabase());
+    registerSingleton((r) => EventBus());
   }
 }
