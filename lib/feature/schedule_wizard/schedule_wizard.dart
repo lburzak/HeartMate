@@ -7,6 +7,7 @@ import 'package:apkainzynierka/feature/schedule_wizard/service/router.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/ui/router.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/ui/view.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/usecase/create_schedule.dart';
+import 'package:apkainzynierka/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
@@ -17,8 +18,7 @@ class ScheduleWizard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final container =
-        _buildContainer(context, boxDatabase: context.read<BoxDatabase>());
+    final container = _buildContainer(context, context.read());
 
     return MultiProvider(
       providers: [
@@ -32,11 +32,10 @@ class ScheduleWizard extends StatelessWidget {
   }
 }
 
-KiwiContainer _buildContainer(BuildContext context,
-    {required BoxDatabase boxDatabase}) {
+KiwiContainer _buildContainer(BuildContext context, AppContainer appContainer) {
   final c = KiwiContainer.scoped();
 
-  c.registerInstance(boxDatabase);
+  c.registerInstance<BoxDatabase>(appContainer.resolve());
 
   c.registerFactory((r) => ScheduleWizardCubit(r.resolve(), r.resolve()));
 

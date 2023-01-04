@@ -7,9 +7,7 @@ import 'package:apkainzynierka/today_dosage/today_dosage_cubit.dart';
 import 'package:apkainzynierka/today_dosage/today_dosage_router.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart' hide Router;
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:provider/provider.dart';
 
 class TodayDosageView extends StatefulWidget {

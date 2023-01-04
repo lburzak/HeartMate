@@ -17,9 +17,8 @@ void main() async {
 final _router = GoRouter(routes: [
   GoRoute(
     path: '/',
-    builder: (context, state) =>
-        Provider<AppContainer>(
-            create: (context) => AppContainer(), child: const MainView()),
+    builder: (context, state) => Provider<AppContainer>(
+        create: (context) => AppContainer(), child: const MainView()),
   ),
   GoRoute(
     path: '/schedules/current',
