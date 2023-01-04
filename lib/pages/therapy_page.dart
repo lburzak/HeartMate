@@ -21,7 +21,7 @@ class _TherapyPageState extends State<TherapyPage> {
   @override
   void initState() {
     super.initState();
-    dailyDosageContainer = buildTodayDosageContainer(context: context);
+    dailyDosageContainer = buildTodayDosageContainer(context, context.read());
   }
 
   @override

@@ -1,0 +1,3 @@
+class DisableNotifications {
+  void call() {}
+}
