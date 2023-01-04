@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_type.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_wizard_state.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/service/router.dart';
@@ -22,13 +24,13 @@ class ScheduleWizardCubit extends Cubit<ScheduleWizardState> {
   void incrementDosage(int dayIndex) {
     emit(state.copyWith(
         dosages: state.dosages.transformedAt(
-            dayIndex, (currentValue) => currentValue + _dosageStep)));
+            dayIndex, (currentValue) => max(0, currentValue + _dosageStep))));
   }
 
   void decrementDosage(int dayIndex) {
     emit(state.copyWith(
         dosages: state.dosages.transformedAt(
-            dayIndex, (currentValue) => currentValue - _dosageStep)));
+            dayIndex, (currentValue) => max(0, currentValue - _dosageStep))));
   }
 
   void setStartDate(DateTime dateTime) {
