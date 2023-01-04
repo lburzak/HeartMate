@@ -14,7 +14,6 @@ void main() => testWidget(() => ScheduleWizardView(
       state: ScheduleWizardState(
           scheduleType: ScheduleType.weekly,
           startDate: DateTime.now(),
-          endDate: DateTime.now(),
           dosages: [1.5]),
     ));
 

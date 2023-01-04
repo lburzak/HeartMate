@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_type.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_wizard_state.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/service/router.dart';
@@ -14,7 +16,6 @@ class ScheduleWizardCubit extends Cubit<ScheduleWizardState> {
       : super(ScheduleWizardState(
             scheduleType: _initialScheduleType,
             startDate: Date.today(),
-            endDate: Date.today(),
             dosages: _initDosages(_initialScheduleType)));
 
   double get _dosageStep => 0.25;
@@ -22,13 +23,13 @@ class ScheduleWizardCubit extends Cubit<ScheduleWizardState> {
   void incrementDosage(int dayIndex) {
     emit(state.copyWith(
         dosages: state.dosages.transformedAt(
-            dayIndex, (currentValue) => currentValue + _dosageStep)));
+            dayIndex, (currentValue) => max(0, currentValue + _dosageStep))));
   }
 
   void decrementDosage(int dayIndex) {
     emit(state.copyWith(
         dosages: state.dosages.transformedAt(
-            dayIndex, (currentValue) => currentValue - _dosageStep)));
+            dayIndex, (currentValue) => max(0, currentValue - _dosageStep))));
   }
 
   void setStartDate(DateTime dateTime) {
@@ -39,7 +40,9 @@ class ScheduleWizardCubit extends Cubit<ScheduleWizardState> {
     emit(state.copyWith(startDate: dateTime, startDateError: null));
   }
 
-  void setScheduleType(ScheduleType type) {}
+  void setScheduleType(ScheduleType type) {
+    emit(state.copyWith(scheduleType: type, dosages: _initDosages(type)));
+  }
 
   void save() {
     if (state.startDateError != null) {

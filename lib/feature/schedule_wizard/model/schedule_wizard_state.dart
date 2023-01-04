@@ -8,8 +8,6 @@ class ScheduleWizardState with _$ScheduleWizardState {
   const factory ScheduleWizardState(
       {required ScheduleType scheduleType,
       required DateTime startDate,
-      required DateTime endDate,
       String? startDateError,
-      String? endDateError,
       required List<double> dosages}) = $ScheduleWizardState;
 }

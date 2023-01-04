@@ -2,9 +2,9 @@ import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_type.dart'
 import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_wizard_state.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/service/cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
-class ScheduleWizardView extends StatefulWidget {
+class ScheduleWizardView extends StatelessWidget {
   final ScheduleWizardState state;
   final ScheduleWizardCubit cubit;
 
@@ -12,50 +12,24 @@ class ScheduleWizardView extends StatefulWidget {
       {super.key, required this.cubit, required this.state});
 
   @override
-  State<ScheduleWizardView> createState() => _ScheduleWizardViewState();
-}
-
-class _ScheduleWizardViewState extends State<ScheduleWizardView> {
-  double _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      if (_counter >= 0) {
-        _counter += 0.25;
-      }
-    });
-  }
-
-  void _decrementCounter() {
-    setState(() {
-      if (_counter > 0) {
-        _counter -= 0.25;
-      }
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         const SafeArea(child: Text("Nowy harmonogram")),
-        _CalendarField(
-          dateTime: widget.state.startDate,
-          onDateSelected: (DateTime selectedDate) {
-            print(selectedDate.day);
-          },
-        ),
-        _CalendarField(
-          dateTime: widget.state.endDate,
-          onDateSelected: (DateTime selectedDate) {
-            print(selectedDate);
-          },
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: _CalendarField(
+            dateTime: state.startDate,
+            onDateSelected: (DateTime selectedDate) {
+              cubit.setStartDate(selectedDate);
+            },
+          ),
         ),
         _ScheduleTypeSelector(
-          selectedType: widget.state.scheduleType,
-          onTypeSelected: (type) => widget.cubit.setScheduleType(type!),
+          selectedType: state.scheduleType,
+          onTypeSelected: (type) => cubit.setScheduleType(type!),
         ),
-        widget.state.scheduleType == ScheduleType.weekly
+        state.scheduleType == ScheduleType.weekly
             ? Row(
                 children: [
                   const SizedBox(width: 20),
@@ -73,20 +47,22 @@ class _ScheduleWizardViewState extends State<ScheduleWizardView> {
                                     width: 30,
                                     height: 30,
                                     child: FloatingActionButton(
-                                      onPressed: _decrementCounter,
+                                      onPressed: () =>
+                                          cubit.decrementDosage(index),
                                       foregroundColor: Colors.white,
                                       backgroundColor: Colors.blue,
                                       child: const Icon(Icons.remove),
                                     ),
                                   ),
                                   const SizedBox(width: 20),
-                                  Text('$_counter' " mg"),
+                                  Text("${state.dosages[index]} mg"),
                                   const SizedBox(width: 20),
                                   SizedBox(
                                     width: 30,
                                     height: 30,
                                     child: FloatingActionButton(
-                                      onPressed: _incrementCounter,
+                                      onPressed: () =>
+                                          cubit.incrementDosage(index),
                                       foregroundColor: Colors.white,
                                       backgroundColor: Colors.blue,
                                       child: const Icon(Icons.add),
@@ -108,20 +84,20 @@ class _ScheduleWizardViewState extends State<ScheduleWizardView> {
                     width: 30,
                     height: 30,
                     child: FloatingActionButton(
-                      onPressed: _decrementCounter,
+                      onPressed: () => cubit.decrementDosage(0),
                       foregroundColor: Colors.white,
                       backgroundColor: Colors.blue,
                       child: const Icon(Icons.remove),
                     ),
                   ),
                   const SizedBox(width: 20),
-                  Text('$_counter' " mg"),
+                  Text("${state.dosages[0]} mg"),
                   const SizedBox(width: 20),
                   SizedBox(
                     width: 30,
                     height: 30,
                     child: FloatingActionButton(
-                      onPressed: _incrementCounter,
+                      onPressed: () => cubit.incrementDosage(0),
                       foregroundColor: Colors.white,
                       backgroundColor: Colors.blue,
                       child: const Icon(Icons.add),
@@ -135,7 +111,7 @@ class _ScheduleWizardViewState extends State<ScheduleWizardView> {
           child: SizedBox(
               width: 200,
               child: ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: cubit.save,
                   icon: const Icon(Icons.check),
                   label: const Text("zapisz"))),
         ))
@@ -220,8 +196,11 @@ class _ScheduleTypeOption extends StatelessWidget {
 class _CalendarField extends StatelessWidget {
   final DateTime dateTime;
   final void Function(DateTime selectedDate) onDateSelected;
+  final DateFormat formatter = DateFormat("dd.MM.y");
 
-  const _CalendarField({
+  String get dateTimeFormatted => formatter.format(dateTime);
+
+  _CalendarField({
     Key? key,
     required this.dateTime,
     required this.onDateSelected,
@@ -229,10 +208,29 @@ class _CalendarField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-        child: Text(dateTime.toString()),
-        onPressed: () {
-          onDateSelected(DateTime.now());
-        });
+    return FormField<int>(
+        builder: (field) => GestureDetector(
+            onTap: () {
+              showDatePicker(
+                context: context,
+                initialDate: dateTime,
+                firstDate: DateTime.now(),
+                lastDate: DateTime(2050),
+              ).then((value) {
+                if (value == null) {
+                  return;
+                }
+
+                onDateSelected(value);
+              });
+            },
+            child: InputDecorator(
+              decoration: const InputDecoration(
+                labelText: "Data rozpoczęcia",
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue)),
+              ),
+              child: Text(dateTimeFormatted),
+            )));
   }
 }
