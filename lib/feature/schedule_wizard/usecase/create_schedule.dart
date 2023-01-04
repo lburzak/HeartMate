@@ -5,16 +5,9 @@ class CreateSchedule {
 
   CreateSchedule(this._scheduleRepository);
 
-  void call(
-      {required DateTime startDate,
-      required DateTime endDate,
-      required List<double> dosages}) {
-    if (_scheduleRepository.scheduleWithinPeriodExists(startDate, endDate)) {
-      throw ScheduleOverlapException();
-    }
-
+  void call({required DateTime startDate, required List<double> dosages}) {
     _scheduleRepository.createSchedule(
-        startDate: startDate, endDate: endDate, dosageCycle: dosages);
+        startDate: startDate, dosageCycle: dosages);
   }
 }
 

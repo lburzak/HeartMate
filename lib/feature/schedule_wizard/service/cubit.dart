@@ -1,9 +1,7 @@
-import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_overlap_answer.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_type.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_wizard_state.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/service/router.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/usecase/create_schedule.dart';
-import 'package:apkainzynierka/feature/schedule_wizard/usecase/push_schedules_outside_period.dart';
 import 'package:bloc/bloc.dart';
 
 const _initialScheduleType = ScheduleType.daily;
@@ -11,10 +9,8 @@ const _initialScheduleType = ScheduleType.daily;
 class ScheduleWizardCubit extends Cubit<ScheduleWizardState> {
   final ScheduleWizardRouter _router;
   final CreateSchedule _createSchedule;
-  final PushSchedulesOutsidePeriod _pushSchedulesOutsidePeriod;
 
-  ScheduleWizardCubit(
-      this._router, this._createSchedule, this._pushSchedulesOutsidePeriod)
+  ScheduleWizardCubit(this._router, this._createSchedule)
       : super(ScheduleWizardState(
             scheduleType: _initialScheduleType,
             startDate: Date.today(),
@@ -43,14 +39,6 @@ class ScheduleWizardCubit extends Cubit<ScheduleWizardState> {
     emit(state.copyWith(startDate: dateTime, startDateError: null));
   }
 
-  void setEndDate(DateTime dateTime) {
-    if (dateTime.isBefore(Date.today())) {
-      emit(state.copyWith(endDateError: "Date from the past"));
-    }
-
-    emit(state.copyWith(endDate: dateTime, endDateError: null));
-  }
-
   void setScheduleType(ScheduleType type) {}
 
   void save() {
@@ -58,30 +46,9 @@ class ScheduleWizardCubit extends Cubit<ScheduleWizardState> {
       return;
     }
 
-    if (state.endDateError != null) {
-      return;
-    }
+    _createSchedule(startDate: state.startDate, dosages: state.dosages);
 
-    try {
-      _createSchedule(
-          startDate: state.startDate,
-          endDate: state.endDate,
-          dosages: state.dosages);
-    } on ScheduleOverlapException {
-      _router
-          .promptScheduleOverlap()
-          .then(_handleScheduleOverlap)
-          .then((_) => save());
-    }
-  }
-
-  void _handleScheduleOverlap(ScheduleOverlapAnswer answer) {
-    if (answer == ScheduleOverlapAnswer.cancel) {
-      return;
-    }
-
-    _pushSchedulesOutsidePeriod(
-        periodStart: state.startDate, periodEnd: state.endDate);
+    _router.finish();
   }
 
   static List<double> _initDosages(ScheduleType scheduleType) {
