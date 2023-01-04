@@ -23,7 +23,7 @@ KiwiContainer buildTodayDosageContainer(
 
   c.registerInstance<BoxDatabase>(appContainer.resolve());
 
-  c.registerFactory((r) => TodayDosageCubit(r(), r(), r(), r(), r()));
+  c.registerFactory((r) => TodayDosageCubit(r(), r(), r(), r(), r(), r()));
   c.registerFactory((r) => TodayDosageRouter(r(), r(), r()));
 
   c.registerFactory((r) => RevertTodayDose(r()));
