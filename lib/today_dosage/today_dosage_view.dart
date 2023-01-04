@@ -1,26 +1,18 @@
-import 'package:apkainzynierka/common/navigation/navigation_handler.dart';
 import 'package:apkainzynierka/feature/last_inr_measurements/last_inr_measurements.dart';
 import 'package:apkainzynierka/feature/report_inr/report_inr.dart';
 import 'package:apkainzynierka/main.dart';
 import 'package:apkainzynierka/today_dosage/state/today_dosage_state.dart';
 import 'package:apkainzynierka/today_dosage/today_dosage_cubit.dart';
-import 'package:apkainzynierka/today_dosage/today_dosage_router.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart' hide Router;
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-class TodayDosageView extends StatefulWidget {
+class TodayDosageView extends StatelessWidget {
   final TodayDosageState state;
 
   const TodayDosageView(this.state, {super.key});
 
-  @override
-  State<TodayDosageView> createState() => _TodayDosageViewState();
-}
-
-class _TodayDosageViewState extends State<TodayDosageView>
-    with NavigationHandler<TodayDosageRouter, TodayDosageView> {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<TodayDosageCubit>();
@@ -110,11 +102,11 @@ class _TodayDosageViewState extends State<TodayDosageView>
   }
 
   Color getBackgroundColor() {
-    if (widget.state.scheduleUndefined) {
+    if (state.scheduleUndefined) {
       return Colors.amber;
     }
 
-    if (widget.state.taken) {
+    if (state.taken) {
       return Colors.green;
     }
     return Colors.transparent;
