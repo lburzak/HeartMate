@@ -111,7 +111,7 @@ class ScheduleWizardView extends StatelessWidget {
           child: SizedBox(
               width: 200,
               child: ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: cubit.save,
                   icon: const Icon(Icons.check),
                   label: const Text("zapisz"))),
         ))
