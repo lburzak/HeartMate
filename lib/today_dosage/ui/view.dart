@@ -1,8 +1,8 @@
 import 'package:apkainzynierka/feature/last_inr_measurements/last_inr_measurements.dart';
 import 'package:apkainzynierka/feature/report_inr/report_inr.dart';
 import 'package:apkainzynierka/main.dart';
-import 'package:apkainzynierka/today_dosage/state/today_dosage_state.dart';
-import 'package:apkainzynierka/today_dosage/today_dosage_cubit.dart';
+import 'package:apkainzynierka/today_dosage/model/state.dart';
+import 'package:apkainzynierka/today_dosage/service/cubit.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart' hide Router;
 import 'package:go_router/go_router.dart';

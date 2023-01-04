@@ -1,8 +1,7 @@
-import 'package:apkainzynierka/today_dosage/state/today_dosage_state.dart';
+import 'package:apkainzynierka/today_dosage/model/state.dart';
+import 'package:apkainzynierka/today_dosage/service/cubit.dart';
 import 'package:apkainzynierka/today_dosage/today_dosage_container.dart';
-import 'package:apkainzynierka/today_dosage/today_dosage_cubit.dart';
-import 'package:apkainzynierka/today_dosage/today_dosage_router.dart';
-import 'package:apkainzynierka/today_dosage/today_dosage_view.dart';
+import 'package:apkainzynierka/today_dosage/ui/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
@@ -29,13 +28,14 @@ class _TherapyPageState extends State<TherapyPage> {
     return MultiProvider(
       providers: [
         Provider.value(value: dailyDosageContainer.resolve<TodayDosageCubit>()),
-        Provider.value(value: dailyDosageContainer.resolve<TodayDosageRouter>())
       ],
       child: BlocBuilder<TodayDosageCubit, TodayDosageState>(
           builder: (context, state) => SafeArea(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [TodayDosageView(state)],
+                  children: [
+                    TodayDosageView(state: state, cubit: context.read())
+                  ],
                 ),
               )),
     );

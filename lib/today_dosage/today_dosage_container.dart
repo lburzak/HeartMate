@@ -7,7 +7,7 @@ import 'package:apkainzynierka/domain/usecase/get_today_dosage.dart';
 import 'package:apkainzynierka/domain/usecase/report_dose_taken.dart';
 import 'package:apkainzynierka/domain/usecase/revert_today_dose.dart';
 import 'package:apkainzynierka/main.dart';
-import 'package:apkainzynierka/today_dosage/today_dosage_cubit.dart';
+import 'package:apkainzynierka/today_dosage/service/cubit.dart';
 import 'package:apkainzynierka/today_dosage/ui/router.dart';
 import 'package:flutter/material.dart';
 import 'package:kiwi/kiwi.dart';
