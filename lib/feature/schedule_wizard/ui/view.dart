@@ -21,12 +21,6 @@ class ScheduleWizardView extends StatelessWidget {
             print(selectedDate.day);
           },
         ),
-        _CalendarField(
-          dateTime: state.endDate,
-          onDateSelected: (DateTime selectedDate) {
-            print(selectedDate);
-          },
-        ),
         _ScheduleTypeSelector(
           selectedType: state.scheduleType,
           onTypeSelected: (type) => cubit.setScheduleType(type!),

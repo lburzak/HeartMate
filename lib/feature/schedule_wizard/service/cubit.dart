@@ -16,7 +16,6 @@ class ScheduleWizardCubit extends Cubit<ScheduleWizardState> {
       : super(ScheduleWizardState(
             scheduleType: _initialScheduleType,
             startDate: Date.today(),
-            endDate: Date.today(),
             dosages: _initDosages(_initialScheduleType)));
 
   double get _dosageStep => 0.25;
