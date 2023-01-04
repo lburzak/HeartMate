@@ -25,56 +25,58 @@ class _TherapyPageState extends State<TherapyPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const TodayDosage(),
-        SizedBox(
+    return SafeArea(
+      child: Column(
+        children: [
+          const TodayDosage(),
+          SizedBox(
+              child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: List.generate(
+                    7,
+                    (index) => Column(children: const [
+                          Text("Pn"),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          DailyDosageCircle()
+                        ]))),
+          )),
+          SizedBox(
+            height: 80,
             child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: List.generate(
-                  7,
-                  (index) => Column(children: const [
-                        Text("Pn"),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        DailyDosageCircle()
-                      ]))),
-        )),
-        SizedBox(
-          height: 80,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox.expand(
-                child: ElevatedButton(
-                    onPressed: () => context.push('/schedules/current'),
-                    child: const Text("Dostosuj harmonogram"))),
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox.expand(
+                  child: ElevatedButton(
+                      onPressed: () => context.push('/schedules/current'),
+                      child: const Text("Dostosuj harmonogram"))),
+            ),
           ),
-        ),
-        const SizedBox(height: 150, child: LastInrMeasurements()),
-        SizedBox(
-          height: 80,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox.expand(
-                child: ElevatedButton(
-                    onPressed: () {
-                      showModalBottomSheet<void>(
-                        context: context,
-                        builder: (BuildContext _) {
-                          return Provider<AppContainer>.value(
-                              value: context.read(),
-                              builder: (context, child) =>
-                                  const ReportInrDialog());
-                        },
-                      );
-                    },
-                    child: const Text("Dodaj pomiar INR"))),
+          const SizedBox(height: 150, child: LastInrMeasurements()),
+          SizedBox(
+            height: 80,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox.expand(
+                  child: ElevatedButton(
+                      onPressed: () {
+                        showModalBottomSheet<void>(
+                          context: context,
+                          builder: (BuildContext _) {
+                            return Provider<AppContainer>.value(
+                                value: context.read(),
+                                builder: (context, child) =>
+                                    const ReportInrDialog());
+                          },
+                        );
+                      },
+                      child: const Text("Dodaj pomiar INR"))),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
