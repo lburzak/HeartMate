@@ -55,4 +55,11 @@ class LocalScheduleRepository extends ScheduleRepository {
 
     _schedules.put(schedule.id, schedule);
   }
+
+  @override
+  bool existsScheduleForDay(DateTime dateTime) {
+    return _schedules.values
+        .where((i) => i.effectiveFrom.isBefore(dateTime))
+        .isNotEmpty;
+  }
 }

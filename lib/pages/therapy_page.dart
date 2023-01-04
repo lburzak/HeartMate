@@ -1,10 +1,9 @@
-import 'package:apkainzynierka/today_dosage/state/today_dosage_state.dart';
-import 'package:apkainzynierka/today_dosage/today_dosage_container.dart';
-import 'package:apkainzynierka/today_dosage/today_dosage_cubit.dart';
-import 'package:apkainzynierka/today_dosage/today_dosage_router.dart';
-import 'package:apkainzynierka/today_dosage/today_dosage_view.dart';
+import 'package:apkainzynierka/feature/last_inr_measurements/last_inr_measurements.dart';
+import 'package:apkainzynierka/feature/report_inr/report_inr.dart';
+import 'package:apkainzynierka/feature/today_dosage/today_dosage.dart';
+import 'package:apkainzynierka/main.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:provider/provider.dart';
 
@@ -26,18 +25,80 @@ class _TherapyPageState extends State<TherapyPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider.value(value: dailyDosageContainer.resolve<TodayDosageCubit>()),
-        Provider.value(value: dailyDosageContainer.resolve<TodayDosageRouter>())
-      ],
-      child: BlocBuilder<TodayDosageCubit, TodayDosageState>(
-          builder: (context, state) => SafeArea(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [TodayDosageView(state)],
-                ),
-              )),
+    return SafeArea(
+      child: Column(
+        children: [
+          const TodayDosage(),
+          SizedBox(
+              child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: List.generate(
+                    7,
+                    (index) => Column(children: const [
+                          Text("Pn"),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          DailyDosageCircle()
+                        ]))),
+          )),
+          SizedBox(
+            height: 80,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox.expand(
+                  child: ElevatedButton(
+                      onPressed: () => context.push('/schedules/current'),
+                      child: const Text("Dostosuj harmonogram"))),
+            ),
+          ),
+          const SizedBox(height: 150, child: LastInrMeasurements()),
+          SizedBox(
+            height: 80,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox.expand(
+                  child: ElevatedButton(
+                      onPressed: () {
+                        showModalBottomSheet<void>(
+                          context: context,
+                          builder: (BuildContext _) {
+                            return Provider<AppContainer>.value(
+                                value: context.read(),
+                                builder: (context, child) =>
+                                    const ReportInrDialog());
+                          },
+                        );
+                      },
+                      child: const Text("Dodaj pomiar INR"))),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class DailyDosageCircle extends StatelessWidget {
+  const DailyDosageCircle({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox(
+      height: 50,
+      width: 50,
+      child: Material(
+        shape: CircleBorder(
+            side: BorderSide(
+          color: Colors.green,
+          width: 2,
+        )),
+        child: Center(child: Text('1.5')),
+      ),
     );
   }
 }

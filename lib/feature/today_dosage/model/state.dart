@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'today_dosage_state.freezed.dart';
+part 'state.freezed.dart';
 
 @freezed
 class TodayDosageState with _$TodayDosageState {
