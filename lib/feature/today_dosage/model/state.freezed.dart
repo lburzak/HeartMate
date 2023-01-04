@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'today_dosage_state.dart';
+part of 'state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -17,8 +17,11 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$TodayDosageState {
   bool get taken => throw _privateConstructorUsedError;
+
   double get potency => throw _privateConstructorUsedError;
+
   bool get custom => throw _privateConstructorUsedError;
+
   bool get scheduleUndefined => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -31,6 +34,7 @@ abstract class $TodayDosageStateCopyWith<$Res> {
   factory $TodayDosageStateCopyWith(
           TodayDosageState value, $Res Function(TodayDosageState) then) =
       _$TodayDosageStateCopyWithImpl<$Res, TodayDosageState>;
+
   @useResult
   $Res call({bool taken, double potency, bool custom, bool scheduleUndefined});
 }
@@ -42,6 +46,7 @@ class _$TodayDosageStateCopyWithImpl<$Res, $Val extends TodayDosageState>
 
   // ignore: unused_field
   final $Val _value;
+
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -80,6 +85,7 @@ abstract class _$$_TodayDosageStateCopyWith<$Res>
   factory _$$_TodayDosageStateCopyWith(
           _$_TodayDosageState value, $Res Function(_$_TodayDosageState) then) =
       __$$_TodayDosageStateCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call({bool taken, double potency, bool custom, bool scheduleUndefined});
@@ -177,12 +183,16 @@ abstract class _TodayDosageState implements TodayDosageState {
 
   @override
   bool get taken;
+
   @override
   double get potency;
+
   @override
   bool get custom;
+
   @override
   bool get scheduleUndefined;
+
   @override
   @JsonKey(ignore: true)
   _$$_TodayDosageStateCopyWith<_$_TodayDosageState> get copyWith =>
