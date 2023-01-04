@@ -10,8 +10,9 @@ import 'package:provider/provider.dart';
 
 class TodayDosageView extends StatelessWidget {
   final TodayDosageState state;
+  final TodayDosageCubit cubit;
 
-  const TodayDosageView(this.state, {super.key});
+  const TodayDosageView({super.key, required this.state, required this.cubit});
 
   @override
   Widget build(BuildContext context) {
