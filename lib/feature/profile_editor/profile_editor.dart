@@ -29,7 +29,8 @@ class ProfileEditor extends StatelessWidget {
 
 class ProfileEditorContainer extends KiwiContainer {
   ProfileEditorContainer(AppContainer appContainer) : super.scoped() {
-    registerFactory((r) => ProfileEditorCubit(r.resolve(), r.resolve()));
+    registerFactory(
+        (r) => ProfileEditorCubit(r.resolve(), r.resolve(), r.resolve()));
     registerFactory((r) => UpdateProfile(r.resolve()));
     registerFactory((r) => ScheduleNotifications());
     registerFactory<ProfileRepository>(
