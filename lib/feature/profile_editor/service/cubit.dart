@@ -135,4 +135,8 @@ class ProfileEditorCubit extends Cubit<ProfileEditorState> {
   void setFirstName(String name) {}
 
   void setLastName(String name) {}
+
+  void setAnticoagulant(Anticoagulant value) {}
+
+  void setIllness(Illness? value) {}
 }

@@ -1,4 +1,6 @@
+import 'package:apkainzynierka/domain/model/anticoagulant.dart';
 import 'package:apkainzynierka/domain/model/gender.dart';
+import 'package:apkainzynierka/domain/model/illness.dart';
 import 'package:apkainzynierka/feature/profile_editor/model/state.dart';
 import 'package:apkainzynierka/feature/profile_editor/service/cubit.dart';
 import 'package:flutter/material.dart';
@@ -99,6 +101,31 @@ class ProfileEditorView extends StatelessWidget {
                         option: state.gender,
                         optionAdapter: _displayGender,
                         options: Gender.values,
+                        onChanged: (value) => cubit.setGender(value),
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
+                      child: SelectorField<Illness?>(
+                        label: "Dolegliwość",
+                        option: state.illness,
+                        optionAdapter: _displayIllness,
+                        options: Illness.values,
+                        onChanged: (value) => cubit.setIllness(value),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: SelectorField<Anticoagulant>(
+                        label: "Antykoagulant",
+                        option: state.anticoagulant,
+                        optionAdapter: _displayAnticoagulant,
+                        options: Anticoagulant.values,
+                        onChanged: (value) => cubit.setAnticoagulant(value!),
                       ),
                     )
                   ],
@@ -117,6 +144,30 @@ class ProfileEditorView extends StatelessWidget {
         return "Mężczyzna";
       case Gender.female:
         return "Kobieta";
+      default:
+        return "nie podano";
+    }
+  }
+
+  String _displayIllness(Illness? illness) {
+    switch (illness) {
+      case Illness.artificialValve:
+        return "Sztuczna zastawka";
+      case Illness.other:
+        return "Inne";
+      default:
+        return "nie podano";
+    }
+  }
+
+  String _displayAnticoagulant(Anticoagulant value) {
+    switch (value) {
+      case Anticoagulant.acenokumarol:
+        return "Acenokumarol";
+      case Anticoagulant.sintrom:
+        return "Sintrom";
+      case Anticoagulant.warfin:
+        return "Warfarin";
       default:
         return "nie podano";
     }
@@ -240,13 +291,15 @@ class SelectorField<T> extends StatelessWidget {
   final T option;
   final String Function(T value) optionAdapter;
   final String label;
+  final void Function(T? value) onChanged;
 
   const SelectorField(
       {super.key,
       required this.options,
       required this.option,
       required this.optionAdapter,
-      required this.label});
+      required this.label,
+      required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -255,7 +308,7 @@ class SelectorField<T> extends StatelessWidget {
       child: DropdownButtonFormField<T>(
         style: const TextStyle(fontSize: 14),
         value: option,
-        onChanged: (value) {},
+        onChanged: onChanged,
         autofocus: false,
         items: options
             .map((e) => DropdownMenuItem<T>(
