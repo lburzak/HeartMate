@@ -195,7 +195,18 @@ class ProfileEditorView extends StatelessWidget {
                                     "${state.inrRange.from} - ${state.inrRange.to}")),
                           )),
                   const SizedBox(height: 8),
-                  OtherMedicinesPicker(state: state, cubit: cubit)
+                  OtherMedicinesPicker(state: state, cubit: cubit),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24.0),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        onPressed: cubit.save,
+                        label: const Text("Zapisz"),
+                        icon: const Icon(Icons.done),
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
