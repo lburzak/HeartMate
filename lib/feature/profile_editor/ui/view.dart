@@ -16,175 +16,184 @@ class ProfileEditorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      child: Align(
-        alignment: Alignment.topCenter,
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                TextFormField(
-                  style: const TextStyle(fontSize: 14),
-                  initialValue: state.firstName,
-                  onChanged: cubit.setFirstName,
-                  decoration: const InputDecoration(
-                      labelText: "Imię",
-                      enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue)),
-                      filled: true),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: TextFormField(
+    return SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Form(
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  TextFormField(
                     style: const TextStyle(fontSize: 14),
-                    initialValue: state.lastName,
-                    onChanged: cubit.setLastName,
+                    initialValue: state.firstName,
+                    onChanged: cubit.setFirstName,
                     decoration: const InputDecoration(
-                        labelText: "Nazwisko",
+                        labelText: "Imię",
                         enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.blue)),
                         filled: true),
                   ),
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      child: IntegerField(
-                        label: "Wiek",
-                        minValue: 0,
-                        maxValue: 130,
-                        suffixText: "lata",
-                        value: state.age ?? 0,
-                        onChanged: (age) {
-                          cubit.setAge(age);
-                        },
-                        error: state.ageError,
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: TextFormField(
+                      style: const TextStyle(fontSize: 14),
+                      initialValue: state.lastName,
+                      onChanged: cubit.setLastName,
+                      decoration: const InputDecoration(
+                          labelText: "Nazwisko",
+                          enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blue)),
+                          filled: true),
                     ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: IntegerField(
-                        label: "Wzrost",
-                        minValue: 0,
-                        maxValue: 300,
-                        suffixText: "cm",
-                        value: state.height ?? 0,
-                        onChanged: (value) {
-                          cubit.setHeight(value);
-                        },
-                        error: state.heightError,
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: IntegerField(
+                          label: "Wiek",
+                          minValue: 0,
+                          maxValue: 130,
+                          suffixText: "lata",
+                          value: state.age ?? 0,
+                          onChanged: (age) {
+                            cubit.setAge(age);
+                          },
+                          error: state.ageError,
+                        ),
                       ),
-                    )
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    Expanded(
-                      child: IntegerField(
-                        label: "Waga",
-                        minValue: 0,
-                        maxValue: 300,
-                        suffixText: "kg",
-                        value: state.weight ?? 0,
-                        onChanged: (value) {
-                          cubit.setWeight(value);
-                        },
-                        error: state.weightError,
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: IntegerField(
+                          label: "Wzrost",
+                          minValue: 0,
+                          maxValue: 300,
+                          suffixText: "cm",
+                          value: state.height ?? 0,
+                          onChanged: (value) {
+                            cubit.setHeight(value);
+                          },
+                          error: state.heightError,
+                        ),
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: IntegerField(
+                          label: "Waga",
+                          minValue: 0,
+                          maxValue: 300,
+                          suffixText: "kg",
+                          value: state.weight ?? 0,
+                          onChanged: (value) {
+                            cubit.setWeight(value);
+                          },
+                          error: state.weightError,
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: SelectorField<Gender?>(
-                        label: "Płeć",
-                        option: state.gender,
-                        optionAdapter: _displayGender,
-                        options: Gender.values,
-                        onChanged: (value) => cubit.setGender(value),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: SelectorField<Gender?>(
+                          label: "Płeć",
+                          option: state.gender,
+                          optionAdapter: _displayGender,
+                          options: Gender.values,
+                          onChanged: (value) => cubit.setGender(value),
+                        ),
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: SelectorField<Illness?>(
+                          label: "Dolegliwość",
+                          option: state.illness,
+                          optionAdapter: _displayIllness,
+                          options: Illness.values,
+                          onChanged: (value) => cubit.setIllness(value),
+                        ),
                       ),
-                    )
-                  ],
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      child: SelectorField<Illness?>(
-                        label: "Dolegliwość",
-                        option: state.illness,
-                        optionAdapter: _displayIllness,
-                        options: Illness.values,
-                        onChanged: (value) => cubit.setIllness(value),
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: SelectorField<Anticoagulant>(
-                        label: "Antykoagulant",
-                        option: state.anticoagulant,
-                        optionAdapter: _displayAnticoagulant,
-                        options: Anticoagulant.values,
-                        onChanged: (value) => cubit.setAnticoagulant(value!),
-                      ),
-                    )
-                  ],
-                ),
-                const SizedBox(height: 8),
-                FormField<InrRange>(
-                    builder: (field) => GestureDetector(
-                          onTap: () => showDialog(
-                            context: context,
-                            builder: (context) => PickerDialog<InrRange>(
-                              builder: (valueNotifier) => Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const Text("Dolna granica"),
-                                  DecimalNumberPicker(
-                                    itemWidth: 50,
-                                    minValue: 0,
-                                    maxValue: 3,
-                                    decimalTextMapper: (numberText) =>
-                                        ".$numberText",
-                                    onChanged: (value) => valueNotifier.value =
-                                        valueNotifier.value
-                                            .copyWith(from: value),
-                                    value: valueNotifier.value.from,
-                                  ),
-                                  const SizedBox(height: 24),
-                                  const Text("Górna granica"),
-                                  DecimalNumberPicker(
-                                    itemWidth: 50,
-                                    minValue: 0,
-                                    maxValue: 3,
-                                    decimalTextMapper: (numberText) =>
-                                        ".$numberText",
-                                    onChanged: (value) => valueNotifier.value =
-                                        valueNotifier.value.copyWith(to: value),
-                                    value: valueNotifier.value.to,
-                                  ),
-                                ],
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: SelectorField<Anticoagulant>(
+                          label: "Antykoagulant",
+                          option: state.anticoagulant,
+                          optionAdapter: _displayAnticoagulant,
+                          options: Anticoagulant.values,
+                          onChanged: (value) => cubit.setAnticoagulant(value!),
+                        ),
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  FormField<InrRange>(
+                      builder: (field) => GestureDetector(
+                            onTap: () => showDialog(
+                              context: context,
+                              builder: (context) => PickerDialog<InrRange>(
+                                builder: (valueNotifier) => Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const Text("Dolna granica"),
+                                    DecimalNumberPicker(
+                                      itemWidth: 50,
+                                      minValue: 0,
+                                      maxValue: 3,
+                                      decimalTextMapper: (numberText) =>
+                                          ".$numberText",
+                                      onChanged: (value) =>
+                                          valueNotifier.value = valueNotifier
+                                              .value
+                                              .copyWith(from: value),
+                                      value: valueNotifier.value.from,
+                                    ),
+                                    const SizedBox(height: 24),
+                                    const Text("Górna granica"),
+                                    DecimalNumberPicker(
+                                      itemWidth: 50,
+                                      minValue: 0,
+                                      maxValue: 3,
+                                      decimalTextMapper: (numberText) =>
+                                          ".$numberText",
+                                      onChanged: (value) =>
+                                          valueNotifier.value = valueNotifier
+                                              .value
+                                              .copyWith(to: value),
+                                      value: valueNotifier.value.to,
+                                    ),
+                                  ],
+                                ),
+                                initialValue: state.inrRange,
+                                onSubmitted: (value) =>
+                                    cubit.setInrRange(value),
+                                onFinished: () {
+                                  Navigator.pop(context);
+                                },
                               ),
-                              initialValue: state.inrRange,
-                              onSubmitted: (value) => cubit.setInrRange(value),
-                              onFinished: () {
-                                Navigator.pop(context);
-                              },
                             ),
-                          ),
-                          child: InputDecorator(
-                              decoration: InputDecoration(
-                                  labelText: "Terapeutyczny przedział INR",
-                                  errorText: state.inrRangeError,
-                                  enabledBorder: const UnderlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.blue)),
-                                  filled: true),
-                              child: Text(
-                                  "${state.inrRange.from} - ${state.inrRange.to}")),
-                        ))
-              ],
+                            child: InputDecorator(
+                                decoration: InputDecoration(
+                                    labelText: "Terapeutyczny przedział INR",
+                                    errorText: state.inrRangeError,
+                                    enabledBorder: const UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.blue)),
+                                    filled: true),
+                                child: Text(
+                                    "${state.inrRange.from} - ${state.inrRange.to}")),
+                          )),
+                  const SizedBox(height: 8),
+                  OtherMedicinesPicker(state: state, cubit: cubit)
+                ],
+              ),
             ),
           ),
         ),
@@ -225,6 +234,74 @@ class ProfileEditorView extends StatelessWidget {
       default:
         return "nie podano";
     }
+  }
+}
+
+class OtherMedicinesPicker extends StatefulWidget {
+  const OtherMedicinesPicker({
+    Key? key,
+    required this.state,
+    required this.cubit,
+  }) : super(key: key);
+
+  final ProfileEditorState state;
+  final ProfileEditorCubit cubit;
+
+  @override
+  State<OtherMedicinesPicker> createState() => _OtherMedicinesPickerState();
+}
+
+class _OtherMedicinesPickerState extends State<OtherMedicinesPicker> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    _controller = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return InputDecorator(
+        decoration: InputDecoration(
+            contentPadding:
+                const EdgeInsets.only(left: 12, top: 12, bottom: 12),
+            labelText: "Przyjmowane leki",
+            errorText: widget.state.inrRangeError,
+            enabledBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.blue)),
+            filled: true),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Wrap(
+                spacing: 6,
+                children: widget.state.otherMedicines
+                    .map((e) => Chip(
+                          label: Text(e),
+                          backgroundColor: Colors.blue,
+                        ))
+                    .toList()),
+            Row(
+              children: [
+                Expanded(
+                    child: TextField(
+                  controller: _controller,
+                  onSubmitted: (value) => submitNewMedicine(),
+                  decoration:
+                      const InputDecoration(helperText: "Wprowadź nowy lek"),
+                )),
+                IconButton(
+                    onPressed: submitNewMedicine, icon: const Icon(Icons.add))
+              ],
+            )
+          ],
+        ));
+  }
+
+  void submitNewMedicine() {
+    widget.cubit.addOtherMedicine(_controller.text);
+    _controller.clear();
   }
 }
 
