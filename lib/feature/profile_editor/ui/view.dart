@@ -17,18 +17,37 @@ class ProfileEditorView extends StatelessWidget {
       child: Align(
         alignment: Alignment.topCenter,
         child: SafeArea(
-          left: true,
-          top: true,
-          right: true,
-          bottom: true,
-          minimum: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                TextFormField(
+                  style: const TextStyle(fontSize: 14),
+                  initialValue: state.firstName,
+                  onChanged: cubit.setFirstName,
+                  decoration: const InputDecoration(
+                      labelText: "Imię",
+                      enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue)),
+                      filled: true),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: TextFormField(
+                    style: const TextStyle(fontSize: 14),
+                    initialValue: state.lastName,
+                    onChanged: cubit.setLastName,
+                    decoration: const InputDecoration(
+                        labelText: "Nazwisko",
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blue)),
+                        filled: true),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Expanded(
                       child: IntegerField(
                         label: "Wiek",
                         minValue: 0,
@@ -41,27 +60,26 @@ class ProfileEditorView extends StatelessWidget {
                         error: state.ageError,
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: IntegerField(
-                      label: "Wzrost",
-                      minValue: 0,
-                      maxValue: 300,
-                      suffixText: "cm",
-                      value: state.height ?? 0,
-                      onChanged: (value) {
-                        cubit.setHeight(value);
-                      },
-                      error: state.heightError,
-                    ),
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: IntegerField(
+                        label: "Wzrost",
+                        minValue: 0,
+                        maxValue: 300,
+                        suffixText: "cm",
+                        value: state.height ?? 0,
+                        onChanged: (value) {
+                          cubit.setHeight(value);
+                        },
+                        error: state.heightError,
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(
                       child: IntegerField(
                         label: "Waga",
                         minValue: 0,
@@ -74,33 +92,34 @@ class ProfileEditorView extends StatelessWidget {
                         error: state.weightError,
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: SizedBox(
-                      height: 59,
-                      child: DropdownButtonFormField<Gender>(
-                        style: const TextStyle(fontSize: 14),
-                        onChanged: (value) {},
-                        autofocus: false,
-                        items: Gender.values
-                            .map((e) => DropdownMenuItem<Gender>(
-                                  value: e,
-                                  child: Text(_displayGender(e)),
-                                ))
-                            .toList(),
-                        decoration: const InputDecoration(
-                            labelText: "Płeć",
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.blue)),
-                            enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.blue)),
-                            filled: true),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: SizedBox(
+                        height: 59,
+                        child: DropdownButtonFormField<Gender>(
+                          style: const TextStyle(fontSize: 14),
+                          onChanged: (value) {},
+                          autofocus: false,
+                          items: Gender.values
+                              .map((e) => DropdownMenuItem<Gender>(
+                                    value: e,
+                                    child: Text(_displayGender(e)),
+                                  ))
+                              .toList(),
+                          decoration: const InputDecoration(
+                              labelText: "Płeć",
+                              focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.blue)),
+                              enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.blue)),
+                              filled: true),
+                        ),
                       ),
-                    ),
-                  )
-                ],
-              )
-            ],
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),

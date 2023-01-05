@@ -131,4 +131,8 @@ class ProfileEditorCubit extends Cubit<ProfileEditorState> {
   void setGender(Gender? gender) {
     emit(state.copyWith(gender: gender));
   }
+
+  void setFirstName(String name) {}
+
+  void setLastName(String name) {}
 }
