@@ -25,7 +25,9 @@ class ProfileEditorView extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const Header(text: "Dane osobowe"),
                   TextFormField(
                     style: const TextStyle(fontSize: 14),
                     initialValue: state.firstName,
@@ -50,6 +52,7 @@ class ProfileEditorView extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
+                  const Header(text: "Parametry ciała"),
                   Row(
                     children: [
                       Expanded(
@@ -110,6 +113,7 @@ class ProfileEditorView extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 16),
+                  const Header(text: "Leczenie"),
                   Row(
                     children: [
                       Expanded(
@@ -234,6 +238,26 @@ class ProfileEditorView extends StatelessWidget {
       default:
         return "nie podano";
     }
+  }
+}
+
+class Header extends StatelessWidget {
+  final String text;
+
+  const Header({
+    Key? key,
+    required this.text,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0, top: 8),
+      child: Text(
+        text,
+        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
+      ),
+    );
   }
 }
 
