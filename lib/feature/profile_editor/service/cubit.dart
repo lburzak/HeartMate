@@ -2,6 +2,7 @@ import 'package:apkainzynierka/domain/model/anticoagulant.dart';
 import 'package:apkainzynierka/domain/model/gender.dart';
 import 'package:apkainzynierka/domain/model/illness.dart';
 import 'package:apkainzynierka/domain/model/inr_range.dart';
+import 'package:apkainzynierka/domain/repository/profile_repository.dart';
 import 'package:apkainzynierka/feature/profile_editor/model/state.dart';
 import 'package:apkainzynierka/feature/profile_editor/model/time_of_day.dart';
 import 'package:apkainzynierka/feature/profile_editor/usecase/schedule_notifications.dart';
@@ -21,9 +22,13 @@ const ProfileEditorState _initialState = ProfileEditorState(
 class ProfileEditorCubit extends Cubit<ProfileEditorState> {
   final UpdateProfile _updateProfile;
   final ScheduleNotifications _scheduleNotifications;
+  final ProfileRepository _profileRepository;
 
-  ProfileEditorCubit(this._updateProfile, this._scheduleNotifications)
-      : super(_initialState);
+  ProfileEditorCubit(
+      this._updateProfile, this._scheduleNotifications, this._profileRepository)
+      : super(_initialState) {
+    _fetchData();
+  }
 
   void save() {
     _updateProfile(
@@ -80,21 +85,22 @@ class ProfileEditorCubit extends Cubit<ProfileEditorState> {
             state.otherMedicines.where((element) => element != name).toList()));
   }
 
-  void setInrRange(double from, double to) {
-    if (from > to) {
+  void setInrRange(InrRange inrRange) {
+    if (inrRange.from > inrRange.to) {
       emit(state.copyWith(
+          inrRange: inrRange,
           inrRangeError:
               "Dolna granica zakresu nie może być wyższa niż górna."));
       return;
     }
 
-    if (from < 1.0 || to > 3.0) {
-      emit(state.copyWith(inrRangeError: "Nieprawidłowa wartość zakresu"));
+    if (inrRange.from < 1.0 || inrRange.to > 3.0) {
+      emit(state.copyWith(
+          inrRange: inrRange, inrRangeError: "Nieprawidłowa wartość zakresu"));
       return;
     }
 
-    emit(state.copyWith(
-        inrRange: InrRange(from: from, to: to), inrRangeError: null));
+    emit(state.copyWith(inrRange: inrRange, inrRangeError: null));
   }
 
   void selectAnticoagulant(Anticoagulant anticoagulant) {
@@ -130,5 +136,32 @@ class ProfileEditorCubit extends Cubit<ProfileEditorState> {
 
   void setGender(Gender? gender) {
     emit(state.copyWith(gender: gender));
+  }
+
+  void setFirstName(String name) {
+    emit(state.copyWith(firstName: name));
+  }
+
+  void setLastName(String name) {
+    emit(state.copyWith(lastName: name));
+  }
+
+  void setAnticoagulant(Anticoagulant value) {}
+
+  void setIllness(Illness? value) {}
+
+  void _fetchData() {
+    final profile = _profileRepository.getCurrent();
+    emit(state.copyWith(
+        otherMedicines: profile.otherMedicines,
+        inrRange: profile.inrRange,
+        illness: profile.illness,
+        anticoagulant: profile.anticoagulant,
+        gender: profile.gender,
+        age: profile.age,
+        weight: profile.weight,
+        height: profile.height,
+        lastName: profile.lastName,
+        firstName: profile.firstName));
   }
 }
