@@ -1,6 +1,6 @@
+import 'package:apkainzynierka/feature/main_page/journal_page.dart';
+import 'package:apkainzynierka/feature/main_page/therapy_page.dart';
 import 'package:apkainzynierka/feature/profile_editor/profile_editor.dart';
-import 'package:apkainzynierka/pages/journal_page.dart';
-import 'package:apkainzynierka/pages/therapy_page.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 
