@@ -143,7 +143,8 @@ class IntegerField extends StatelessWidget {
                   decoration: InputDecoration(
                       errorText: error,
                       labelText: label,
-                      border: const UnderlineInputBorder(),
+                      enabledBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue)),
                       filled: true,
                       suffixText: suffixText),
                   child: Text(value.toString())),
