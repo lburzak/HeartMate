@@ -138,9 +138,13 @@ class ProfileEditorCubit extends Cubit<ProfileEditorState> {
     emit(state.copyWith(gender: gender));
   }
 
-  void setFirstName(String name) {}
+  void setFirstName(String name) {
+    emit(state.copyWith(firstName: name));
+  }
 
-  void setLastName(String name) {}
+  void setLastName(String name) {
+    emit(state.copyWith(lastName: name));
+  }
 
   void setAnticoagulant(Anticoagulant value) {}
 
