@@ -80,21 +80,22 @@ class ProfileEditorCubit extends Cubit<ProfileEditorState> {
             state.otherMedicines.where((element) => element != name).toList()));
   }
 
-  void setInrRange(double from, double to) {
-    if (from > to) {
+  void setInrRange(InrRange inrRange) {
+    if (inrRange.from > inrRange.to) {
       emit(state.copyWith(
+          inrRange: inrRange,
           inrRangeError:
               "Dolna granica zakresu nie może być wyższa niż górna."));
       return;
     }
 
-    if (from < 1.0 || to > 3.0) {
-      emit(state.copyWith(inrRangeError: "Nieprawidłowa wartość zakresu"));
+    if (inrRange.from < 1.0 || inrRange.to > 3.0) {
+      emit(state.copyWith(
+          inrRange: inrRange, inrRangeError: "Nieprawidłowa wartość zakresu"));
       return;
     }
 
-    emit(state.copyWith(
-        inrRange: InrRange(from: from, to: to), inrRangeError: null));
+    emit(state.copyWith(inrRange: inrRange, inrRangeError: null));
   }
 
   void selectAnticoagulant(Anticoagulant anticoagulant) {

@@ -1,6 +1,7 @@
 import 'package:apkainzynierka/domain/model/anticoagulant.dart';
 import 'package:apkainzynierka/domain/model/gender.dart';
 import 'package:apkainzynierka/domain/model/illness.dart';
+import 'package:apkainzynierka/domain/model/inr_range.dart';
 import 'package:apkainzynierka/feature/profile_editor/model/state.dart';
 import 'package:apkainzynierka/feature/profile_editor/service/cubit.dart';
 import 'package:flutter/material.dart';
@@ -129,7 +130,60 @@ class ProfileEditorView extends StatelessWidget {
                       ),
                     )
                   ],
-                )
+                ),
+                const SizedBox(height: 8),
+                FormField<InrRange>(
+                    builder: (field) => GestureDetector(
+                          onTap: () => showDialog(
+                            context: context,
+                            builder: (context) => PickerDialog<InrRange>(
+                              builder: (valueNotifier) => Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Text("Dolna granica"),
+                                  DecimalNumberPicker(
+                                    itemWidth: 50,
+                                    minValue: 0,
+                                    maxValue: 3,
+                                    decimalTextMapper: (numberText) =>
+                                        ".$numberText",
+                                    onChanged: (value) => valueNotifier.value =
+                                        valueNotifier.value
+                                            .copyWith(from: value),
+                                    value: valueNotifier.value.from,
+                                  ),
+                                  const SizedBox(height: 24),
+                                  const Text("Górna granica"),
+                                  DecimalNumberPicker(
+                                    itemWidth: 50,
+                                    minValue: 0,
+                                    maxValue: 3,
+                                    decimalTextMapper: (numberText) =>
+                                        ".$numberText",
+                                    onChanged: (value) => valueNotifier.value =
+                                        valueNotifier.value.copyWith(to: value),
+                                    value: valueNotifier.value.to,
+                                  ),
+                                ],
+                              ),
+                              initialValue: state.inrRange,
+                              onSubmitted: (value) => cubit.setInrRange(value),
+                              onFinished: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ),
+                          child: InputDecorator(
+                              decoration: InputDecoration(
+                                  labelText: "Terapeutyczny przedział INR",
+                                  errorText: state.inrRangeError,
+                                  enabledBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.blue)),
+                                  filled: true),
+                              child: Text(
+                                  "${state.inrRange.from} - ${state.inrRange.to}")),
+                        ))
               ],
             ),
           ),
@@ -239,7 +293,7 @@ class PickerDialog<T> extends StatelessWidget {
 
   final void Function(T value) onSubmitted;
   final void Function() onFinished;
-  final Widget Function(ValueNotifier valueNotifier) builder;
+  final Widget Function(ValueNotifier<T> valueNotifier) builder;
   final T initialValue;
   late final ValueNotifier<T> _valueNotifier = ValueNotifier(initialValue);
 
