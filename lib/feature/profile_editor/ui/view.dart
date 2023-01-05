@@ -94,26 +94,11 @@ class ProfileEditorView extends StatelessWidget {
                     ),
                     const SizedBox(width: 8),
                     Expanded(
-                      child: SizedBox(
-                        height: 59,
-                        child: DropdownButtonFormField<Gender>(
-                          style: const TextStyle(fontSize: 14),
-                          onChanged: (value) {},
-                          autofocus: false,
-                          items: Gender.values
-                              .map((e) => DropdownMenuItem<Gender>(
-                                    value: e,
-                                    child: Text(_displayGender(e)),
-                                  ))
-                              .toList(),
-                          decoration: const InputDecoration(
-                              labelText: "Płeć",
-                              focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.blue)),
-                              enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.blue)),
-                              filled: true),
-                        ),
+                      child: SelectorField<Gender?>(
+                        label: "Płeć",
+                        option: state.gender,
+                        optionAdapter: _displayGender,
+                        options: Gender.values,
                       ),
                     )
                   ],
@@ -246,6 +231,46 @@ class ValuePromptDialog extends StatelessWidget {
             },
             child: const Text("OK"))
       ],
+    );
+  }
+}
+
+class SelectorField<T> extends StatelessWidget {
+  final List<T> options;
+  final T option;
+  final String Function(T value) optionAdapter;
+  final String label;
+
+  const SelectorField(
+      {super.key,
+      required this.options,
+      required this.option,
+      required this.optionAdapter,
+      required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 59,
+      child: DropdownButtonFormField<T>(
+        style: const TextStyle(fontSize: 14),
+        value: option,
+        onChanged: (value) {},
+        autofocus: false,
+        items: options
+            .map((e) => DropdownMenuItem<T>(
+                  value: e,
+                  child: Text(optionAdapter(e)),
+                ))
+            .toList(),
+        decoration: InputDecoration(
+            labelText: label,
+            focusedBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.blue)),
+            enabledBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.blue)),
+            filled: true),
+      ),
     );
   }
 }
