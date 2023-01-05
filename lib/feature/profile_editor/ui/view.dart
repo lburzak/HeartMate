@@ -96,9 +96,15 @@ class AgeField extends StatelessWidget {
               onTap: () {
                 showDialog(
                   context: context,
-                  builder: (context) => AgePicker(
+                  builder: (context) => PickerDialog(
+                    builder: (valueNotifier) => NumberPicker(
+                      minValue: 0,
+                      maxValue: 130,
+                      onChanged: (value) => valueNotifier.value = value,
+                      value: valueNotifier.value,
+                    ),
+                    initialValue: value,
                     onSubmitted: onChanged,
-                    age: value,
                     onFinished: () {
                       Navigator.pop(context);
                     },
@@ -117,50 +123,56 @@ class AgeField extends StatelessWidget {
   }
 }
 
-class AgePicker extends StatefulWidget {
-  const AgePicker(
+class PickerDialog<T> extends StatelessWidget {
+  PickerDialog(
       {super.key,
       required this.onSubmitted,
-      required this.age,
-      required this.onFinished});
+      required this.onFinished,
+      required this.builder,
+      required this.initialValue});
 
-  final void Function(int age) onSubmitted;
+  final void Function(T value) onSubmitted;
   final void Function() onFinished;
-  final int age;
+  final Widget Function(ValueNotifier valueNotifier) builder;
+  final T initialValue;
+  late final ValueNotifier<T> _valueNotifier = ValueNotifier(initialValue);
 
   @override
-  State<AgePicker> createState() => _AgePickerState();
+  Widget build(BuildContext context) {
+    return ValuePromptDialog(
+        content: ValueListenableBuilder(
+            valueListenable: _valueNotifier,
+            builder: (context, value, child) => builder(_valueNotifier)),
+        onSubmitted: () {
+          onSubmitted(_valueNotifier.value);
+        },
+        onFinished: () {
+          onFinished();
+        });
+  }
 }
 
-class _AgePickerState extends State<AgePicker> {
-  late int selectedAge;
+class ValuePromptDialog extends StatelessWidget {
+  final Widget content;
+  final void Function() onSubmitted;
+  final void Function() onFinished;
 
-  @override
-  void initState() {
-    super.initState();
-    selectedAge = widget.age;
-  }
+  const ValuePromptDialog(
+      {super.key,
+      required this.content,
+      required this.onSubmitted,
+      required this.onFinished});
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      content: NumberPicker(
-        minValue: 0,
-        maxValue: 130,
-        onChanged: (value) {
-          setState(() {
-            selectedAge = value;
-          });
-        },
-        value: selectedAge,
-      ),
+      content: content,
       actions: [
-        TextButton(
-            onPressed: () => widget.onFinished(), child: const Text("Anuluj")),
+        TextButton(onPressed: () => onFinished(), child: const Text("Anuluj")),
         TextButton(
             onPressed: () {
-              widget.onSubmitted(selectedAge);
-              widget.onFinished();
+              onSubmitted();
+              onFinished();
             },
             child: const Text("OK"))
       ],
