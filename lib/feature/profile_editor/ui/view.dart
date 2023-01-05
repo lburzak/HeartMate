@@ -28,7 +28,11 @@ class ProfileEditorView extends StatelessWidget {
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: AgeField(
+                      child: IntegerField(
+                        label: "Wiek",
+                        minValue: 0,
+                        maxValue: 130,
+                        suffixText: "lata",
                         value: state.age ?? 0,
                         onChanged: (age) {
                           cubit.setAge(age);
@@ -38,12 +42,16 @@ class ProfileEditorView extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: AgeField(
-                      value: state.age ?? 0,
-                      onChanged: (age) {
-                        cubit.setAge(age);
+                    child: IntegerField(
+                      label: "Wzrost",
+                      minValue: 0,
+                      maxValue: 300,
+                      suffixText: "cm",
+                      value: state.height ?? 0,
+                      onChanged: (value) {
+                        cubit.setHeight(value);
                       },
-                      error: state.ageError,
+                      error: state.heightError,
                     ),
                   )
                 ],
@@ -53,17 +61,25 @@ class ProfileEditorView extends StatelessWidget {
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: AgeField(
-                        value: state.age ?? 0,
-                        onChanged: (age) {
-                          cubit.setAge(age);
+                      child: IntegerField(
+                        label: "Waga",
+                        minValue: 0,
+                        maxValue: 300,
+                        suffixText: "kg",
+                        value: state.weight ?? 0,
+                        onChanged: (value) {
+                          cubit.setWeight(value);
                         },
-                        error: state.ageError,
+                        error: state.weightError,
                       ),
                     ),
                   ),
                   Expanded(
-                    child: AgeField(
+                    child: IntegerField(
+                      label: "Waga",
+                      minValue: 0,
+                      maxValue: 130,
+                      suffixText: "kg",
                       value: state.age ?? 0,
                       onChanged: (age) {
                         cubit.setAge(age);
@@ -81,13 +97,24 @@ class ProfileEditorView extends StatelessWidget {
   }
 }
 
-class AgeField extends StatelessWidget {
+class IntegerField extends StatelessWidget {
   final void Function(int value) onChanged;
   final int value;
   final String? error;
+  final int minValue;
+  final int maxValue;
+  final String label;
+  final String? suffixText;
 
-  const AgeField(
-      {super.key, required this.onChanged, required this.value, this.error});
+  const IntegerField(
+      {super.key,
+      required this.onChanged,
+      required this.value,
+      this.error,
+      required this.minValue,
+      required this.maxValue,
+      required this.label,
+      this.suffixText});
 
   @override
   Widget build(BuildContext context) {
@@ -98,8 +125,9 @@ class AgeField extends StatelessWidget {
                   context: context,
                   builder: (context) => PickerDialog(
                     builder: (valueNotifier) => NumberPicker(
-                      minValue: 0,
-                      maxValue: 130,
+                      infiniteLoop: true,
+                      minValue: minValue,
+                      maxValue: maxValue,
                       onChanged: (value) => valueNotifier.value = value,
                       value: valueNotifier.value,
                     ),
@@ -114,10 +142,10 @@ class AgeField extends StatelessWidget {
               child: InputDecorator(
                   decoration: InputDecoration(
                       errorText: error,
-                      labelText: "Wiek",
+                      labelText: label,
                       border: const UnderlineInputBorder(),
                       filled: true,
-                      suffixText: "lata"),
+                      suffixText: suffixText),
                   child: Text(value.toString())),
             ));
   }
