@@ -1,6 +1,6 @@
 import 'package:apkainzynierka/data/database.dart';
+import 'package:apkainzynierka/feature/main_page/main_view.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/schedule_wizard_page.dart';
-import 'package:apkainzynierka/main/main_view.dart';
 import 'package:apkainzynierka/theme/theme_constants.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
