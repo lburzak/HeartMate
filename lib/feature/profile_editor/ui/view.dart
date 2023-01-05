@@ -1,3 +1,4 @@
+import 'package:apkainzynierka/domain/model/gender.dart';
 import 'package:apkainzynierka/feature/profile_editor/model/state.dart';
 import 'package:apkainzynierka/feature/profile_editor/service/cubit.dart';
 import 'package:flutter/material.dart';
@@ -75,16 +76,26 @@ class ProfileEditorView extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: IntegerField(
-                      label: "Waga",
-                      minValue: 0,
-                      maxValue: 130,
-                      suffixText: "kg",
-                      value: state.age ?? 0,
-                      onChanged: (age) {
-                        cubit.setAge(age);
-                      },
-                      error: state.ageError,
+                    child: SizedBox(
+                      height: 59,
+                      child: DropdownButtonFormField<Gender>(
+                        style: const TextStyle(fontSize: 14),
+                        onChanged: (value) {},
+                        autofocus: false,
+                        items: Gender.values
+                            .map((e) => DropdownMenuItem<Gender>(
+                                  value: e,
+                                  child: Text(_displayGender(e)),
+                                ))
+                            .toList(),
+                        decoration: const InputDecoration(
+                            labelText: "Płeć",
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.blue)),
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.blue)),
+                            filled: true),
+                      ),
                     ),
                   )
                 ],
@@ -94,6 +105,17 @@ class ProfileEditorView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _displayGender(Gender? gender) {
+    switch (gender) {
+      case Gender.male:
+        return "Mężczyzna";
+      case Gender.female:
+        return "Kobieta";
+      default:
+        return "nie podano";
+    }
   }
 }
 
