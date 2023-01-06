@@ -70,9 +70,9 @@ class TodayDosageView extends StatelessWidget {
     }
 
     if (state.taken) {
-      return "Przyjęto dawkę ${state.potency}";
+      return "Przyjęto dawkę ${state.potency} mg";
     } else {
-      return "Przyjmij dawkę ${state.potency}";
+      return "Przyjmij dawkę ${state.potency} mg";
     }
   }
 
