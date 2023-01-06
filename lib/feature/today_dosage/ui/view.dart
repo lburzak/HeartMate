@@ -46,12 +46,12 @@ class TodayDosageView extends StatelessWidget {
                         ],
                       ),
                     )),
-                const Align(
+                Align(
                   alignment: Alignment.centerRight,
                   child: Padding(
-                    padding: EdgeInsets.all(24.0),
+                    padding: const EdgeInsets.all(24.0),
                     child: Icon(
-                      Icons.medication,
+                      icon,
                       size: 36,
                     ),
                   ),
@@ -94,5 +94,17 @@ class TodayDosageView extends StatelessWidget {
     }
 
     return Colors.transparent;
+  }
+
+  IconData get icon {
+    if (state.scheduleUndefined) {
+      return Icons.warning;
+    }
+
+    if (state.taken) {
+      return Icons.done;
+    }
+
+    return Icons.medication;
   }
 }
