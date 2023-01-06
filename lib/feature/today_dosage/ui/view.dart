@@ -12,7 +12,7 @@ class TodayDosageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 140,
+      height: 120,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: DottedBorder(
@@ -21,29 +21,43 @@ class TodayDosageView extends StatelessWidget {
           strokeCap: StrokeCap.round,
           borderType: BorderType.RRect,
           radius: const Radius.circular(6),
-          dashPattern: const [12, 12],
-          strokeWidth: state.taken ? 0 : 2,
+          dashPattern: const [6, 10],
+          strokeWidth: state.taken ? 0 : 3,
           child: SizedBox.expand(
-            child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: backgroundColor, elevation: 0),
-                onLongPress: () => cubit.showCustomDosageScreen(),
-                onPressed: () => cubit.toggleTaken(),
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text("Dzisiejsza dawka"),
-                      const SizedBox(height: 10),
-                      Text(
-                        hintText,
-                        style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      )
-                    ],
+            child: Stack(
+              children: [
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: backgroundColor, elevation: 0),
+                    onLongPress: () => cubit.showCustomDosageScreen(),
+                    onPressed: () => cubit.toggleTaken(),
+                    child: Center(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text("Dzisiejsza dawka"),
+                          const SizedBox(height: 10),
+                          Text(
+                            hintText,
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      ),
+                    )),
+                const Align(
+                  alignment: Alignment.centerRight,
+                  child: Padding(
+                    padding: EdgeInsets.all(24.0),
+                    child: Icon(
+                      Icons.medication,
+                      size: 36,
+                    ),
                   ),
-                )),
+                )
+              ],
+            ),
           ),
         ),
       ),
