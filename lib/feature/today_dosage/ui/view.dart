@@ -17,9 +17,12 @@ class TodayDosageView extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: DottedBorder(
           color: borderColor,
+          borderPadding: const EdgeInsets.all(2),
           strokeCap: StrokeCap.round,
-          dashPattern: const [8, 8],
-          strokeWidth: state.taken ? 0 : 4,
+          borderType: BorderType.RRect,
+          radius: const Radius.circular(6),
+          dashPattern: const [12, 12],
+          strokeWidth: state.taken ? 0 : 2,
           child: SizedBox.expand(
             child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
