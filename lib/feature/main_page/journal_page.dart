@@ -1,3 +1,4 @@
+import 'package:apkainzynierka/feature/journal/ui/journal_calendar.dart';
 import 'package:flutter/material.dart';
 
 class JournalPage extends StatelessWidget {
@@ -6,7 +7,7 @@ class JournalPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text("Dziennik"),
+      child: JournalCalendar(),
     );
   }
 }
