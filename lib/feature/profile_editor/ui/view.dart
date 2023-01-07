@@ -298,12 +298,10 @@ class _OtherMedicinesPickerState extends State<OtherMedicinesPicker> {
   @override
   Widget build(BuildContext context) {
     return InputDecorator(
-        decoration: InputDecoration(
-            contentPadding:
-                const EdgeInsets.only(left: 12, top: 12, bottom: 12),
+        decoration: const InputDecoration(
+            contentPadding: EdgeInsets.only(left: 12, top: 12, bottom: 12),
             labelText: "Przyjmowane leki",
-            errorText: widget.state.inrRangeError,
-            enabledBorder: const UnderlineInputBorder(
+            enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.blue)),
             filled: true),
         child: Column(

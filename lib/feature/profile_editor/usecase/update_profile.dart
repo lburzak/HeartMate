@@ -2,6 +2,7 @@ import 'package:apkainzynierka/domain/model/anticoagulant.dart';
 import 'package:apkainzynierka/domain/model/gender.dart';
 import 'package:apkainzynierka/domain/model/illness.dart';
 import 'package:apkainzynierka/domain/model/inr_range.dart';
+import 'package:apkainzynierka/domain/model/profile.dart';
 import 'package:apkainzynierka/domain/repository/profile_repository.dart';
 
 class UpdateProfile {
@@ -20,9 +21,7 @@ class UpdateProfile {
       required Anticoagulant anticoagulant,
       required InrRange inrRange,
       required List<String> otherMedicines}) {
-    final profile = _profileRepository.getCurrent();
-
-    final newProfile = profile.copyWith(
+    final newProfile = Profile(
         firstName: firstName,
         lastName: lastName,
         height: height,

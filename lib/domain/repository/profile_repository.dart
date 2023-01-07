@@ -4,4 +4,6 @@ abstract class ProfileRepository {
   Profile getCurrent();
 
   void update(Profile profile);
+
+  bool exists();
 }
