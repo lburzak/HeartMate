@@ -9,7 +9,7 @@ class MaterialWelcomeRouter extends WelcomeRouter {
 
   @override
   void goToProfileEditor() {
-    _context.go("/profile/editor");
+    _context.push("/profile/editor");
   }
 
   @override

@@ -10,7 +10,9 @@ class WelcomeCubit extends Cubit<void> {
   final WelcomeRouter _router;
   StreamSubscription? _subscription;
 
-  WelcomeCubit(this._eventBus, this._router) : super(null);
+  WelcomeCubit(this._eventBus, this._router) : super(null) {
+    attach();
+  }
 
   void attach() {
     _subscription = _eventBus
