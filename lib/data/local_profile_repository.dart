@@ -32,4 +32,9 @@ class LocalProfileRepository extends ProfileRepository {
       profiles.putAt(0, profile);
     }
   }
+
+  @override
+  bool exists() {
+    return profiles.isNotEmpty;
+  }
 }
