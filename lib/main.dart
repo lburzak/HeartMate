@@ -2,6 +2,7 @@ import 'package:apkainzynierka/data/database.dart';
 import 'package:apkainzynierka/feature/main_page/main_view.dart';
 import 'package:apkainzynierka/feature/profile_editor/profile_editor.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/schedule_wizard_page.dart';
+import 'package:apkainzynierka/feature/welcome/util.dart';
 import 'package:apkainzynierka/feature/welcome/welcome_page.dart';
 import 'package:apkainzynierka/theme/theme_constants.dart';
 import 'package:event_bus/event_bus.dart';
@@ -16,33 +17,38 @@ void main() async {
   runApp(const MyApp());
 }
 
-AppContainer _appContainer = AppContainer();
+final AppContainer _appContainer = AppContainer();
+final ShouldShowWelcomePage _shouldShowWelcomePage =
+    ShouldShowWelcomePage(_appContainer);
 
-final _router = GoRouter(initialLocation: '/welcome', routes: [
-  GoRoute(
-    path: '/',
-    builder: (context, state) => Provider<AppContainer>(
-        create: (context) => _appContainer, child: const MainView()),
-  ),
-  GoRoute(
-    path: '/schedules/current',
-    builder: (context, state) => Provider<AppContainer>(
-        create: (context) => _appContainer, child: const ScheduleWizardPage()),
-  ),
-  GoRoute(
-    path: '/profile/editor',
-    builder: (context, state) => Provider<AppContainer>(
-        create: (context) => _appContainer,
-        child: const Scaffold(
-          body: ProfileEditor(),
-        )),
-  ),
-  GoRoute(
-    path: '/welcome',
-    builder: (context, state) => Provider<AppContainer>(
-        create: (context) => _appContainer, child: const WelcomePage()),
-  ),
-]);
+final _router = GoRouter(
+    initialLocation: _shouldShowWelcomePage() ? '/welcome' : '/',
+    routes: [
+      GoRoute(
+        path: '/',
+        builder: (context, state) => Provider<AppContainer>(
+            create: (context) => _appContainer, child: const MainView()),
+      ),
+      GoRoute(
+        path: '/schedules/current',
+        builder: (context, state) => Provider<AppContainer>(
+            create: (context) => _appContainer,
+            child: const ScheduleWizardPage()),
+      ),
+      GoRoute(
+        path: '/profile/editor',
+        builder: (context, state) => Provider<AppContainer>(
+            create: (context) => _appContainer,
+            child: const Scaffold(
+              body: ProfileEditor(),
+            )),
+      ),
+      GoRoute(
+        path: '/welcome',
+        builder: (context, state) => Provider<AppContainer>(
+            create: (context) => _appContainer, child: const WelcomePage()),
+      ),
+    ]);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
