@@ -1,24 +1,24 @@
-import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_overlap_answer.dart';
+import 'dart:math';
+
+import 'package:apkainzynierka/domain/event/schedule_updated_event.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_type.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_wizard_state.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/service/router.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/usecase/create_schedule.dart';
-import 'package:apkainzynierka/feature/schedule_wizard/usecase/push_schedules_outside_period.dart';
 import 'package:bloc/bloc.dart';
+import 'package:event_bus/event_bus.dart';
 
 const _initialScheduleType = ScheduleType.daily;
 
 class ScheduleWizardCubit extends Cubit<ScheduleWizardState> {
   final ScheduleWizardRouter _router;
   final CreateSchedule _createSchedule;
-  final PushSchedulesOutsidePeriod _pushSchedulesOutsidePeriod;
+  final EventBus _eventBus;
 
-  ScheduleWizardCubit(
-      this._router, this._createSchedule, this._pushSchedulesOutsidePeriod)
+  ScheduleWizardCubit(this._router, this._createSchedule, this._eventBus)
       : super(ScheduleWizardState(
             scheduleType: _initialScheduleType,
             startDate: Date.today(),
-            endDate: Date.today(),
             dosages: _initDosages(_initialScheduleType)));
 
   double get _dosageStep => 0.25;
@@ -26,13 +26,13 @@ class ScheduleWizardCubit extends Cubit<ScheduleWizardState> {
   void incrementDosage(int dayIndex) {
     emit(state.copyWith(
         dosages: state.dosages.transformedAt(
-            dayIndex, (currentValue) => currentValue + _dosageStep)));
+            dayIndex, (currentValue) => max(0, currentValue + _dosageStep))));
   }
 
   void decrementDosage(int dayIndex) {
     emit(state.copyWith(
         dosages: state.dosages.transformedAt(
-            dayIndex, (currentValue) => currentValue - _dosageStep)));
+            dayIndex, (currentValue) => max(0, currentValue - _dosageStep))));
   }
 
   void setStartDate(DateTime dateTime) {
@@ -43,45 +43,20 @@ class ScheduleWizardCubit extends Cubit<ScheduleWizardState> {
     emit(state.copyWith(startDate: dateTime, startDateError: null));
   }
 
-  void setEndDate(DateTime dateTime) {
-    if (dateTime.isBefore(Date.today())) {
-      emit(state.copyWith(endDateError: "Date from the past"));
-    }
-
-    emit(state.copyWith(endDate: dateTime, endDateError: null));
+  void setScheduleType(ScheduleType type) {
+    emit(state.copyWith(scheduleType: type, dosages: _initDosages(type)));
   }
-
-  void setScheduleType(ScheduleType type) {}
 
   void save() {
     if (state.startDateError != null) {
       return;
     }
 
-    if (state.endDateError != null) {
-      return;
-    }
+    _createSchedule(startDate: state.startDate, dosages: state.dosages);
 
-    try {
-      _createSchedule(
-          startDate: state.startDate,
-          endDate: state.endDate,
-          dosages: state.dosages);
-    } on ScheduleOverlapException {
-      _router
-          .promptScheduleOverlap()
-          .then(_handleScheduleOverlap)
-          .then((_) => save());
-    }
-  }
+    _eventBus.fire(ScheduleUpdatedEvent());
 
-  void _handleScheduleOverlap(ScheduleOverlapAnswer answer) {
-    if (answer == ScheduleOverlapAnswer.cancel) {
-      return;
-    }
-
-    _pushSchedulesOutsidePeriod(
-        periodStart: state.startDate, periodEnd: state.endDate);
+    _router.finish();
   }
 
   static List<double> _initDosages(ScheduleType scheduleType) {

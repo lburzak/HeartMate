@@ -8,7 +8,6 @@ class Schedule with _$Schedule {
   const factory Schedule(
       {required int id,
       required DateTime effectiveFrom,
-      required DateTime effectiveTo,
       required List<double> dosageScheme}) = _Schedule;
 
   factory Schedule.fromJson(Map<String, Object?> json) =>

@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'schedule.dart';
 
@@ -22,7 +22,6 @@ Schedule _$ScheduleFromJson(Map<String, dynamic> json) {
 mixin _$Schedule {
   int get id => throw _privateConstructorUsedError;
   DateTime get effectiveFrom => throw _privateConstructorUsedError;
-  DateTime get effectiveTo => throw _privateConstructorUsedError;
   List<double> get dosageScheme => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,11 +35,7 @@ abstract class $ScheduleCopyWith<$Res> {
   factory $ScheduleCopyWith(Schedule value, $Res Function(Schedule) then) =
       _$ScheduleCopyWithImpl<$Res, Schedule>;
   @useResult
-  $Res call(
-      {int id,
-      DateTime effectiveFrom,
-      DateTime effectiveTo,
-      List<double> dosageScheme});
+  $Res call({int id, DateTime effectiveFrom, List<double> dosageScheme});
 }
 
 /// @nodoc
@@ -58,7 +53,6 @@ class _$ScheduleCopyWithImpl<$Res, $Val extends Schedule>
   $Res call({
     Object? id = null,
     Object? effectiveFrom = null,
-    Object? effectiveTo = null,
     Object? dosageScheme = null,
   }) {
     return _then(_value.copyWith(
@@ -69,10 +63,6 @@ class _$ScheduleCopyWithImpl<$Res, $Val extends Schedule>
       effectiveFrom: null == effectiveFrom
           ? _value.effectiveFrom
           : effectiveFrom // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      effectiveTo: null == effectiveTo
-          ? _value.effectiveTo
-          : effectiveTo // ignore: cast_nullable_to_non_nullable
               as DateTime,
       dosageScheme: null == dosageScheme
           ? _value.dosageScheme
@@ -89,11 +79,7 @@ abstract class _$$_ScheduleCopyWith<$Res> implements $ScheduleCopyWith<$Res> {
       __$$_ScheduleCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {int id,
-      DateTime effectiveFrom,
-      DateTime effectiveTo,
-      List<double> dosageScheme});
+  $Res call({int id, DateTime effectiveFrom, List<double> dosageScheme});
 }
 
 /// @nodoc
@@ -109,7 +95,6 @@ class __$$_ScheduleCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? effectiveFrom = null,
-    Object? effectiveTo = null,
     Object? dosageScheme = null,
   }) {
     return _then(_$_Schedule(
@@ -120,10 +105,6 @@ class __$$_ScheduleCopyWithImpl<$Res>
       effectiveFrom: null == effectiveFrom
           ? _value.effectiveFrom
           : effectiveFrom // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      effectiveTo: null == effectiveTo
-          ? _value.effectiveTo
-          : effectiveTo // ignore: cast_nullable_to_non_nullable
               as DateTime,
       dosageScheme: null == dosageScheme
           ? _value._dosageScheme
@@ -139,7 +120,6 @@ class _$_Schedule implements _Schedule {
   const _$_Schedule(
       {required this.id,
       required this.effectiveFrom,
-      required this.effectiveTo,
       required final List<double> dosageScheme})
       : _dosageScheme = dosageScheme;
 
@@ -150,18 +130,17 @@ class _$_Schedule implements _Schedule {
   final int id;
   @override
   final DateTime effectiveFrom;
-  @override
-  final DateTime effectiveTo;
   final List<double> _dosageScheme;
   @override
   List<double> get dosageScheme {
+    if (_dosageScheme is EqualUnmodifiableListView) return _dosageScheme;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_dosageScheme);
   }
 
   @override
   String toString() {
-    return 'Schedule(id: $id, effectiveFrom: $effectiveFrom, effectiveTo: $effectiveTo, dosageScheme: $dosageScheme)';
+    return 'Schedule(id: $id, effectiveFrom: $effectiveFrom, dosageScheme: $dosageScheme)';
   }
 
   @override
@@ -172,15 +151,13 @@ class _$_Schedule implements _Schedule {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.effectiveFrom, effectiveFrom) ||
                 other.effectiveFrom == effectiveFrom) &&
-            (identical(other.effectiveTo, effectiveTo) ||
-                other.effectiveTo == effectiveTo) &&
             const DeepCollectionEquality()
                 .equals(other._dosageScheme, _dosageScheme));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, effectiveFrom, effectiveTo,
+  int get hashCode => Object.hash(runtimeType, id, effectiveFrom,
       const DeepCollectionEquality().hash(_dosageScheme));
 
   @JsonKey(ignore: true)
@@ -201,7 +178,6 @@ abstract class _Schedule implements Schedule {
   const factory _Schedule(
       {required final int id,
       required final DateTime effectiveFrom,
-      required final DateTime effectiveTo,
       required final List<double> dosageScheme}) = _$_Schedule;
 
   factory _Schedule.fromJson(Map<String, dynamic> json) = _$_Schedule.fromJson;
@@ -210,8 +186,6 @@ abstract class _Schedule implements Schedule {
   int get id;
   @override
   DateTime get effectiveFrom;
-  @override
-  DateTime get effectiveTo;
   @override
   List<double> get dosageScheme;
   @override

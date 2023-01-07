@@ -2,6 +2,7 @@ import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_type.dart'
 import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_wizard_state.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/service/cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ScheduleWizardView extends StatelessWidget {
   final ScheduleWizardState state;
@@ -15,22 +16,105 @@ class ScheduleWizardView extends StatelessWidget {
     return Column(
       children: [
         const SafeArea(child: Text("Nowy harmonogram")),
-        _CalendarField(
-          dateTime: state.startDate,
-          onDateSelected: (DateTime selectedDate) {
-            print(selectedDate.day);
-          },
-        ),
-        _CalendarField(
-          dateTime: state.endDate,
-          onDateSelected: (DateTime selectedDate) {
-            print(selectedDate);
-          },
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: _CalendarField(
+            dateTime: state.startDate,
+            onDateSelected: (DateTime selectedDate) {
+              cubit.setStartDate(selectedDate);
+            },
+          ),
         ),
         _ScheduleTypeSelector(
           selectedType: state.scheduleType,
           onTypeSelected: (type) => cubit.setScheduleType(type!),
-        )
+        ),
+        state.scheduleType == ScheduleType.weekly
+            ? Row(
+                children: [
+                  const SizedBox(width: 20),
+                  SizedBox(
+                      child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: List.generate(
+                            7,
+                            (index) => Row(children: [
+                                  const Text("dzień tygodnia"),
+                                  const SizedBox(width: 50),
+                                  SizedBox(
+                                    width: 30,
+                                    height: 30,
+                                    child: FloatingActionButton(
+                                      onPressed: () =>
+                                          cubit.decrementDosage(index),
+                                      foregroundColor: Colors.white,
+                                      backgroundColor: Colors.blue,
+                                      child: const Icon(Icons.remove),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 20),
+                                  Text("${state.dosages[index]} mg"),
+                                  const SizedBox(width: 20),
+                                  SizedBox(
+                                    width: 30,
+                                    height: 30,
+                                    child: FloatingActionButton(
+                                      onPressed: () =>
+                                          cubit.incrementDosage(index),
+                                      foregroundColor: Colors.white,
+                                      backgroundColor: Colors.blue,
+                                      child: const Icon(Icons.add),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 40,
+                                  )
+                                ]))),
+                  )),
+                ],
+              )
+            : Row(
+                children: [
+                  const SizedBox(width: 20),
+                  const Text("Codziennie"),
+                  const SizedBox(width: 50),
+                  SizedBox(
+                    width: 30,
+                    height: 30,
+                    child: FloatingActionButton(
+                      onPressed: () => cubit.decrementDosage(0),
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.blue,
+                      child: const Icon(Icons.remove),
+                    ),
+                  ),
+                  const SizedBox(width: 20),
+                  Text("${state.dosages[0]} mg"),
+                  const SizedBox(width: 20),
+                  SizedBox(
+                    width: 30,
+                    height: 30,
+                    child: FloatingActionButton(
+                      onPressed: () => cubit.incrementDosage(0),
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.blue,
+                      child: const Icon(Icons.add),
+                    ),
+                  ),
+                ],
+              ),
+        Expanded(
+            child: Align(
+          alignment: FractionalOffset.bottomCenter,
+          child: SizedBox(
+              width: 200,
+              child: ElevatedButton.icon(
+                  onPressed: cubit.save,
+                  icon: const Icon(Icons.check),
+                  label: const Text("zapisz"))),
+        ))
       ],
     );
   }
@@ -93,18 +177,18 @@ class _ScheduleTypeOption extends StatelessWidget {
   Widget _createTitle() {
     switch (scheduleType) {
       case ScheduleType.daily:
-        return Text("Cykl dzienny");
+        return const Text("Cykl dzienny");
       case ScheduleType.weekly:
-        return Text("Cykl tygodniowy");
+        return const Text("Cykl tygodniowy");
     }
   }
 
   Widget _createDescription() {
     switch (scheduleType) {
       case ScheduleType.daily:
-        return Text("Przyjmujesz  taką samą dawkę każdego dnia");
+        return const Text("Przyjmujesz taką samą dawkę każdego dnia");
       case ScheduleType.weekly:
-        return Text("Określ dawkę dla każdego dnia tygodnia");
+        return const Text("Określ dawkę dla każdego dnia tygodnia");
     }
   }
 }
@@ -112,8 +196,11 @@ class _ScheduleTypeOption extends StatelessWidget {
 class _CalendarField extends StatelessWidget {
   final DateTime dateTime;
   final void Function(DateTime selectedDate) onDateSelected;
+  final DateFormat formatter = DateFormat("dd.MM.y");
 
-  const _CalendarField({
+  String get dateTimeFormatted => formatter.format(dateTime);
+
+  _CalendarField({
     Key? key,
     required this.dateTime,
     required this.onDateSelected,
@@ -121,10 +208,29 @@ class _CalendarField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-        child: Text(dateTime.toString()),
-        onPressed: () {
-          onDateSelected(DateTime.now());
-        });
+    return FormField<int>(
+        builder: (field) => GestureDetector(
+            onTap: () {
+              showDatePicker(
+                context: context,
+                initialDate: dateTime,
+                firstDate: DateTime.now(),
+                lastDate: DateTime(2050),
+              ).then((value) {
+                if (value == null) {
+                  return;
+                }
+
+                onDateSelected(value);
+              });
+            },
+            child: InputDecorator(
+              decoration: const InputDecoration(
+                labelText: "Data rozpoczęcia",
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue)),
+              ),
+              child: Text(dateTimeFormatted),
+            )));
   }
 }
