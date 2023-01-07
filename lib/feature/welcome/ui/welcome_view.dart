@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class WelcomePageView extends StatelessWidget {
@@ -59,7 +60,7 @@ class WelcomePageView extends StatelessWidget {
               child: IconButton(
                   color: Colors.blue,
                   icon: const Icon(Icons.arrow_forward),
-                  onPressed: () => {}),
+                  onPressed: () => context.go("/profile/editor")),
             ),
           ],
         ));
