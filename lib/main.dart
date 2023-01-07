@@ -2,7 +2,7 @@ import 'package:apkainzynierka/data/database.dart';
 import 'package:apkainzynierka/feature/main_page/main_view.dart';
 import 'package:apkainzynierka/feature/profile_editor/profile_editor.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/schedule_wizard_page.dart';
-import 'package:apkainzynierka/feature/welcome/ui/welcome_view.dart';
+import 'package:apkainzynierka/feature/welcome/welcome_page.dart';
 import 'package:apkainzynierka/theme/theme_constants.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
@@ -40,10 +40,7 @@ final _router = GoRouter(initialLocation: '/welcome', routes: [
   GoRoute(
     path: '/welcome',
     builder: (context, state) => Provider<AppContainer>(
-        create: (context) => _appContainer,
-        child: const Scaffold(
-          body: WelcomePageView(),
-        )),
+        create: (context) => _appContainer, child: const WelcomePage()),
   ),
 ]);
 
