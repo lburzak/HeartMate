@@ -50,6 +50,8 @@ class ProfileEditorCubit extends Cubit<ProfileEditorState> {
       final time = state.notificationsTime;
       _scheduleNotifications.call(hour: time.hour, minute: time.minute);
     }
+
+    _eventBus.fire(ProfileUpdatedEvent());
   }
 
   void enableNotifications() {
@@ -155,7 +157,6 @@ class ProfileEditorCubit extends Cubit<ProfileEditorState> {
 
   void _fetchData() {
     final profile = _profileRepository.getCurrent();
-    _eventBus.fire(ProfileUpdatedEvent());
     emit(state.copyWith(
         otherMedicines: profile.otherMedicines,
         inrRange: profile.inrRange,
