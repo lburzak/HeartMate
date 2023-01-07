@@ -1,18 +1,21 @@
 import 'dart:math';
 
+import 'package:apkainzynierka/domain/event/schedule_updated_event.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_type.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_wizard_state.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/service/router.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/usecase/create_schedule.dart';
 import 'package:bloc/bloc.dart';
+import 'package:event_bus/event_bus.dart';
 
 const _initialScheduleType = ScheduleType.daily;
 
 class ScheduleWizardCubit extends Cubit<ScheduleWizardState> {
   final ScheduleWizardRouter _router;
   final CreateSchedule _createSchedule;
+  final EventBus _eventBus;
 
-  ScheduleWizardCubit(this._router, this._createSchedule)
+  ScheduleWizardCubit(this._router, this._createSchedule, this._eventBus)
       : super(ScheduleWizardState(
             scheduleType: _initialScheduleType,
             startDate: Date.today(),
@@ -50,6 +53,8 @@ class ScheduleWizardCubit extends Cubit<ScheduleWizardState> {
     }
 
     _createSchedule(startDate: state.startDate, dosages: state.dosages);
+
+    _eventBus.fire(ScheduleUpdatedEvent());
 
     _router.finish();
   }

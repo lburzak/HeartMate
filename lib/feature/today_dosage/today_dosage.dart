@@ -12,6 +12,7 @@ import 'package:apkainzynierka/feature/today_dosage/service/router.dart';
 import 'package:apkainzynierka/feature/today_dosage/ui/router.dart';
 import 'package:apkainzynierka/feature/today_dosage/ui/view.dart';
 import 'package:apkainzynierka/main.dart';
+import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
@@ -41,9 +42,10 @@ KiwiContainer buildTodayDosageContainer(
   final c = KiwiContainer.scoped();
 
   c.registerInstance<BoxDatabase>(appContainer.resolve());
+  c.registerInstance<EventBus>(appContainer.resolve());
   c.registerInstance(context);
 
-  c.registerFactory((r) => TodayDosageCubit(r(), r(), r(), r(), r(), r()));
+  c.registerFactory((r) => TodayDosageCubit(r(), r(), r(), r(), r(), r(), r()));
   c.registerFactory<TodayDosageRouter>((r) => MaterialTodayDosageRouter(r()));
 
   c.registerFactory((r) => RevertTodayDose(r()));

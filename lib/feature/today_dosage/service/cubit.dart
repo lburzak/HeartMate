@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:apkainzynierka/domain/event/schedule_updated_event.dart';
 import 'package:apkainzynierka/domain/repository/dose_repository.dart';
 import 'package:apkainzynierka/domain/repository/schedule_repository.dart';
 import 'package:apkainzynierka/domain/usecase/get_today_dosage.dart';
@@ -6,6 +9,7 @@ import 'package:apkainzynierka/domain/usecase/revert_today_dose.dart';
 import 'package:apkainzynierka/feature/today_dosage/model/state.dart';
 import 'package:apkainzynierka/feature/today_dosage/service/router.dart';
 import 'package:bloc/bloc.dart';
+import 'package:event_bus/event_bus.dart';
 
 class TodayDosageCubit extends Cubit<TodayDosageState> {
   final ReportDoseTaken _reportDoseTaken;
@@ -14,6 +18,9 @@ class TodayDosageCubit extends Cubit<TodayDosageState> {
   final DoseRepository _doseRepository;
   final ScheduleRepository _scheduleRepository;
   final TodayDosageRouter _router;
+  final EventBus _eventBus;
+
+  StreamSubscription? _subscription;
 
   TodayDosageCubit(
       this._reportDoseTaken,
@@ -21,10 +28,15 @@ class TodayDosageCubit extends Cubit<TodayDosageState> {
       this._getTodayDosage,
       this._doseRepository,
       this._scheduleRepository,
-      this._router)
+      this._router,
+      this._eventBus)
       : super(const TodayDosageState(
             taken: false, potency: 0, custom: false, scheduleUndefined: true)) {
     _fetchData();
+
+    _subscription = _eventBus.on<ScheduleUpdatedEvent>().listen((event) {
+      _fetchData();
+    });
   }
 
   void toggleTaken() {
@@ -59,5 +71,11 @@ class TodayDosageCubit extends Cubit<TodayDosageState> {
       custom: takenDose?.custom ?? false,
       potency: takenDose?.potency ?? scheduledDosage ?? 0,
     ));
+  }
+
+  @override
+  Future<void> close() {
+    _subscription?.cancel();
+    return super.close();
   }
 }
