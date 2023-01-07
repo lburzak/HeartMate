@@ -156,17 +156,19 @@ class ProfileEditorCubit extends Cubit<ProfileEditorState> {
   void setIllness(Illness? value) {}
 
   void _fetchData() {
-    final profile = _profileRepository.getCurrent();
-    emit(state.copyWith(
-        otherMedicines: profile.otherMedicines,
-        inrRange: profile.inrRange,
-        illness: profile.illness,
-        anticoagulant: profile.anticoagulant,
-        gender: profile.gender,
-        age: profile.age,
-        weight: profile.weight,
-        height: profile.height,
-        lastName: profile.lastName,
-        firstName: profile.firstName));
+    if (_profileRepository.exists()) {
+      final profile = _profileRepository.getCurrent();
+      emit(state.copyWith(
+          otherMedicines: profile.otherMedicines,
+          inrRange: profile.inrRange,
+          illness: profile.illness,
+          anticoagulant: profile.anticoagulant,
+          gender: profile.gender,
+          age: profile.age,
+          weight: profile.weight,
+          height: profile.height,
+          lastName: profile.lastName,
+          firstName: profile.firstName));
+    }
   }
 }
