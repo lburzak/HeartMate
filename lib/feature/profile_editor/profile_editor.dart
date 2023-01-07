@@ -7,6 +7,7 @@ import 'package:apkainzynierka/feature/profile_editor/ui/view.dart';
 import 'package:apkainzynierka/feature/profile_editor/usecase/schedule_notifications.dart';
 import 'package:apkainzynierka/feature/profile_editor/usecase/update_profile.dart';
 import 'package:apkainzynierka/main.dart';
+import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
@@ -29,12 +30,13 @@ class ProfileEditor extends StatelessWidget {
 
 class ProfileEditorContainer extends KiwiContainer {
   ProfileEditorContainer(AppContainer appContainer) : super.scoped() {
-    registerFactory(
-        (r) => ProfileEditorCubit(r.resolve(), r.resolve(), r.resolve()));
+    registerFactory((r) =>
+        ProfileEditorCubit(r.resolve(), r.resolve(), r.resolve(), r.resolve()));
     registerFactory((r) => UpdateProfile(r.resolve()));
     registerFactory((r) => ScheduleNotifications());
     registerFactory<ProfileRepository>(
         (r) => LocalProfileRepository(r.resolve()));
     registerInstance<BoxDatabase>(appContainer.resolve());
+    registerInstance<EventBus>(appContainer.resolve());
   }
 }

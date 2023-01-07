@@ -1,3 +1,4 @@
+import 'package:apkainzynierka/domain/event/profile_updated_event.dart';
 import 'package:apkainzynierka/domain/model/anticoagulant.dart';
 import 'package:apkainzynierka/domain/model/gender.dart';
 import 'package:apkainzynierka/domain/model/illness.dart';
@@ -9,6 +10,7 @@ import 'package:apkainzynierka/feature/profile_editor/usecase/schedule_notificat
 import 'package:apkainzynierka/feature/profile_editor/usecase/update_profile.dart';
 import 'package:apkainzynierka/util/time_extensions.dart';
 import 'package:bloc/bloc.dart';
+import 'package:event_bus/event_bus.dart';
 
 const ProfileEditorState _initialState = ProfileEditorState(
     inrRange: InrRange(from: 0, to: 0),
@@ -23,9 +25,10 @@ class ProfileEditorCubit extends Cubit<ProfileEditorState> {
   final UpdateProfile _updateProfile;
   final ScheduleNotifications _scheduleNotifications;
   final ProfileRepository _profileRepository;
+  final EventBus _eventBus;
 
-  ProfileEditorCubit(
-      this._updateProfile, this._scheduleNotifications, this._profileRepository)
+  ProfileEditorCubit(this._updateProfile, this._scheduleNotifications,
+      this._profileRepository, this._eventBus)
       : super(_initialState) {
     _fetchData();
   }
@@ -152,6 +155,7 @@ class ProfileEditorCubit extends Cubit<ProfileEditorState> {
 
   void _fetchData() {
     final profile = _profileRepository.getCurrent();
+    _eventBus.fire(ProfileUpdatedEvent());
     emit(state.copyWith(
         otherMedicines: profile.otherMedicines,
         inrRange: profile.inrRange,
