@@ -1,14 +1,6 @@
-import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_type.dart';
-import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_wizard_state.dart';
-import 'package:apkainzynierka/feature/schedule_wizard/service/cubit.dart';
-import 'package:apkainzynierka/feature/schedule_wizard/ui/view.dart';
+import 'package:apkainzynierka/feature/welcome/ui/welcome_view.dart';
 import 'package:apkainzynierka/theme/theme_constants.dart';
-import 'package:apkainzynierka/feature/welcome/welcome_view.dart';
 import 'package:flutter/material.dart';
-import 'package:mockito/annotations.dart';
-
-@GenerateNiceMocks([MockSpec<ScheduleWizardCubit>()])
-import 'main.mocks.dart';
 
 void main() => testWidget(() => WelcomePageView());
 
