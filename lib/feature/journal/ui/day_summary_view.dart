@@ -8,7 +8,8 @@ class DaySummaryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(model.dosage.toString()),
         Text(model.anticoagulant.toString()),
