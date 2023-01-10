@@ -6,12 +6,14 @@ class JournalCalendar extends StatelessWidget {
   final DateTime? selectedDay;
   final Map<DateTime, DayHighlight>? selectedMonthHighlights;
   final void Function(DateTime day) onDaySelected;
+  final void Function(DateTime day) onDayFocused;
 
   const JournalCalendar(
       {super.key,
       this.selectedDay,
       required this.onDaySelected,
-      this.selectedMonthHighlights});
+      this.selectedMonthHighlights,
+      required this.onDayFocused});
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class JournalCalendar extends StatelessWidget {
       firstDay: DateTime(2020),
       lastDay: DateTime.now(),
       currentDay: DateTime.now(),
+      onPageChanged: onDayFocused,
       calendarBuilders: CalendarBuilders(markerBuilder: (context, day, events) {
         final List<Marker> markers = [];
         final dayHighlights = selectedMonthHighlights?[day];

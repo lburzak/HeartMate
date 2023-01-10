@@ -19,7 +19,9 @@ class JournalView extends StatelessWidget {
       children: [
         JournalCalendar(
           onDaySelected: cubit.onDaySelected,
+          onDayFocused: cubit.onDayFocused,
           selectedDay: state.selectedDay,
+          selectedMonthHighlights: state.selectedMonthHighlights,
         ),
         selectedDaySummary != null
             ? DaySummaryView(model: selectedDaySummary)

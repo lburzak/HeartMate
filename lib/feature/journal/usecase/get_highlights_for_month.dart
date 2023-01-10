@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:apkainzynierka/data/day_encoding.dart';
 import 'package:apkainzynierka/domain/model/dose.dart';
 import 'package:apkainzynierka/domain/model/inr_measurement.dart';
 import 'package:apkainzynierka/domain/repository/dose_repository.dart';
@@ -30,7 +31,7 @@ class GetHighlightsForMonth {
 
     final map = LinkedHashMap<DateTime, DayHighlight>(
       equals: isSameDay,
-      hashCode: (i) => i.hashCode,
+      hashCode: (i) => i.encodeDay(),
     );
 
     for (final day in month.daysOfMonth) {
