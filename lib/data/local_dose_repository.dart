@@ -36,4 +36,12 @@ class LocalDoseRepository extends DoseRepository {
   Dose? findDoseForDay(DateTime dateTime) {
     return doses.get(dateTime.encodeDay());
   }
+
+  @override
+  List<Dose> findWithinPeriod(
+      {required DateTime start, required DateTime end}) {
+    return doses.values
+        .where((e) => e.dateTaken.isAfter(start) && e.dateTaken.isBefore(end))
+        .toList();
+  }
 }
