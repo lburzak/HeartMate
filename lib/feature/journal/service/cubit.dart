@@ -27,11 +27,15 @@ class JournalCubit extends Cubit<JournalState> {
 
     final inrMeasurement = _inrMeasurementRepository.findForDay(day);
 
+    final profile = _profileRepository.findForDateTime(day);
+
     final summary = DaySummary(
         dosage: dose?.potency ?? dosage,
         taken: dose != null,
         inr: inrMeasurement?.inr,
-        inrRating: inrMeasurement != null ? getRating(inrMeasurement) : null);
+        inrRating: inrMeasurement != null ? getRating(inrMeasurement) : null,
+        otherMedicines: profile.otherMedicines,
+        anticoagulant: profile.anticoagulant);
 
     emit(state.copyWith(selectedDay: day, selectedDaySummary: summary));
   }
