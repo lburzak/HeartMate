@@ -26,8 +26,20 @@ class JournalCubit extends Cubit<JournalState> {
       this._getRatingForInrMeasurement)
       : super(const JournalState());
 
+  void onDayFocused(DateTime day) {
+    final selectedDay = state.selectedDay;
+
+    if (selectedDay == null || !day.isSameMonthAs(selectedDay)) {
+      emit(
+          state.copyWith(selectedMonthHighlights: _getHighlightsForMonth(day)));
+      onDaySelected(day);
+    }
+  }
+
   void onDaySelected(DateTime day) {
-    if (!day.isSameMonthAs(day)) {
+    final selectedDay = state.selectedDay;
+
+    if (selectedDay == null || !day.isSameMonthAs(selectedDay)) {
       emit(
           state.copyWith(selectedMonthHighlights: _getHighlightsForMonth(day)));
     }
