@@ -1,6 +1,7 @@
 import 'package:apkainzynierka/data/day_encoding.dart';
 import 'package:apkainzynierka/domain/model/inr_measurement.dart';
 import 'package:apkainzynierka/domain/repository/inr_measurement_repository.dart';
+import 'package:apkainzynierka/util/time_extensions.dart';
 import 'package:hive/hive.dart';
 
 class LocalInrMeasurementRepository extends InrMeasurementRepository {
@@ -23,5 +24,17 @@ class LocalInrMeasurementRepository extends InrMeasurementRepository {
         (e) => e.reportDate.isAfter(start) && e.reportDate.isBefore(end));
 
     return matchingMeasurements.toList();
+  }
+
+  @override
+  InrMeasurement? findForDay(DateTime day) {
+    final matchingMeasurements =
+        inrMeasurements.values.where((e) => e.reportDate.isSameDayAs(day));
+
+    if (matchingMeasurements.isEmpty) {
+      return null;
+    }
+
+    return matchingMeasurements.first;
   }
 }

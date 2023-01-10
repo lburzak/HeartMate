@@ -37,4 +37,10 @@ class LocalProfileRepository extends ProfileRepository {
   bool exists() {
     return profiles.isNotEmpty;
   }
+
+  @override
+  Profile findForDateTime(DateTime dateTime) {
+    // TODO: implement properly
+    return getCurrent();
+  }
 }

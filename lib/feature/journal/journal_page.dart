@@ -1,7 +1,11 @@
 import 'package:apkainzynierka/data/database.dart';
 import 'package:apkainzynierka/data/local_dose_repository.dart';
+import 'package:apkainzynierka/data/local_inr_measurement_repository.dart';
+import 'package:apkainzynierka/data/local_profile_repository.dart';
 import 'package:apkainzynierka/data/local_schedule_repository.dart';
 import 'package:apkainzynierka/domain/repository/dose_repository.dart';
+import 'package:apkainzynierka/domain/repository/inr_measurement_repository.dart';
+import 'package:apkainzynierka/domain/repository/profile_repository.dart';
 import 'package:apkainzynierka/domain/repository/schedule_repository.dart';
 import 'package:apkainzynierka/feature/journal/model/state.dart';
 import 'package:apkainzynierka/feature/journal/service/cubit.dart';
@@ -34,9 +38,13 @@ class JournalPage extends StatelessWidget {
 
 class JournalContainer extends KiwiContainer {
   JournalContainer(AppContainer appContainer) : super.scoped() {
-    registerFactory((r) => JournalCubit(r(), r()));
+    registerFactory((r) => JournalCubit(r(), r(), r(), r()));
     registerFactory<DoseRepository>((r) => LocalDoseRepository(r()));
     registerFactory<ScheduleRepository>((r) => LocalScheduleRepository(r()));
+    registerFactory<InrMeasurementRepository>(
+        (r) => LocalInrMeasurementRepository(r()));
+    registerFactory<ProfileRepository>((r) => LocalProfileRepository(r()));
     registerInstance<BoxDatabase>(appContainer.resolve());
+    registerFactory((r) => r.resolve<BoxDatabase>().inrMeasurementsBox);
   }
 }
