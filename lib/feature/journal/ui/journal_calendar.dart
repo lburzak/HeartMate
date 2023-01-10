@@ -1,12 +1,17 @@
+import 'package:apkainzynierka/feature/journal/model/day_highlight.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class JournalCalendar extends StatelessWidget {
   final DateTime? selectedDay;
+  final Map<DateTime, DayHighlight>? selectedMonthHighlights;
   final void Function(DateTime day) onDaySelected;
 
   const JournalCalendar(
-      {super.key, this.selectedDay, required this.onDaySelected});
+      {super.key,
+      this.selectedDay,
+      required this.onDaySelected,
+      this.selectedMonthHighlights});
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +25,30 @@ class JournalCalendar extends StatelessWidget {
       firstDay: DateTime(2020),
       lastDay: DateTime.now(),
       currentDay: DateTime.now(),
-      calendarBuilders: CalendarBuilders(
-          markerBuilder: (context, day, events) =>
-              const MarkersContainer(markers: [Marker.doseMissed()])),
+      calendarBuilders: CalendarBuilders(markerBuilder: (context, day, events) {
+        final List<Marker> markers = [];
+        final dayHighlights = selectedMonthHighlights?[day];
+        if (dayHighlights == null) {
+          return const SizedBox.shrink();
+        }
+
+        if (dayHighlights.doseMissed) {
+          markers.add(const Marker.doseMissed());
+        }
+
+        switch (dayHighlights.inrStatus) {
+          case InrStatus.balanced:
+            markers.add(const Marker.inrMeasured(positive: true));
+            break;
+          case InrStatus.imbalanced:
+            markers.add(const Marker.inrMeasured(positive: false));
+            break;
+          case InrStatus.notMeasured:
+            break;
+        }
+
+        return MarkersContainer(markers: markers);
+      }),
     );
   }
 }
