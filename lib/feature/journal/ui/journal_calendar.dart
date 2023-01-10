@@ -16,9 +16,9 @@ class JournalCalendar extends StatelessWidget {
       headerStyle: const HeaderStyle(formatButtonVisible: false),
       calendarStyle: const CalendarStyle(
           outsideDaysVisible: false, isTodayHighlighted: true),
-      focusedDay: DateTime.now().add(const Duration(days: 2)),
+      focusedDay: selectedDay ?? DateTime.now(),
       firstDay: DateTime(2020),
-      lastDay: DateTime(2025),
+      lastDay: DateTime.now(),
       currentDay: DateTime.now(),
       calendarBuilders: CalendarBuilders(
           markerBuilder: (context, day, events) =>
