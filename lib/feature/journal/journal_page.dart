@@ -1,6 +1,12 @@
+import 'package:apkainzynierka/data/database.dart';
+import 'package:apkainzynierka/data/local_dose_repository.dart';
+import 'package:apkainzynierka/data/local_schedule_repository.dart';
+import 'package:apkainzynierka/domain/repository/dose_repository.dart';
+import 'package:apkainzynierka/domain/repository/schedule_repository.dart';
 import 'package:apkainzynierka/feature/journal/model/state.dart';
 import 'package:apkainzynierka/feature/journal/service/cubit.dart';
 import 'package:apkainzynierka/feature/journal/ui/view.dart';
+import 'package:apkainzynierka/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
@@ -10,7 +16,7 @@ class JournalPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final container = JournalContainer();
+    final container = JournalContainer(context.read());
 
     return Scaffold(
       body: SafeArea(
@@ -27,7 +33,10 @@ class JournalPage extends StatelessWidget {
 }
 
 class JournalContainer extends KiwiContainer {
-  JournalContainer() : super.scoped() {
-    registerFactory((r) => JournalCubit());
+  JournalContainer(AppContainer appContainer) : super.scoped() {
+    registerFactory((r) => JournalCubit(r(), r()));
+    registerFactory<DoseRepository>((r) => LocalDoseRepository(r()));
+    registerFactory<ScheduleRepository>((r) => LocalScheduleRepository(r()));
+    registerInstance<BoxDatabase>(appContainer.resolve());
   }
 }
