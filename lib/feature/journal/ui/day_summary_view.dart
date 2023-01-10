@@ -1,5 +1,5 @@
 import 'package:apkainzynierka/feature/journal/model/day_summary.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class DaySummaryView extends StatelessWidget {
   final DaySummary model;
@@ -12,6 +12,7 @@ class DaySummaryView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(model.dosage.toString()),
+        Text(model.taken.toString()),
         Text(model.anticoagulant.toString()),
         Text(model.otherMedicines.toString()),
         Text(model.inr.toString()),
