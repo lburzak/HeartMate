@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class JournalCalendar extends StatelessWidget {
-  const JournalCalendar({super.key});
+  final DateTime? selectedDay;
+  final void Function(DateTime day) onDaySelected;
+
+  const JournalCalendar(
+      {super.key, this.selectedDay, required this.onDaySelected});
 
   @override
   Widget build(BuildContext context) {
     return TableCalendar(
+      onDaySelected: (selectedDay, focusedDay) => onDaySelected(selectedDay),
+      selectedDayPredicate: (day) => isSameDay(day, selectedDay),
       headerStyle: const HeaderStyle(formatButtonVisible: false),
       calendarStyle: const CalendarStyle(
           outsideDaysVisible: false, isTodayHighlighted: true),
