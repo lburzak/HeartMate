@@ -2,6 +2,8 @@ import 'package:apkainzynierka/feature/report_inr/model/state.dart';
 import 'package:apkainzynierka/feature/report_inr/service/cubit.dart';
 import 'package:flutter/material.dart';
 
+import '../../profile_editor/ui/view.dart';
+
 class ReportInrView extends StatelessWidget {
   final ReportInrState state;
   final ReportInrCubit cubit;
@@ -11,22 +13,22 @@ class ReportInrView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200,
-      child: Center(
+      height: 500,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          children: <Widget>[
-            const SizedBox(height: 10),
-            const Align(
-              alignment: Alignment.topLeft,
-              child: Text('Dodaj pomiar'),
+          children: [
+            const Header(text: "Dodaj pomiar"),
+            const SizedBox(
+              height: 10,
             ),
-            const SizedBox(height: 10),
             TextFormField(
               keyboardType: TextInputType.number,
               onChanged: _onInrInput,
               decoration: InputDecoration(
-                  hintText: 'Wprowadź wartość pomiaru INR',
-                  border: const OutlineInputBorder(),
+                  labelText: "Wprowadź wartość pomiaru INR",
+                  enabledBorder: const UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue)),
                   filled: true,
                   errorText: state.error),
             ),
