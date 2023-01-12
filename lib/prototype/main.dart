@@ -2,7 +2,9 @@ import 'package:apkainzynierka/feature/welcome/ui/welcome_view.dart';
 import 'package:apkainzynierka/theme/theme_constants.dart';
 import 'package:flutter/material.dart';
 
-void main() => testWidget(() => WelcomePageView());
+import '../feature/profile_summary/ui/profile_summary_view.dart';
+
+void main() => testWidget(() => ProfileSummaryView());
 
 void testWidget(Widget Function() builder) {
   runApp(WidgetTestApp(builder: builder));
