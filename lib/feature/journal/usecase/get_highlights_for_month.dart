@@ -34,7 +34,8 @@ class GetHighlightsForMonth {
       hashCode: (i) => i.encodeDay(),
     );
 
-    for (final day in month.daysOfMonth) {
+    for (final day
+        in month.daysOfMonth.takeWhile((value) => value.isBefore(month))) {
       map[day] = DayHighlight(
           doseMissed: _determineIfDoseWasMissedForDay(day),
           inrStatus: _determineInrStatusForDay(day));
