@@ -7,4 +7,7 @@ abstract class ScheduleRepository {
 
   void createSchedule(
       {required DateTime startDate, required List<double> dosageCycle});
+
+  Map<DateTime, double?> getDosagesForPeriod(
+      {required DateTime start, required DateTime end});
 }

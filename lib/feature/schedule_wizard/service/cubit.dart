@@ -5,6 +5,7 @@ import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_type.dart'
 import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_wizard_state.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/service/router.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/usecase/create_schedule.dart';
+import 'package:apkainzynierka/util/date.dart';
 import 'package:bloc/bloc.dart';
 import 'package:event_bus/event_bus.dart';
 
@@ -74,12 +75,5 @@ extension ListTransformations<T> on List<T> {
     final newList = List<T>.from(this);
     newList[index] = transform(elementAt(index));
     return newList;
-  }
-}
-
-class Date {
-  static DateTime today() {
-    final now = DateTime.now();
-    return DateTime(now.year, now.month, now.day);
   }
 }

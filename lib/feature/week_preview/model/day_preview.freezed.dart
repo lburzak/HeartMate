@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$DayPreview {
-  double get dosage => throw _privateConstructorUsedError;
+  double? get dosage => throw _privateConstructorUsedError;
   bool? get taken => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -30,7 +30,7 @@ abstract class $DayPreviewCopyWith<$Res> {
           DayPreview value, $Res Function(DayPreview) then) =
       _$DayPreviewCopyWithImpl<$Res, DayPreview>;
   @useResult
-  $Res call({double dosage, bool? taken});
+  $Res call({double? dosage, bool? taken});
 }
 
 /// @nodoc
@@ -46,14 +46,14 @@ class _$DayPreviewCopyWithImpl<$Res, $Val extends DayPreview>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? dosage = null,
+    Object? dosage = freezed,
     Object? taken = freezed,
   }) {
     return _then(_value.copyWith(
-      dosage: null == dosage
+      dosage: freezed == dosage
           ? _value.dosage
           : dosage // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
       taken: freezed == taken
           ? _value.taken
           : taken // ignore: cast_nullable_to_non_nullable
@@ -70,7 +70,7 @@ abstract class _$$_DayPreviewCopyWith<$Res>
       __$$_DayPreviewCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({double dosage, bool? taken});
+  $Res call({double? dosage, bool? taken});
 }
 
 /// @nodoc
@@ -84,14 +84,14 @@ class __$$_DayPreviewCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? dosage = null,
+    Object? dosage = freezed,
     Object? taken = freezed,
   }) {
     return _then(_$_DayPreview(
-      dosage: null == dosage
+      dosage: freezed == dosage
           ? _value.dosage
           : dosage // ignore: cast_nullable_to_non_nullable
-              as double,
+              as double?,
       taken: freezed == taken
           ? _value.taken
           : taken // ignore: cast_nullable_to_non_nullable
@@ -106,7 +106,7 @@ class _$_DayPreview implements _DayPreview {
   const _$_DayPreview({required this.dosage, this.taken});
 
   @override
-  final double dosage;
+  final double? dosage;
   @override
   final bool? taken;
 
@@ -135,11 +135,11 @@ class _$_DayPreview implements _DayPreview {
 }
 
 abstract class _DayPreview implements DayPreview {
-  const factory _DayPreview({required final double dosage, final bool? taken}) =
-      _$_DayPreview;
+  const factory _DayPreview(
+      {required final double? dosage, final bool? taken}) = _$_DayPreview;
 
   @override
-  double get dosage;
+  double? get dosage;
   @override
   bool? get taken;
   @override
