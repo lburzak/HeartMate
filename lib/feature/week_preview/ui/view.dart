@@ -1,6 +1,8 @@
 import 'package:apkainzynierka/feature/week_preview/model/state.dart';
 import 'package:apkainzynierka/feature/week_preview/service/cubit.dart';
+import 'package:apkainzynierka/util/date.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class WeekPreviewView extends StatelessWidget {
   final WeekPreviewCubit cubit;
@@ -18,7 +20,8 @@ class WeekPreviewView extends StatelessWidget {
           children: List.generate(
               7,
               (index) => Column(children: [
-                    const Text("Pn"),
+                    Text(DateFormat("E", "pl_PL").format(
+                        DateTime.now().week.monday.add(Duration(days: index)))),
                     const SizedBox(
                       height: 5,
                     ),
