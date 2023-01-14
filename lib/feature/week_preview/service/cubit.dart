@@ -17,6 +17,12 @@ class WeekPreviewCubit extends Cubit<WeekPreviewState> {
     final thisWeek = Date.today().week;
     emit(state.copyWith(
         days: getDayPreviewsForPeriod(
-            start: thisWeek.monday, end: thisWeek.friday)));
+            start: thisWeek.monday, end: thisWeek.sunday)));
+  }
+
+  @override
+  void onChange(Change<WeekPreviewState> change) {
+    print(change);
+    super.onChange(change);
   }
 }

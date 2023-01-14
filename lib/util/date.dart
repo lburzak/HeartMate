@@ -12,7 +12,7 @@ class Week {
 
   DateTime get monday => getDay(DateTime.monday);
 
-  DateTime get friday => getDay(DateTime.friday);
+  DateTime get sunday => getDay(DateTime.sunday);
 
   DateTime getDay(int number) {
     return relativeDay.subtract(

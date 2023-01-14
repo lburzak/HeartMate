@@ -16,7 +16,7 @@ class GetDayPreviewsForPeriod {
     final doses = _doseRepository.findWithinPeriod(start: start, end: end);
 
     return List.generate(7, (index) {
-      final day = start.subtract(Duration(days: index));
+      final day = start.add(Duration(days: index));
       final scheduledDosage = scheduledDosages[day];
       final dose = doses.firstWhereOrNull((e) => e.dateTaken.isSameDayAs(day));
 

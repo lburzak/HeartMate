@@ -13,6 +13,6 @@ extension PeriodUtil on Period {
     return (start.isBefore(other.end)) && (other.start.isBefore(other.end));
   }
 
-  List<DateTime> get days => List.generate(end.difference(start).inDays,
-      (index) => start.add(const Duration(days: 1)));
+  List<DateTime> get days => List.generate(end.difference(start).inDays + 1,
+      (index) => start.add(Duration(days: index)));
 }
