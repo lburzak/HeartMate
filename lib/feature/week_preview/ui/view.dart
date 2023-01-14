@@ -40,16 +40,22 @@ class DailyDosageCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 50,
-      width: 50,
+    return SizedBox.square(
+      dimension: 50,
       child: Material(
-        shape: const CircleBorder(
+        shape: CircleBorder(
             side: BorderSide(
-          color: Colors.green,
+          color: dosage != null ? Colors.green : Colors.transparent,
           width: 2,
         )),
-        child: Center(child: Text("$dosage")),
+        child: Center(
+            child: dosage != null
+                ? Text("$dosage")
+                : const Icon(
+                    Icons.block,
+                    color: Colors.white10,
+                    size: 50,
+                  )),
       ),
     );
   }
