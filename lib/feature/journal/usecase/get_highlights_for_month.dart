@@ -5,6 +5,7 @@ import 'package:apkainzynierka/domain/model/dose.dart';
 import 'package:apkainzynierka/domain/model/inr_measurement.dart';
 import 'package:apkainzynierka/domain/repository/dose_repository.dart';
 import 'package:apkainzynierka/domain/repository/inr_measurement_repository.dart';
+import 'package:apkainzynierka/domain/repository/schedule_repository.dart';
 import 'package:apkainzynierka/feature/journal/model/day_highlight.dart';
 import 'package:apkainzynierka/feature/journal/model/day_summary.dart';
 import 'package:apkainzynierka/feature/journal/usecase/get_rating_for_inr_measurement.dart';
@@ -14,13 +15,14 @@ import 'package:apkainzynierka/util/time_extensions.dart';
 class GetHighlightsForMonth {
   final DoseRepository _doseRepository;
   final InrMeasurementRepository _inrMeasurementRepository;
+  final ScheduleRepository _scheduleRepository;
   final GetRatingForInrMeasurement _getRatingForInrMeasurement;
 
   late List<Dose> _doses;
   late List<InrMeasurement> _inrMeasurements;
 
   GetHighlightsForMonth(this._doseRepository, this._inrMeasurementRepository,
-      this._getRatingForInrMeasurement);
+      this._getRatingForInrMeasurement, this._scheduleRepository);
 
   Map<DateTime, DayHighlight> call(DateTime month) {
     _doses = _doseRepository.findWithinPeriod(
@@ -34,8 +36,10 @@ class GetHighlightsForMonth {
       hashCode: (i) => i.encodeDay(),
     );
 
+    final now = DateTime.now();
+
     for (final day
-        in month.daysOfMonth.takeWhile((value) => value.isBefore(month))) {
+    in month.daysOfMonth.takeWhile((value) => value.isBefore(now))) {
       map[day] = DayHighlight(
           doseMissed: _determineIfDoseWasMissedForDay(day),
           inrStatus: _determineInrStatusForDay(day));
@@ -45,6 +49,12 @@ class GetHighlightsForMonth {
   }
 
   bool _determineIfDoseWasMissedForDay(DateTime day) {
+    final scheduleExists = _scheduleRepository.existsScheduleForDay(day);
+
+    if (!scheduleExists) {
+      return false;
+    }
+
     return _doses.firstWhereOrNull((item) => item.dateTaken.isSameDayAs(day)) ==
         null;
   }

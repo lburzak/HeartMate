@@ -37,13 +37,6 @@ class JournalCubit extends Cubit<JournalState> {
   }
 
   void onDaySelected(DateTime day) {
-    final selectedDay = state.selectedDay;
-
-    if (selectedDay == null || !day.isSameMonthAs(selectedDay)) {
-      emit(
-          state.copyWith(selectedMonthHighlights: _getHighlightsForMonth(day)));
-    }
-
     final scheduleId = _scheduleRepository.getScheduleIdForDay(day);
 
     final dosage = scheduleId != null
