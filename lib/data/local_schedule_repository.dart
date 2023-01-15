@@ -35,7 +35,9 @@ class LocalScheduleRepository extends ScheduleRepository {
   @override
   int? getScheduleIdForDay(DateTime dateTime) {
     final matchingSchedules = _schedules.values
-        .where((i) => i.effectiveFrom.isBefore(dateTime))
+        .where((i) =>
+            i.effectiveFrom.isBefore(dateTime) ||
+            i.effectiveFrom.isAtSameMomentAs(dateTime))
         .toList();
 
     if (matchingSchedules.isEmpty) {
@@ -45,7 +47,7 @@ class LocalScheduleRepository extends ScheduleRepository {
     matchingSchedules
         .sort((a, b) => a.effectiveFrom.compareTo(b.effectiveFrom));
 
-    return matchingSchedules[0].id;
+    return matchingSchedules.last.id;
   }
 
   @override
