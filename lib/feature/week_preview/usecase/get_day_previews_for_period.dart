@@ -14,7 +14,7 @@ class GetDayPreviewsForPeriod {
 
   List<DayPreview> call({required DateTime start, required DateTime end}) {
     final scheduledDosages =
-        _scheduleRepository.getDosagesForPeriod(start: start, end: end);
+    _scheduleRepository.getDosagesForPeriod(start: start, end: end);
     final doses = _doseRepository.findWithinPeriod(start: start, end: end);
 
     final today = Date.today();
@@ -27,10 +27,16 @@ class GetDayPreviewsForPeriod {
       final scheduledDosage = scheduledDosages[day];
       final dose = doses.firstWhereOrNull((e) => e.dateTaken.isSameDayAs(day));
 
+      bool? taken;
+
+      if (day.isBefore(today) || day.isSameDayAs(today)) {
+        taken = dose != null;
+      }
+
       return DayPreview(
           isToday: index == todayIndex,
           dosage: dose != null ? dose.potency : scheduledDosage,
-          taken: dose != null);
+          taken: taken);
     });
   }
 }

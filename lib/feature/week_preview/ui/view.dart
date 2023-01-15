@@ -35,6 +35,7 @@ class WeekPreviewView extends StatelessWidget {
                     DailyDosageCircle(
                       isToday: state.days[index].isToday,
                       dosage: state.days[index].dosage,
+                      taken: state.days[index].taken,
                     )
                   ]))),
     ));
@@ -43,12 +44,14 @@ class WeekPreviewView extends StatelessWidget {
 
 class DailyDosageCircle extends StatelessWidget {
   final double? dosage;
+  final bool? taken;
   final bool isToday;
 
   const DailyDosageCircle({
     Key? key,
     this.dosage,
     required this.isToday,
+    required this.taken,
   }) : super(key: key);
 
   @override
@@ -58,7 +61,7 @@ class DailyDosageCircle extends StatelessWidget {
       child: Material(
         shape: CircleBorder(
             side: BorderSide(
-          color: dosage != null ? Colors.green : Colors.transparent,
+          color: _borderColor,
           width: isToday ? 5 : 2,
         )),
         child: Center(
@@ -71,5 +74,21 @@ class DailyDosageCircle extends StatelessWidget {
                   )),
       ),
     );
+  }
+
+  Color get _borderColor {
+    if (dosage == null) {
+      return Colors.transparent;
+    }
+
+    if (taken == null) {
+      return Colors.white38;
+    }
+
+    if (taken == true) {
+      return Colors.green;
+    }
+
+    return Colors.red;
   }
 }
