@@ -9,7 +9,8 @@ class WeekPreviewCubit extends Cubit<WeekPreviewState> {
 
   WeekPreviewCubit(this.getDayPreviewsForPeriod)
       : super(WeekPreviewState(
-            days: List.generate(7, (index) => const DayPreview(dosage: 0)))) {
+            days: List.generate(
+                7, (index) => const DayPreview(dosage: 0, isToday: false)))) {
     _fetchData();
   }
 

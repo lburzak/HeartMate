@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$DayPreview {
   double? get dosage => throw _privateConstructorUsedError;
   bool? get taken => throw _privateConstructorUsedError;
+  bool get isToday => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $DayPreviewCopyWith<DayPreview> get copyWith =>
@@ -30,7 +31,7 @@ abstract class $DayPreviewCopyWith<$Res> {
           DayPreview value, $Res Function(DayPreview) then) =
       _$DayPreviewCopyWithImpl<$Res, DayPreview>;
   @useResult
-  $Res call({double? dosage, bool? taken});
+  $Res call({double? dosage, bool? taken, bool isToday});
 }
 
 /// @nodoc
@@ -48,6 +49,7 @@ class _$DayPreviewCopyWithImpl<$Res, $Val extends DayPreview>
   $Res call({
     Object? dosage = freezed,
     Object? taken = freezed,
+    Object? isToday = null,
   }) {
     return _then(_value.copyWith(
       dosage: freezed == dosage
@@ -58,6 +60,10 @@ class _$DayPreviewCopyWithImpl<$Res, $Val extends DayPreview>
           ? _value.taken
           : taken // ignore: cast_nullable_to_non_nullable
               as bool?,
+      isToday: null == isToday
+          ? _value.isToday
+          : isToday // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -70,7 +76,7 @@ abstract class _$$_DayPreviewCopyWith<$Res>
       __$$_DayPreviewCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({double? dosage, bool? taken});
+  $Res call({double? dosage, bool? taken, bool isToday});
 }
 
 /// @nodoc
@@ -86,6 +92,7 @@ class __$$_DayPreviewCopyWithImpl<$Res>
   $Res call({
     Object? dosage = freezed,
     Object? taken = freezed,
+    Object? isToday = null,
   }) {
     return _then(_$_DayPreview(
       dosage: freezed == dosage
@@ -96,6 +103,10 @@ class __$$_DayPreviewCopyWithImpl<$Res>
           ? _value.taken
           : taken // ignore: cast_nullable_to_non_nullable
               as bool?,
+      isToday: null == isToday
+          ? _value.isToday
+          : isToday // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -103,16 +114,19 @@ class __$$_DayPreviewCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_DayPreview implements _DayPreview {
-  const _$_DayPreview({required this.dosage, this.taken});
+  const _$_DayPreview(
+      {required this.dosage, this.taken, required this.isToday});
 
   @override
   final double? dosage;
   @override
   final bool? taken;
+  @override
+  final bool isToday;
 
   @override
   String toString() {
-    return 'DayPreview(dosage: $dosage, taken: $taken)';
+    return 'DayPreview(dosage: $dosage, taken: $taken, isToday: $isToday)';
   }
 
   @override
@@ -121,11 +135,12 @@ class _$_DayPreview implements _DayPreview {
         (other.runtimeType == runtimeType &&
             other is _$_DayPreview &&
             (identical(other.dosage, dosage) || other.dosage == dosage) &&
-            (identical(other.taken, taken) || other.taken == taken));
+            (identical(other.taken, taken) || other.taken == taken) &&
+            (identical(other.isToday, isToday) || other.isToday == isToday));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, dosage, taken);
+  int get hashCode => Object.hash(runtimeType, dosage, taken, isToday);
 
   @JsonKey(ignore: true)
   @override
@@ -136,12 +151,16 @@ class _$_DayPreview implements _DayPreview {
 
 abstract class _DayPreview implements DayPreview {
   const factory _DayPreview(
-      {required final double? dosage, final bool? taken}) = _$_DayPreview;
+      {required final double? dosage,
+      final bool? taken,
+      required final bool isToday}) = _$_DayPreview;
 
   @override
   double? get dosage;
   @override
   bool? get taken;
+  @override
+  bool get isToday;
   @override
   @JsonKey(ignore: true)
   _$$_DayPreviewCopyWith<_$_DayPreview> get copyWith =>

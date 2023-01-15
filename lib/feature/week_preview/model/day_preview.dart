@@ -4,8 +4,8 @@ part 'day_preview.freezed.dart';
 
 @freezed
 class DayPreview with _$DayPreview {
-  const factory DayPreview({
-    required double? dosage,
-    bool? taken
-}) = _DayPreview;
+  const factory DayPreview(
+      {required double? dosage,
+      bool? taken,
+      required bool isToday}) = _DayPreview;
 }

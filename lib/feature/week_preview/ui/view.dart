@@ -20,12 +20,20 @@ class WeekPreviewView extends StatelessWidget {
           children: List.generate(
               7,
               (index) => Column(children: [
-                    Text(DateFormat("E", "pl_PL").format(
-                        DateTime.now().week.monday.add(Duration(days: index)))),
+                    Text(
+                      DateFormat("E", "pl_PL").format(DateTime.now()
+                          .week
+                          .monday
+                          .add(Duration(days: index))),
+                      style: state.days[index].isToday
+                          ? const TextStyle(fontWeight: FontWeight.bold)
+                          : null,
+                    ),
                     const SizedBox(
                       height: 5,
                     ),
                     DailyDosageCircle(
+                      isToday: state.days[index].isToday,
                       dosage: state.days[index].dosage,
                     )
                   ]))),
@@ -35,10 +43,12 @@ class WeekPreviewView extends StatelessWidget {
 
 class DailyDosageCircle extends StatelessWidget {
   final double? dosage;
+  final bool isToday;
 
   const DailyDosageCircle({
     Key? key,
     this.dosage,
+    required this.isToday,
   }) : super(key: key);
 
   @override
@@ -49,7 +59,7 @@ class DailyDosageCircle extends StatelessWidget {
         shape: CircleBorder(
             side: BorderSide(
           color: dosage != null ? Colors.green : Colors.transparent,
-          width: 2,
+          width: isToday ? 5 : 2,
         )),
         child: Center(
             child: dosage != null
