@@ -24,7 +24,9 @@ class JournalCubit extends Cubit<JournalState> {
       this._profileRepository,
       this._getHighlightsForMonth,
       this._getRatingForInrMeasurement)
-      : super(const JournalState());
+      : super(const JournalState()) {
+    onDayFocused(DateTime.now());
+  }
 
   void onDayFocused(DateTime day) {
     final selectedDay = state.selectedDay;
