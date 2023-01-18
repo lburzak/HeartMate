@@ -1,6 +1,7 @@
 import 'package:apkainzynierka/feature/last_inr_measurements/last_inr_measurements.dart';
 import 'package:apkainzynierka/feature/report_inr/report_inr.dart';
 import 'package:apkainzynierka/feature/today_dosage/today_dosage.dart';
+import 'package:apkainzynierka/feature/week_preview/week_preview.dart';
 import 'package:apkainzynierka/main.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -29,21 +30,7 @@ class _TherapyPageState extends State<TherapyPage> {
       child: Column(
         children: [
           const TodayDosage(),
-          SizedBox(
-              child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: List.generate(
-                    7,
-                    (index) => Column(children: const [
-                          Text("Pn"),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          DailyDosageCircle()
-                        ]))),
-          )),
+          const WeekPreview(),
           SizedBox(
             height: 80,
             child: Padding(
@@ -76,28 +63,6 @@ class _TherapyPageState extends State<TherapyPage> {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class DailyDosageCircle extends StatelessWidget {
-  const DailyDosageCircle({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const SizedBox(
-      height: 50,
-      width: 50,
-      child: Material(
-        shape: CircleBorder(
-            side: BorderSide(
-          color: Colors.green,
-          width: 2,
-        )),
-        child: Center(child: Text('1.5')),
       ),
     );
   }
