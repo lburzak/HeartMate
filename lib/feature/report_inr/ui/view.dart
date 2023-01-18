@@ -13,36 +13,7 @@ class ReportInrView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 500,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            const Header(text: "Dodaj pomiar"),
-            const SizedBox(
-              height: 10,
-            ),
-            TextFormField(
-              keyboardType: TextInputType.number,
-              onChanged: _onInrInput,
-              decoration: InputDecoration(
-                  labelText: "Wprowadź wartość pomiaru INR",
-                  enabledBorder: const UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue)),
-                  filled: true,
-                  errorText: state.error),
-            ),
-            const SizedBox(height: 10),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: ElevatedButton(
-                onPressed: cubit.submit,
-                child: const Text('Dodaj'),
-              ),
-            ),
-          ],
-        ),
-      ),
+      child: _displayContent(context),
     );
   }
 
@@ -55,4 +26,75 @@ class ReportInrView extends StatelessWidget {
 
     cubit.setInr(value);
   }
+
+  SizedBox _displayContent(BuildContext context) {
+    if(MediaQuery.of(context).viewInsets.bottom == 0) {
+      return SizedBox(
+        height: 200,
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              const Header(text: "Dodaj pomiar"),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                keyboardType: TextInputType.number,
+                onChanged: _onInrInput,
+                decoration: InputDecoration(
+                    labelText: "Wprowadź wartość pomiaru INR",
+                    enabledBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blue)),
+                    filled: true,
+                    errorText: state.error),
+              ),
+              const SizedBox(height: 10),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: ElevatedButton(
+                  onPressed: cubit.submit,
+                  child: const Text('Dodaj'),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    } else {
+      return SizedBox(
+        height: 500,
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              const Header(text: "Dodaj pomiar"),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                keyboardType: TextInputType.number,
+                onChanged: _onInrInput,
+                decoration: InputDecoration(
+                    labelText: "Wprowadź wartość pomiaru INR",
+                    enabledBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blue)),
+                    filled: true,
+                    errorText: state.error),
+              ),
+              const SizedBox(height: 10),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: ElevatedButton(
+                  onPressed: cubit.submit,
+                  child: const Text('Dodaj'),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+  }
+
 }
