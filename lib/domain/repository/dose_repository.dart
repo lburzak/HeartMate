@@ -6,4 +6,6 @@ abstract class DoseRepository {
   void removeDoseFromDay(DateTime dateTime);
 
   Dose? findDoseForDay(DateTime dateTime);
+
+  List<Dose> findWithinPeriod({required DateTime start, required DateTime end});
 }

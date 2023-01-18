@@ -5,4 +5,6 @@ abstract class InrMeasurementRepository {
 
   List<InrMeasurement> findWithinPeriod(
       {required DateTime start, required DateTime end});
+
+  InrMeasurement? findForDay(DateTime day);
 }
