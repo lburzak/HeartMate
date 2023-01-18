@@ -4,6 +4,8 @@ import 'package:apkainzynierka/feature/schedule_wizard/service/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../../profile_editor/ui/view.dart';
+
 class ScheduleWizardView extends StatelessWidget {
   final ScheduleWizardState state;
   final ScheduleWizardCubit cubit;
@@ -15,7 +17,10 @@ class ScheduleWizardView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SafeArea(child: Text("Nowy harmonogram")),
+        const SafeArea(
+            child: Header(
+          text: "Nowy harmonogram",
+        )),
         Padding(
           padding: const EdgeInsets.all(20),
           child: _CalendarField(
@@ -30,81 +35,8 @@ class ScheduleWizardView extends StatelessWidget {
           onTypeSelected: (type) => cubit.setScheduleType(type!),
         ),
         state.scheduleType == ScheduleType.weekly
-            ? Row(
-                children: [
-                  const SizedBox(width: 20),
-                  SizedBox(
-                      child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: List.generate(
-                            7,
-                            (index) => Row(children: [
-                                  const Text("dzień tygodnia"),
-                                  const SizedBox(width: 50),
-                                  SizedBox(
-                                    width: 30,
-                                    height: 30,
-                                    child: FloatingActionButton(
-                                      onPressed: () =>
-                                          cubit.decrementDosage(index),
-                                      foregroundColor: Colors.white,
-                                      backgroundColor: Colors.blue,
-                                      child: const Icon(Icons.remove),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 20),
-                                  Text("${state.dosages[index]} mg"),
-                                  const SizedBox(width: 20),
-                                  SizedBox(
-                                    width: 30,
-                                    height: 30,
-                                    child: FloatingActionButton(
-                                      onPressed: () =>
-                                          cubit.incrementDosage(index),
-                                      foregroundColor: Colors.white,
-                                      backgroundColor: Colors.blue,
-                                      child: const Icon(Icons.add),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 40,
-                                  )
-                                ]))),
-                  )),
-                ],
-              )
-            : Row(
-                children: [
-                  const SizedBox(width: 20),
-                  const Text("Codziennie"),
-                  const SizedBox(width: 50),
-                  SizedBox(
-                    width: 30,
-                    height: 30,
-                    child: FloatingActionButton(
-                      onPressed: () => cubit.decrementDosage(0),
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.blue,
-                      child: const Icon(Icons.remove),
-                    ),
-                  ),
-                  const SizedBox(width: 20),
-                  Text("${state.dosages[0]} mg"),
-                  const SizedBox(width: 20),
-                  SizedBox(
-                    width: 30,
-                    height: 30,
-                    child: FloatingActionButton(
-                      onPressed: () => cubit.incrementDosage(0),
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.blue,
-                      child: const Icon(Icons.add),
-                    ),
-                  ),
-                ],
-              ),
+            ? buildRowWeekly()
+            : buildRowDaily(),
         Expanded(
             child: Align(
           alignment: FractionalOffset.bottomCenter,
@@ -117,6 +49,87 @@ class ScheduleWizardView extends StatelessWidget {
         ))
       ],
     );
+  }
+
+  Row buildRowDaily() {
+    return Row(
+              children: [
+                const SizedBox(width: 20),
+                const Text("Codziennie"),
+                const SizedBox(width: 50),
+                SizedBox(
+                  width: 30,
+                  height: 30,
+                  child: FloatingActionButton(
+                    onPressed: () => cubit.decrementDosage(0),
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.blue,
+                    child: const Icon(Icons.remove),
+                  ),
+                ),
+                const SizedBox(width: 20),
+                Text("${state.dosages[0]} mg"),
+                const SizedBox(width: 20),
+                SizedBox(
+                  width: 30,
+                  height: 30,
+                  child: FloatingActionButton(
+                    onPressed: () => cubit.incrementDosage(0),
+                    foregroundColor: Colors.white,
+                    backgroundColor: Colors.blue,
+                    child: const Icon(Icons.add),
+                  ),
+                ),
+              ],
+            );
+  }
+
+  Row buildRowWeekly() {
+    return Row(
+              children: [
+                const SizedBox(width: 20),
+                SizedBox(
+                    child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: List.generate(
+                          7,
+                          (index) => Row(children: [
+                                const Text("dzień tygodnia"),
+                                const SizedBox(width: 50),
+                                SizedBox(
+                                  width: 30,
+                                  height: 30,
+                                  child: FloatingActionButton(
+                                    onPressed: () =>
+                                        cubit.decrementDosage(index),
+                                    foregroundColor: Colors.white,
+                                    backgroundColor: Colors.blue,
+                                    child: const Icon(Icons.remove),
+                                  ),
+                                ),
+                                const SizedBox(width: 20),
+                                Text("${state.dosages[index]} mg"),
+                                const SizedBox(width: 20),
+                                SizedBox(
+                                  width: 30,
+                                  height: 30,
+                                  child: FloatingActionButton(
+                                    onPressed: () =>
+                                        cubit.incrementDosage(index),
+                                    foregroundColor: Colors.white,
+                                    backgroundColor: Colors.blue,
+                                    child: const Icon(Icons.add),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 40,
+                                )
+                              ]))),
+                )),
+              ],
+            );
   }
 }
 
