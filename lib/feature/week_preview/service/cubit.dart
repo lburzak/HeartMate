@@ -1,3 +1,4 @@
+import 'package:apkainzynierka/domain/event/schedule_updated_event.dart';
 import 'package:apkainzynierka/domain/event/today_dose_updated_event.dart';
 import 'package:apkainzynierka/feature/week_preview/model/day_preview.dart';
 import 'package:apkainzynierka/feature/week_preview/model/state.dart';
@@ -17,6 +18,10 @@ class WeekPreviewCubit extends Cubit<WeekPreviewState> {
     _fetchData();
 
     _eventBus.on<TodayDoseUpdatedEvent>().listen((event) {
+      _fetchData();
+    });
+
+    _eventBus.on<ScheduleUpdatedEvent>().listen((event) {
       _fetchData();
     });
   }
