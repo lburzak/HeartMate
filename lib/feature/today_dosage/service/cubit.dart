@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:apkainzynierka/domain/event/schedule_updated_event.dart';
+import 'package:apkainzynierka/domain/event/today_dose_updated_event.dart';
 import 'package:apkainzynierka/domain/repository/dose_repository.dart';
 import 'package:apkainzynierka/domain/repository/schedule_repository.dart';
 import 'package:apkainzynierka/domain/usecase/get_today_dosage.dart';
@@ -52,6 +53,8 @@ class TodayDosageCubit extends Cubit<TodayDosageState> {
       _revertDoseTaken();
       emit(state.copyWith(taken: false));
     }
+
+    _eventBus.fire(TodayDoseUpdatedEvent());
   }
 
   void showCustomDosageScreen() {
