@@ -12,6 +12,7 @@ import 'package:apkainzynierka/feature/journal/service/cubit.dart';
 import 'package:apkainzynierka/feature/journal/ui/view.dart';
 import 'package:apkainzynierka/feature/journal/usecase/get_highlights_for_month.dart';
 import 'package:apkainzynierka/feature/journal/usecase/get_rating_for_inr_measurement.dart';
+import 'package:apkainzynierka/feature/journal/usecase/get_summary_for_day.dart';
 import 'package:apkainzynierka/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,14 +41,15 @@ class JournalPage extends StatelessWidget {
 
 class JournalContainer extends KiwiContainer {
   JournalContainer(AppContainer appContainer) : super.scoped() {
-    registerFactory((r) => JournalCubit(r(), r(), r(), r(), r(), r()));
+    registerFactory((r) => JournalCubit(r(), r()));
     registerFactory<DoseRepository>((r) => LocalDoseRepository(r()));
     registerFactory<ScheduleRepository>((r) => LocalScheduleRepository(r()));
     registerFactory<InrMeasurementRepository>(
         (r) => LocalInrMeasurementRepository(r()));
     registerFactory<ProfileRepository>((r) => LocalProfileRepository(r()));
     registerFactory((r) => GetRatingForInrMeasurement(r()));
-    registerFactory((r) => GetHighlightsForMonth(r(), r(), r()));
+    registerFactory((r) => GetHighlightsForMonth(r(), r(), r(), r()));
+    registerFactory((r) => GetSummaryForDay(r(), r(), r(), r(), r()));
     registerFactory((r) => r.resolve<BoxDatabase>().inrMeasurementsBox);
     registerInstance<BoxDatabase>(appContainer.resolve());
   }

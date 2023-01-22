@@ -16,7 +16,7 @@ extension Days on DateTime {
 
   List<DateTime> get daysOfMonth {
     return List.generate(
-        lastDayOfMonth.day, (index) => DateTime(year, month, index));
+        lastDayOfMonth.day, (index) => DateTime(year, month, index + 1));
   }
 }
 
