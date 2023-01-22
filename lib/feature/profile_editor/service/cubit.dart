@@ -151,9 +151,13 @@ class ProfileEditorCubit extends Cubit<ProfileEditorState> {
     emit(state.copyWith(lastName: name));
   }
 
-  void setAnticoagulant(Anticoagulant value) {}
+  void setAnticoagulant(Anticoagulant value) {
+    emit(state.copyWith(anticoagulant: value));
+  }
 
-  void setIllness(Illness? value) {}
+  void setIllness(Illness? value) {
+    emit(state.copyWith(illness: value));
+  }
 
   void _fetchData() {
     if (_profileRepository.exists()) {

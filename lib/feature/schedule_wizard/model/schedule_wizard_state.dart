@@ -9,5 +9,6 @@ class ScheduleWizardState with _$ScheduleWizardState {
       {required ScheduleType scheduleType,
       required DateTime startDate,
       String? startDateError,
+      required List<int> dosageStepsIndices,
       required List<double> dosages}) = $ScheduleWizardState;
 }

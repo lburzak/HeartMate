@@ -19,6 +19,7 @@ mixin _$ScheduleWizardState {
   ScheduleType get scheduleType => throw _privateConstructorUsedError;
   DateTime get startDate => throw _privateConstructorUsedError;
   String? get startDateError => throw _privateConstructorUsedError;
+  List<int> get dosageStepsIndices => throw _privateConstructorUsedError;
   List<double> get dosages => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -36,6 +37,7 @@ abstract class $ScheduleWizardStateCopyWith<$Res> {
       {ScheduleType scheduleType,
       DateTime startDate,
       String? startDateError,
+      List<int> dosageStepsIndices,
       List<double> dosages});
 }
 
@@ -55,6 +57,7 @@ class _$ScheduleWizardStateCopyWithImpl<$Res, $Val extends ScheduleWizardState>
     Object? scheduleType = null,
     Object? startDate = null,
     Object? startDateError = freezed,
+    Object? dosageStepsIndices = null,
     Object? dosages = null,
   }) {
     return _then(_value.copyWith(
@@ -70,6 +73,10 @@ class _$ScheduleWizardStateCopyWithImpl<$Res, $Val extends ScheduleWizardState>
           ? _value.startDateError
           : startDateError // ignore: cast_nullable_to_non_nullable
               as String?,
+      dosageStepsIndices: null == dosageStepsIndices
+          ? _value.dosageStepsIndices
+          : dosageStepsIndices // ignore: cast_nullable_to_non_nullable
+              as List<int>,
       dosages: null == dosages
           ? _value.dosages
           : dosages // ignore: cast_nullable_to_non_nullable
@@ -90,6 +97,7 @@ abstract class _$$$ScheduleWizardStateCopyWith<$Res>
       {ScheduleType scheduleType,
       DateTime startDate,
       String? startDateError,
+      List<int> dosageStepsIndices,
       List<double> dosages});
 }
 
@@ -107,6 +115,7 @@ class __$$$ScheduleWizardStateCopyWithImpl<$Res>
     Object? scheduleType = null,
     Object? startDate = null,
     Object? startDateError = freezed,
+    Object? dosageStepsIndices = null,
     Object? dosages = null,
   }) {
     return _then(_$$ScheduleWizardState(
@@ -122,6 +131,10 @@ class __$$$ScheduleWizardStateCopyWithImpl<$Res>
           ? _value.startDateError
           : startDateError // ignore: cast_nullable_to_non_nullable
               as String?,
+      dosageStepsIndices: null == dosageStepsIndices
+          ? _value._dosageStepsIndices
+          : dosageStepsIndices // ignore: cast_nullable_to_non_nullable
+              as List<int>,
       dosages: null == dosages
           ? _value._dosages
           : dosages // ignore: cast_nullable_to_non_nullable
@@ -137,8 +150,10 @@ class _$$ScheduleWizardState implements $ScheduleWizardState {
       {required this.scheduleType,
       required this.startDate,
       this.startDateError,
+      required final List<int> dosageStepsIndices,
       required final List<double> dosages})
-      : _dosages = dosages;
+      : _dosageStepsIndices = dosageStepsIndices,
+        _dosages = dosages;
 
   @override
   final ScheduleType scheduleType;
@@ -146,6 +161,15 @@ class _$$ScheduleWizardState implements $ScheduleWizardState {
   final DateTime startDate;
   @override
   final String? startDateError;
+  final List<int> _dosageStepsIndices;
+  @override
+  List<int> get dosageStepsIndices {
+    if (_dosageStepsIndices is EqualUnmodifiableListView)
+      return _dosageStepsIndices;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_dosageStepsIndices);
+  }
+
   final List<double> _dosages;
   @override
   List<double> get dosages {
@@ -156,7 +180,7 @@ class _$$ScheduleWizardState implements $ScheduleWizardState {
 
   @override
   String toString() {
-    return 'ScheduleWizardState(scheduleType: $scheduleType, startDate: $startDate, startDateError: $startDateError, dosages: $dosages)';
+    return 'ScheduleWizardState(scheduleType: $scheduleType, startDate: $startDate, startDateError: $startDateError, dosageStepsIndices: $dosageStepsIndices, dosages: $dosages)';
   }
 
   @override
@@ -170,12 +194,19 @@ class _$$ScheduleWizardState implements $ScheduleWizardState {
                 other.startDate == startDate) &&
             (identical(other.startDateError, startDateError) ||
                 other.startDateError == startDateError) &&
+            const DeepCollectionEquality()
+                .equals(other._dosageStepsIndices, _dosageStepsIndices) &&
             const DeepCollectionEquality().equals(other._dosages, _dosages));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, scheduleType, startDate,
-      startDateError, const DeepCollectionEquality().hash(_dosages));
+  int get hashCode => Object.hash(
+      runtimeType,
+      scheduleType,
+      startDate,
+      startDateError,
+      const DeepCollectionEquality().hash(_dosageStepsIndices),
+      const DeepCollectionEquality().hash(_dosages));
 
   @JsonKey(ignore: true)
   @override
@@ -190,6 +221,7 @@ abstract class $ScheduleWizardState implements ScheduleWizardState {
       {required final ScheduleType scheduleType,
       required final DateTime startDate,
       final String? startDateError,
+      required final List<int> dosageStepsIndices,
       required final List<double> dosages}) = _$$ScheduleWizardState;
 
   @override
@@ -198,6 +230,8 @@ abstract class $ScheduleWizardState implements ScheduleWizardState {
   DateTime get startDate;
   @override
   String? get startDateError;
+  @override
+  List<int> get dosageStepsIndices;
   @override
   List<double> get dosages;
   @override
