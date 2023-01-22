@@ -1,5 +1,6 @@
 import 'package:apkainzynierka/feature/profile_summary/ui/profile_summary_view.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfileSummaryPage extends StatelessWidget {
   const ProfileSummaryPage({super.key});
@@ -14,7 +15,9 @@ class ProfileSummaryPage extends StatelessWidget {
           Icons.edit,
           color: Colors.white,
         ),
-        onPressed: () {},
+        onPressed: () {
+          context.push("/profile/editor");
+        },
       ),
     );
   }
