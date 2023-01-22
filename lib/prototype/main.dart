@@ -1,10 +1,8 @@
-import 'package:apkainzynierka/feature/welcome/ui/welcome_view.dart';
+import 'package:apkainzynierka/feature/profile_summary/ui/profile_summary_page.dart';
 import 'package:apkainzynierka/theme/theme_constants.dart';
 import 'package:flutter/material.dart';
 
-import '../feature/profile_summary/ui/profile_summary_view.dart';
-
-void main() => testWidget(() => ProfileSummaryView());
+void main() => testWidget(() => ProfileSummaryPage());
 
 void testWidget(Widget Function() builder) {
   runApp(WidgetTestApp(builder: builder));
