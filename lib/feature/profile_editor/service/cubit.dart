@@ -6,6 +6,7 @@ import 'package:apkainzynierka/domain/model/inr_range.dart';
 import 'package:apkainzynierka/domain/repository/profile_repository.dart';
 import 'package:apkainzynierka/feature/profile_editor/model/state.dart';
 import 'package:apkainzynierka/feature/profile_editor/model/time_of_day.dart';
+import 'package:apkainzynierka/feature/profile_editor/service/routing.dart';
 import 'package:apkainzynierka/feature/profile_editor/usecase/schedule_notifications.dart';
 import 'package:apkainzynierka/feature/profile_editor/usecase/update_profile.dart';
 import 'package:apkainzynierka/util/time_extensions.dart';
@@ -26,9 +27,10 @@ class ProfileEditorCubit extends Cubit<ProfileEditorState> {
   final ScheduleNotifications _scheduleNotifications;
   final ProfileRepository _profileRepository;
   final EventBus _eventBus;
+  final ProfileEditorRouting _routing;
 
   ProfileEditorCubit(this._updateProfile, this._scheduleNotifications,
-      this._profileRepository, this._eventBus)
+      this._profileRepository, this._eventBus, this._routing)
       : super(_initialState) {
     _fetchData();
   }
@@ -52,6 +54,7 @@ class ProfileEditorCubit extends Cubit<ProfileEditorState> {
     }
 
     _eventBus.fire(ProfileUpdatedEvent());
+    _routing.finish();
   }
 
   void enableNotifications() {

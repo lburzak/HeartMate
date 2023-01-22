@@ -3,6 +3,8 @@ import 'package:apkainzynierka/data/local_profile_repository.dart';
 import 'package:apkainzynierka/domain/repository/profile_repository.dart';
 import 'package:apkainzynierka/feature/profile_editor/model/state.dart';
 import 'package:apkainzynierka/feature/profile_editor/service/cubit.dart';
+import 'package:apkainzynierka/feature/profile_editor/service/routing.dart';
+import 'package:apkainzynierka/feature/profile_editor/ui/routing.dart';
 import 'package:apkainzynierka/feature/profile_editor/ui/view.dart';
 import 'package:apkainzynierka/feature/profile_editor/usecase/schedule_notifications.dart';
 import 'package:apkainzynierka/feature/profile_editor/usecase/update_profile.dart';
@@ -17,7 +19,7 @@ class ProfileEditor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final container = ProfileEditorContainer(context.read());
+    final container = ProfileEditorContainer(context.read(), context);
 
     return BlocProvider<ProfileEditorCubit>(
       create: (context) => container.resolve(),
@@ -29,13 +31,16 @@ class ProfileEditor extends StatelessWidget {
 }
 
 class ProfileEditorContainer extends KiwiContainer {
-  ProfileEditorContainer(AppContainer appContainer) : super.scoped() {
-    registerFactory((r) =>
-        ProfileEditorCubit(r.resolve(), r.resolve(), r.resolve(), r.resolve()));
+  ProfileEditorContainer(AppContainer appContainer, BuildContext context)
+      : super.scoped() {
+    registerFactory((r) => ProfileEditorCubit(
+        r.resolve(), r.resolve(), r.resolve(), r.resolve(), r.resolve()));
     registerFactory((r) => UpdateProfile(r.resolve()));
     registerFactory((r) => ScheduleNotifications());
     registerFactory<ProfileRepository>(
         (r) => LocalProfileRepository(r.resolve()));
+    registerFactory<ProfileEditorRouting>(
+        (r) => MaterialProfileEditorRouting(context));
     registerInstance<BoxDatabase>(appContainer.resolve());
     registerInstance<EventBus>(appContainer.resolve());
   }
