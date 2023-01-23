@@ -1,6 +1,6 @@
 import 'package:apkainzynierka/feature/main_page/journal_page.dart';
 import 'package:apkainzynierka/feature/main_page/therapy_page.dart';
-import 'package:apkainzynierka/feature/profile_summary/ui/profile_summary_page.dart';
+import 'package:apkainzynierka/feature/profile_summary/profile_summary.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +30,7 @@ class _MainViewState extends State<MainView> {
           onPageChanged: (index) {
             setState(() => _currentPageIndex = index);
           },
-          children: const [TherapyPage(), JournalPage(), ProfileSummaryPage()],
+          children: const [TherapyPage(), JournalPage(), ProfileSummary()],
         ),
       ),
       bottomNavigationBar: _buildBottomBar(
