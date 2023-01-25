@@ -46,13 +46,11 @@ class ScheduleWizardView extends StatelessWidget {
                 height: 72,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton.icon(
-                      onPressed: cubit.save,
-                      icon: const Icon(Icons.check),
-                      label: const Text(
-                        "ZAPISZ",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      )),
+                  child: ActionButton(
+                    onPressed: cubit.save,
+                    label: "ZAPISZ",
+                    icon: Icons.done,
+                  ),
                 )),
           )
         ],
@@ -97,6 +95,44 @@ class ScheduleWizardView extends StatelessWidget {
                         dosage: state.dosages[index],
                       )
                     ])));
+  }
+}
+
+class ActionButton extends StatelessWidget {
+  final void Function() onPressed;
+  final String label;
+  final IconData icon;
+
+  const ActionButton({
+    Key? key,
+    required this.onPressed,
+    required this.label,
+    required this.icon,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        onPressed: onPressed,
+        child: SizedBox(
+          width: double.infinity,
+          child: Stack(
+            children: [
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: Icon(
+                    icon,
+                    size: 28,
+                  )),
+              Center(
+                child: Text(
+                  label,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+              )
+            ],
+          ),
+        ));
   }
 }
 
