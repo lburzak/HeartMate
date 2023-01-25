@@ -10,10 +10,12 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() async {
   Provider.debugCheckInvalidValueType = null;
   await BoxDatabase.init();
+  initializeDateFormatting("pl_PL", null);
   runApp(const MyApp());
 }
 

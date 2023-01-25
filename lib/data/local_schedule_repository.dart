@@ -2,6 +2,7 @@ import 'package:apkainzynierka/data/database.dart';
 import 'package:apkainzynierka/domain/model/schedule.dart';
 import 'package:apkainzynierka/domain/repository/resource_error.dart';
 import 'package:apkainzynierka/domain/repository/schedule_repository.dart';
+import 'package:apkainzynierka/util/period.dart';
 import 'package:hive/hive.dart';
 
 class LocalScheduleRepository extends ScheduleRepository {
@@ -34,7 +35,9 @@ class LocalScheduleRepository extends ScheduleRepository {
   @override
   int? getScheduleIdForDay(DateTime dateTime) {
     final matchingSchedules = _schedules.values
-        .where((i) => i.effectiveFrom.isBefore(dateTime))
+        .where((i) =>
+            i.effectiveFrom.isBefore(dateTime) ||
+            i.effectiveFrom.isAtSameMomentAs(dateTime))
         .toList();
 
     if (matchingSchedules.isEmpty) {
@@ -44,7 +47,7 @@ class LocalScheduleRepository extends ScheduleRepository {
     matchingSchedules
         .sort((a, b) => a.effectiveFrom.compareTo(b.effectiveFrom));
 
-    return matchingSchedules[0].id;
+    return matchingSchedules.last.id;
   }
 
   @override
@@ -61,5 +64,19 @@ class LocalScheduleRepository extends ScheduleRepository {
     return _schedules.values
         .where((i) => i.effectiveFrom.isBefore(dateTime))
         .isNotEmpty;
+  }
+
+  @override
+  Map<DateTime, double?> getDosagesForPeriod(
+      {required DateTime start, required DateTime end}) {
+    final period = Period(start: start, end: end);
+
+    return Map.fromEntries(period.days.map((day) {
+      final scheduleId = getScheduleIdForDay(day);
+      final dosage =
+          scheduleId == null ? null : getDosageForDay(scheduleId, day);
+
+      return MapEntry(day, dosage);
+    }));
   }
 }
