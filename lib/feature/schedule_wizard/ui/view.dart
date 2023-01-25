@@ -207,6 +207,7 @@ class _ScheduleTypeOption extends StatelessWidget {
       title: _createTitle(),
       subtitle: _createDescription(),
       leading: Radio<ScheduleType>(
+        activeColor: Colors.blue,
         value: scheduleType,
         groupValue: selectedScheduleType,
         onChanged: onChanged,
