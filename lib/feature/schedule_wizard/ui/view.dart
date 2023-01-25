@@ -1,6 +1,8 @@
 import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_type.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_wizard_state.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/service/cubit.dart';
+import 'package:apkainzynierka/util/date.dart';
+import 'package:apkainzynierka/util/string.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -15,109 +17,145 @@ class ScheduleWizardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SafeArea(
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const SafeArea(
+              child: Padding(
+            padding: EdgeInsets.all(18.0),
             child: Header(
-          text: "Dostosuj harmonogram",
-        )),
-        _ScheduleTypeSelector(
-          selectedType: state.scheduleType,
-          onTypeSelected: (type) => cubit.setScheduleType(type!),
-        ),
-        state.scheduleType == ScheduleType.weekly
-            ? buildRowWeekly()
-            : buildRowDaily(),
-        Expanded(
-            child: Align(
-          alignment: FractionalOffset.bottomCenter,
-          child: SizedBox(
-              width: 200,
-              child: ElevatedButton.icon(
-                  onPressed: cubit.save,
-                  icon: const Icon(Icons.check),
-                  label: const Text("zapisz"))),
-        ))
+              text: "Dostosuj harmonogram",
+            ),
+          )),
+          _ScheduleTypeSelector(
+            selectedType: state.scheduleType,
+            onTypeSelected: (type) => cubit.setScheduleType(type!),
+          ),
+          Padding(
+            padding:
+                const EdgeInsets.only(left: 24, right: 24, top: 12, bottom: 12),
+            child: state.scheduleType == ScheduleType.weekly
+                ? buildRowWeekly()
+                : buildRowDaily(),
+          ),
+          Align(
+            alignment: FractionalOffset.bottomCenter,
+            child: SizedBox(
+                width: double.infinity,
+                height: 72,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton.icon(
+                      onPressed: cubit.save,
+                      icon: const Icon(Icons.check),
+                      label: const Text(
+                        "ZAPISZ",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      )),
+                )),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget buildRowDaily() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        const Text("Codziennie",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+        DosagePicker(
+            onIncrement: () => cubit.incrementDosage(0),
+            onDecrement: () => cubit.decrementDosage(0),
+            dosage: state.dosages[0])
       ],
     );
   }
 
-  Row buildRowDaily() {
+  Widget buildRowWeekly() {
+    return Column(
+        children: List.generate(
+            7,
+            (index) => Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        DateFormat("EEEE", "pl_PL")
+                            .format(DateTime.now()
+                                .week
+                                .monday
+                                .add(Duration(days: index)))
+                            .capitalize(),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                      DosagePicker(
+                        onIncrement: () => cubit.incrementDosage(index),
+                        onDecrement: () => cubit.decrementDosage(index),
+                        dosage: state.dosages[index],
+                      )
+                    ])));
+  }
+}
+
+class DosagePicker extends StatelessWidget {
+  final void Function() onIncrement;
+  final void Function() onDecrement;
+  final double dosage;
+
+  const DosagePicker(
+      {super.key,
+      required this.onIncrement,
+      required this.onDecrement,
+      required this.dosage});
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       children: [
-        const SizedBox(width: 20),
-        const Text("Codziennie"),
-        const SizedBox(width: 50),
+        CircleButton(
+          onPressed: onDecrement,
+          icon: Icons.remove,
+        ),
         SizedBox(
-          width: 30,
-          height: 30,
-          child: FloatingActionButton(
-            onPressed: () => cubit.decrementDosage(0),
-            foregroundColor: Colors.white,
-            backgroundColor: Colors.blue,
-            child: const Icon(Icons.remove),
+          width: 90,
+          child: Center(
+            child: Text(
+              "$dosage mg",
+              style: const TextStyle(fontSize: 17),
+            ),
           ),
         ),
-        const SizedBox(width: 20),
-        Text("${state.dosages[0]} mg"),
-        const SizedBox(width: 20),
-        SizedBox(
-          width: 30,
-          height: 30,
-          child: FloatingActionButton(
-            onPressed: () => cubit.incrementDosage(0),
-            foregroundColor: Colors.white,
-            backgroundColor: Colors.blue,
-            child: const Icon(Icons.add),
-          ),
+        CircleButton(
+          onPressed: onIncrement,
+          icon: Icons.add,
         ),
       ],
     );
   }
+}
 
-  Row buildRowWeekly() {
-    return Row(
-      children: [
-        const SizedBox(width: 20),
-        SizedBox(
-            child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: List.generate(
-                  7,
-                  (index) => Row(children: [
-                        const Text("dzień tygodnia"),
-                        const SizedBox(width: 50),
-                        SizedBox(
-                          width: 30,
-                          height: 30,
-                          child: FloatingActionButton(
-                            onPressed: () => cubit.decrementDosage(index),
-                            foregroundColor: Colors.white,
-                            backgroundColor: Colors.blue,
-                            child: const Icon(Icons.remove),
-                          ),
-                        ),
-                        const SizedBox(width: 20),
-                        Text("${state.dosages[index]} mg"),
-                        const SizedBox(width: 20),
-                        SizedBox(
-                          width: 30,
-                          height: 30,
-                          child: FloatingActionButton(
-                            onPressed: () => cubit.incrementDosage(index),
-                            foregroundColor: Colors.white,
-                            backgroundColor: Colors.blue,
-                            child: const Icon(Icons.add),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 40,
-                        )
-                      ]))),
-        )),
-      ],
+class CircleButton extends StatelessWidget {
+  final void Function() onPressed;
+  final IconData icon;
+
+  const CircleButton({super.key, required this.onPressed, required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      constraints: const BoxConstraints(minHeight: 36, minWidth: 36),
+      onPressed: onPressed,
+      elevation: 2.0,
+      fillColor: Colors.blue,
+      shape: const CircleBorder(),
+      clipBehavior: Clip.antiAlias,
+      child: Icon(
+        icon,
+        size: 20.0,
+      ),
     );
   }
 }
