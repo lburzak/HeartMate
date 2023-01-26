@@ -105,17 +105,6 @@ class ProfileSummaryView extends StatelessWidget {
               SizedBox(width: 100),
               Text("wyłączone")
             ]),
-            const SizedBox(height: 218),
-            Row(
-              children: [
-                const SizedBox(width: 312),
-                FloatingActionButton(
-                    foregroundColor: Colors.white,
-                    backgroundColor: Colors.blue,
-                    child: const Icon(Icons.edit),
-                    onPressed: () => {}),
-              ],
-            ),
           ],
         ),
       ),
