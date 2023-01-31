@@ -1,8 +1,6 @@
-import 'package:apkainzynierka/domain/model/anticoagulant.dart';
-import 'package:apkainzynierka/domain/model/gender.dart';
-import 'package:apkainzynierka/domain/model/illness.dart';
 import 'package:apkainzynierka/domain/model/profile.dart';
 import 'package:apkainzynierka/feature/profile_editor/ui/view.dart';
+import 'package:apkainzynierka/util/lang.dart';
 import 'package:flutter/material.dart';
 
 class ProfileSummaryView extends StatelessWidget {
@@ -35,7 +33,7 @@ class ProfileSummaryView extends StatelessWidget {
               SizedBox(width: 30),
               Text('Rodzaj schorzenia'),
               SizedBox(width: 90),
-              Text(_displayIllness(model.illness))
+              Text(model.illness.readable)
             ]),
             const SizedBox(height: 10),
             Row(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -63,7 +61,7 @@ class ProfileSummaryView extends StatelessWidget {
               SizedBox(width: 30),
               Text('Płeć'),
               SizedBox(width: 175),
-              Text(_displayGender(model.gender))
+              Text(model.gender.readable)
             ]),
             const SizedBox(height: 20),
             Row(children: const [
@@ -76,7 +74,7 @@ class ProfileSummaryView extends StatelessWidget {
               SizedBox(width: 30),
               Text('Przyjmowany antykoagulant'),
               SizedBox(width: 28),
-              Text(_displayAnticoagulant(model.anticoagulant))
+              Text(model.anticoagulant.readable)
             ]),
             const SizedBox(height: 10),
             Row(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -109,40 +107,5 @@ class ProfileSummaryView extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String _displayGender(Gender? gender) {
-    switch (gender) {
-      case Gender.male:
-        return "Mężczyzna";
-      case Gender.female:
-        return "Kobieta";
-      default:
-        return "nie podano";
-    }
-  }
-
-  String _displayIllness(Illness? illness) {
-    switch (illness) {
-      case Illness.artificialValve:
-        return "Sztuczna zastawka";
-      case Illness.other:
-        return "Inne";
-      default:
-        return "nie podano";
-    }
-  }
-
-  String _displayAnticoagulant(Anticoagulant value) {
-    switch (value) {
-      case Anticoagulant.acenokumarol:
-        return "Acenokumarol";
-      case Anticoagulant.sintrom:
-        return "Sintrom";
-      case Anticoagulant.warfin:
-        return "Warfarin";
-      default:
-        return "nie podano";
-    }
   }
 }
