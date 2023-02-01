@@ -1,19 +1,9 @@
 import 'package:apkainzynierka/feature/therapy_report/model/therapy_report.dart';
 import 'package:apkainzynierka/feature/therapy_report/ui/pdf_report_builder.dart';
-import 'package:apkainzynierka/feature/therapy_report/usecase/get_therapy_report.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
-
-void main() async {
-  initializeDateFormatting("pl_PL", null);
-  runApp(MaterialApp(
-    color: Color(0x000000ff),
-    home: PdfReportPreview(report: GetTherapyReport()(),),
-  ));
-}
 
 class PdfReportPreview extends StatelessWidget {
   final TherapyReport report;

@@ -5,7 +5,7 @@ import 'package:apkainzynierka/feature/therapy_report/model/journal_entry.dart';
 import 'package:apkainzynierka/feature/therapy_report/model/therapy_report.dart';
 
 class GetTherapyReport {
-  TherapyReport call() {
+  TherapyReport call({required DateTime start, required DateTime end}) {
     final now = DateTime.now();
     final oneDay = Duration(days: 1);
     return TherapyReport(
