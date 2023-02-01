@@ -23,6 +23,10 @@ mixin _$TherapyReportState {
   int? get age => throw _privateConstructorUsedError;
   Gender? get gender => throw _privateConstructorUsedError;
   Illness? get illness => throw _privateConstructorUsedError;
+  DateTime get reportDate => throw _privateConstructorUsedError;
+  List<JournalEntry> get journalEntries => throw _privateConstructorUsedError;
+  Map<DateTime, double> get inrMeasurements =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TherapyReportStateCopyWith<TherapyReportState> get copyWith =>
@@ -42,7 +46,10 @@ abstract class $TherapyReportStateCopyWith<$Res> {
       int? weight,
       int? age,
       Gender? gender,
-      Illness? illness});
+      Illness? illness,
+      DateTime reportDate,
+      List<JournalEntry> journalEntries,
+      Map<DateTime, double> inrMeasurements});
 }
 
 /// @nodoc
@@ -65,6 +72,9 @@ class _$TherapyReportStateCopyWithImpl<$Res, $Val extends TherapyReportState>
     Object? age = freezed,
     Object? gender = freezed,
     Object? illness = freezed,
+    Object? reportDate = null,
+    Object? journalEntries = null,
+    Object? inrMeasurements = null,
   }) {
     return _then(_value.copyWith(
       firstName: freezed == firstName
@@ -95,6 +105,18 @@ class _$TherapyReportStateCopyWithImpl<$Res, $Val extends TherapyReportState>
           ? _value.illness
           : illness // ignore: cast_nullable_to_non_nullable
               as Illness?,
+      reportDate: null == reportDate
+          ? _value.reportDate
+          : reportDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      journalEntries: null == journalEntries
+          ? _value.journalEntries
+          : journalEntries // ignore: cast_nullable_to_non_nullable
+              as List<JournalEntry>,
+      inrMeasurements: null == inrMeasurements
+          ? _value.inrMeasurements
+          : inrMeasurements // ignore: cast_nullable_to_non_nullable
+              as Map<DateTime, double>,
     ) as $Val);
   }
 }
@@ -114,7 +136,10 @@ abstract class _$$_TherapyReportStateCopyWith<$Res>
       int? weight,
       int? age,
       Gender? gender,
-      Illness? illness});
+      Illness? illness,
+      DateTime reportDate,
+      List<JournalEntry> journalEntries,
+      Map<DateTime, double> inrMeasurements});
 }
 
 /// @nodoc
@@ -135,6 +160,9 @@ class __$$_TherapyReportStateCopyWithImpl<$Res>
     Object? age = freezed,
     Object? gender = freezed,
     Object? illness = freezed,
+    Object? reportDate = null,
+    Object? journalEntries = null,
+    Object? inrMeasurements = null,
   }) {
     return _then(_$_TherapyReportState(
       firstName: freezed == firstName
@@ -165,6 +193,18 @@ class __$$_TherapyReportStateCopyWithImpl<$Res>
           ? _value.illness
           : illness // ignore: cast_nullable_to_non_nullable
               as Illness?,
+      reportDate: null == reportDate
+          ? _value.reportDate
+          : reportDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      journalEntries: null == journalEntries
+          ? _value._journalEntries
+          : journalEntries // ignore: cast_nullable_to_non_nullable
+              as List<JournalEntry>,
+      inrMeasurements: null == inrMeasurements
+          ? _value._inrMeasurements
+          : inrMeasurements // ignore: cast_nullable_to_non_nullable
+              as Map<DateTime, double>,
     ));
   }
 }
@@ -179,7 +219,12 @@ class _$_TherapyReportState implements _TherapyReportState {
       this.weight,
       this.age,
       this.gender,
-      this.illness});
+      this.illness,
+      required this.reportDate,
+      required final List<JournalEntry> journalEntries,
+      required final Map<DateTime, double> inrMeasurements})
+      : _journalEntries = journalEntries,
+        _inrMeasurements = inrMeasurements;
 
   @override
   final String? firstName;
@@ -195,10 +240,27 @@ class _$_TherapyReportState implements _TherapyReportState {
   final Gender? gender;
   @override
   final Illness? illness;
+  @override
+  final DateTime reportDate;
+  final List<JournalEntry> _journalEntries;
+  @override
+  List<JournalEntry> get journalEntries {
+    if (_journalEntries is EqualUnmodifiableListView) return _journalEntries;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_journalEntries);
+  }
+
+  final Map<DateTime, double> _inrMeasurements;
+  @override
+  Map<DateTime, double> get inrMeasurements {
+    if (_inrMeasurements is EqualUnmodifiableMapView) return _inrMeasurements;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_inrMeasurements);
+  }
 
   @override
   String toString() {
-    return 'TherapyReportState(firstName: $firstName, lastName: $lastName, height: $height, weight: $weight, age: $age, gender: $gender, illness: $illness)';
+    return 'TherapyReportState(firstName: $firstName, lastName: $lastName, height: $height, weight: $weight, age: $age, gender: $gender, illness: $illness, reportDate: $reportDate, journalEntries: $journalEntries, inrMeasurements: $inrMeasurements)';
   }
 
   @override
@@ -214,12 +276,28 @@ class _$_TherapyReportState implements _TherapyReportState {
             (identical(other.weight, weight) || other.weight == weight) &&
             (identical(other.age, age) || other.age == age) &&
             (identical(other.gender, gender) || other.gender == gender) &&
-            (identical(other.illness, illness) || other.illness == illness));
+            (identical(other.illness, illness) || other.illness == illness) &&
+            (identical(other.reportDate, reportDate) ||
+                other.reportDate == reportDate) &&
+            const DeepCollectionEquality()
+                .equals(other._journalEntries, _journalEntries) &&
+            const DeepCollectionEquality()
+                .equals(other._inrMeasurements, _inrMeasurements));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, firstName, lastName, height, weight, age, gender, illness);
+      runtimeType,
+      firstName,
+      lastName,
+      height,
+      weight,
+      age,
+      gender,
+      illness,
+      reportDate,
+      const DeepCollectionEquality().hash(_journalEntries),
+      const DeepCollectionEquality().hash(_inrMeasurements));
 
   @JsonKey(ignore: true)
   @override
@@ -231,13 +309,17 @@ class _$_TherapyReportState implements _TherapyReportState {
 
 abstract class _TherapyReportState implements TherapyReportState {
   const factory _TherapyReportState(
-      {final String? firstName,
-      final String? lastName,
-      final int? height,
-      final int? weight,
-      final int? age,
-      final Gender? gender,
-      final Illness? illness}) = _$_TherapyReportState;
+          {final String? firstName,
+          final String? lastName,
+          final int? height,
+          final int? weight,
+          final int? age,
+          final Gender? gender,
+          final Illness? illness,
+          required final DateTime reportDate,
+          required final List<JournalEntry> journalEntries,
+          required final Map<DateTime, double> inrMeasurements}) =
+      _$_TherapyReportState;
 
   @override
   String? get firstName;
@@ -253,6 +335,12 @@ abstract class _TherapyReportState implements TherapyReportState {
   Gender? get gender;
   @override
   Illness? get illness;
+  @override
+  DateTime get reportDate;
+  @override
+  List<JournalEntry> get journalEntries;
+  @override
+  Map<DateTime, double> get inrMeasurements;
   @override
   @JsonKey(ignore: true)
   _$$_TherapyReportStateCopyWith<_$_TherapyReportState> get copyWith =>

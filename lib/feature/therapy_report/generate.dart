@@ -1,5 +1,9 @@
+import 'dart:math';
+
+import 'package:apkainzynierka/domain/model/anticoagulant.dart';
 import 'package:apkainzynierka/domain/model/gender.dart';
 import 'package:apkainzynierka/domain/model/illness.dart';
+import 'package:apkainzynierka/feature/therapy_report/model/journal_entry.dart';
 import 'package:apkainzynierka/feature/therapy_report/model/state.dart';
 import 'package:apkainzynierka/util/lang.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -10,19 +14,40 @@ import 'package:printing/printing.dart';
 
 Future<Document> generate() async {
   initializeDateFormatting("pl_PL", null);
+  final reportDateFormat = DateFormat("dd.MM.yyyy o HH:mm", 'pl_PL');
   final pdf = Document(version: PdfVersion.pdf_1_5, compress: true);
   final lightFont = await PdfGoogleFonts.poppinsRegular();
   final boldFont = await PdfGoogleFonts.poppinsBold();
   final icons = await PdfGoogleFonts.materialIcons();
-  const model = TherapyReportState(
-    age: 24,
-    firstName: "Łukasz",
-    lastName: "Burzak",
-    gender: Gender.male,
-    height: 177,
-    illness: Illness.other,
-    weight: 65,
-  );
+  final now = DateTime.now();
+  final oneDay = Duration(days: 1);
+  final model = TherapyReportState(
+      reportDate: now,
+      age: 24,
+      firstName: "Łukasz",
+      lastName: "Burzak",
+      gender: Gender.male,
+      height: 177,
+      illness: Illness.other,
+      weight: 65,
+      journalEntries: List.generate(
+          120,
+          (index) => JournalEntry(
+              date: now.subtract(oneDay),
+              scheduledDose: index.isEven ? index % 10 : null,
+              takenDose: index.isOdd ? index % 10 : null,
+              otherMedicines: ["Metmin", "Clatra"],
+              anticoagulant: Anticoagulant.warfin)),
+      inrMeasurements: {
+        now.subtract(Duration(days: 80)): 1.5,
+        now.subtract(Duration(days: 70)): 2,
+        now.subtract(Duration(days: 60)): 2.5,
+        now.subtract(Duration(days: 50)): 7,
+        now.subtract(Duration(days: 40)): 3.5,
+        now.subtract(Duration(days: 30)): 3.5,
+        now.subtract(Duration(days: 20)): 4.5,
+        now.subtract(Duration(days: 10)): 1.5,
+      });
   final base = ThemeData.withFont(base: lightFont, bold: boldFont);
   final theme = base.copyWith(
       header0: base.header0.copyWith(fontWeight: FontWeight.bold),
@@ -42,7 +67,7 @@ Future<Document> generate() async {
               padding: EdgeInsets.only(top: 6),
               child: Row(children: [
                 Text(
-                    "Wygenerowano z HeartMate dnia ${DateFormat("dd.MM.yyyy hh:mm", 'pl_PL').format(DateTime.now())}")
+                    "Wygenerowano z HeartMate dnia ${reportDateFormat.format(DateTime.now())}")
               ]))),
       build: (context) {
         return [
@@ -50,22 +75,7 @@ Future<Document> generate() async {
             Expanded(
                 child: SizedBox(
                     height: 100,
-                    child: Chart(
-                        grid: CartesianGrid(
-                            xAxis: FixedAxis(
-                              marginStart: 10,
-                              List.generate(30, (index) => index + 1),
-                              buildLabel: (value) => Text(value.toString(),
-                                  style: TextStyle(fontSize: 8)),
-                            ),
-                            yAxis: FixedAxis([1, 2, 3])),
-                        datasets: [
-                          LineDataSet(data: [
-                            const PointChartValue(1, 2),
-                            const PointChartValue(2, 3),
-                            const PointChartValue(3, 3)
-                          ])
-                        ]))),
+                    child: buildInrChart(context, model))),
             SizedBox(width: 20),
             Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -76,7 +86,7 @@ Future<Document> generate() async {
                 ])
           ]),
           SizedBox(height: 20),
-          buildMonthTable(context),
+          buildMonthTable(context, model),
         ];
       },
     ),
@@ -89,22 +99,35 @@ Future<Document> generate() async {
   // await file.writeAsBytes(await pdf.save());
 }
 
-Widget buildMonthTable(Context context) {
-  final format = DateFormat('dd.MM.yyyy', 'pl_PL');
+Widget buildInrChart(Context context, TherapyReportState model) {
+  return Chart(
+      grid: CartesianGrid(
+          xAxis: FixedAxis(
+            model.inrMeasurements.keys.map((e) => e.millisecondsSinceEpoch).toList(),
+            marginStart: 10,
+            buildLabel: (value) => Text(DateFormat("dd.MM").format(DateTime.fromMillisecondsSinceEpoch(value.toInt())),
+                style: TextStyle(fontSize: 8)),
+          ),
+          yAxis: FixedAxis([...List.generate(model.inrMeasurements.values.reduce(max).ceil() + 1, (index) => index)])),
+      datasets: [
+        LineDataSet(data: [
+          ...model.inrMeasurements.entries.map((e) => PointChartValue(e.key.millisecondsSinceEpoch.toDouble(), e.value))
+        ], isCurved: true)
+      ]);
+}
+
+Widget buildMonthTable(Context context, TherapyReportState model) {
+  final journalDateFormat = DateFormat('dd.MM.yyyy', 'pl_PL');
 
   return Table(border: TableBorder.all(), children: [
     buildMonthTableHeader(context),
-    ...List.generate(
-        120,
-        (index) => TableRow(children: [
-              Text(
-                  format.format(DateTime.now().subtract(Duration(days: index))),
-                  style: Theme.of(context).tableHeader),
-              Text("$index"),
-              Text("$index"),
-              Text("$index"),
-              Text("$index"),
-            ]))
+    ...model.journalEntries.map((e) => TableRow(children: [
+          Text(journalDateFormat.format(e.date), style: Theme.of(context).tableHeader),
+          Text(e.anticoagulant?.readable ?? "-"),
+          Text(e.scheduledDose?.toString() ?? "-"),
+          Text(e.takenDose?.toString() ?? "-"),
+          Text(e.otherMedicines.join(", ")),
+        ]))
   ]);
 }
 
