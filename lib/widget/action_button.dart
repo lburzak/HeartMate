@@ -4,12 +4,14 @@ class ActionButton extends StatelessWidget {
   final void Function() onPressed;
   final String label;
   final IconData icon;
+  final EdgeInsets padding;
 
   const ActionButton({
     Key? key,
     required this.onPressed,
     required this.label,
     required this.icon,
+    this.padding = const EdgeInsets.all(8.0),
   }) : super(key: key);
 
   @override
@@ -18,7 +20,7 @@ class ActionButton extends StatelessWidget {
         width: double.infinity,
         height: 72,
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: padding,
           child: ElevatedButton(
               onPressed: onPressed,
               child: SizedBox(

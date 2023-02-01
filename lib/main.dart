@@ -2,7 +2,7 @@ import 'package:apkainzynierka/data/database.dart';
 import 'package:apkainzynierka/feature/main_page/main_view.dart';
 import 'package:apkainzynierka/feature/profile_editor/profile_editor.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/schedule_wizard_page.dart';
-import 'package:apkainzynierka/feature/therapy_report/ui/pdf_report_page.dart';
+import 'package:apkainzynierka/feature/therapy_report/ui/therapy_report_page.dart';
 import 'package:apkainzynierka/feature/therapy_report/ui/therapy_report_wizard.dart';
 import 'package:apkainzynierka/feature/welcome/util.dart';
 import 'package:apkainzynierka/feature/welcome/welcome_page.dart';

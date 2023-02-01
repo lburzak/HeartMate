@@ -13,11 +13,11 @@ import 'package:apkainzynierka/feature/journal/ui/view.dart';
 import 'package:apkainzynierka/feature/journal/usecase/get_highlights_for_month.dart';
 import 'package:apkainzynierka/feature/journal/usecase/get_rating_for_inr_measurement.dart';
 import 'package:apkainzynierka/feature/journal/usecase/get_summary_for_day.dart';
+import 'package:apkainzynierka/feature/therapy_report/ui/therapy_report_wizard.dart';
 import 'package:apkainzynierka/main.dart';
 import 'package:apkainzynierka/widget/action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:kiwi/kiwi.dart';
 
 class JournalPage extends StatelessWidget {
@@ -35,7 +35,7 @@ class JournalPage extends StatelessWidget {
             builder: (context, state) =>
                 Column(
                   children: [
-                    ActionButton(onPressed: () => context.push("/report"), label: "Generuj raport", icon: Icons.receipt_long),
+                    ActionButton(onPressed: () => TherapyReportWizard.showAsModal(context), label: "Generuj raport", icon: Icons.receipt_long),
                     JournalView(state: state, cubit: context.read()),
                   ],
                 ),
