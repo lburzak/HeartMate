@@ -4,11 +4,11 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'journal_entry.dart';
 
-part 'state.freezed.dart';
+part 'therapy_report.freezed.dart';
 
 @freezed
-class TherapyReportState with _$TherapyReportState {
-  const factory TherapyReportState({
+class TherapyReport with _$TherapyReportState {
+  const factory TherapyReport({
     String? firstName,
     String? lastName,
     int? height,

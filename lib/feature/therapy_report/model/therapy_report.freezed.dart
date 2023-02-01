@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'state.dart';
+part of 'therapy_report.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -29,15 +29,15 @@ mixin _$TherapyReportState {
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $TherapyReportStateCopyWith<TherapyReportState> get copyWith =>
+  $TherapyReportStateCopyWith<TherapyReport> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $TherapyReportStateCopyWith<$Res> {
   factory $TherapyReportStateCopyWith(
-          TherapyReportState value, $Res Function(TherapyReportState) then) =
-      _$TherapyReportStateCopyWithImpl<$Res, TherapyReportState>;
+          TherapyReport value, $Res Function(TherapyReport) then) =
+      _$TherapyReportStateCopyWithImpl<$Res, TherapyReport>;
   @useResult
   $Res call(
       {String? firstName,
@@ -53,7 +53,7 @@ abstract class $TherapyReportStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TherapyReportStateCopyWithImpl<$Res, $Val extends TherapyReportState>
+class _$TherapyReportStateCopyWithImpl<$Res, $Val extends TherapyReport>
     implements $TherapyReportStateCopyWith<$Res> {
   _$TherapyReportStateCopyWithImpl(this._value, this._then);
 
@@ -307,7 +307,7 @@ class _$_TherapyReportState implements _TherapyReportState {
           this, _$identity);
 }
 
-abstract class _TherapyReportState implements TherapyReportState {
+abstract class _TherapyReportState implements TherapyReport {
   const factory _TherapyReportState(
           {final String? firstName,
           final String? lastName,
