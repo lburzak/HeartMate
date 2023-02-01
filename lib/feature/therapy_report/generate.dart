@@ -32,11 +32,20 @@ Future<Document> generate() async {
   final icon = Icon(const IconData(0xe7fd), size: 10);
 
   pdf.addPage(
-    Page(
+    MultiPage(
       theme: theme,
       pageFormat: PdfPageFormat.a4,
+      footer: (context) => Footer(
+          margin: EdgeInsets.only(top: 20),
+          decoration: BoxDecoration(border: Border(top: BorderSide())),
+          title: Padding(
+              padding: EdgeInsets.only(top: 6),
+              child: Row(children: [
+                Text(
+                    "Wygenerowano z HeartMate dnia ${DateFormat("dd.MM.yyyy hh:mm", 'pl_PL').format(DateTime.now())}")
+              ]))),
       build: (context) {
-        return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        return [
           Row(children: [
             Expanded(
                 child: SizedBox(
@@ -68,15 +77,7 @@ Future<Document> generate() async {
           ]),
           SizedBox(height: 20),
           buildMonthTable(context),
-          Spacer(),
-          Footer(
-              decoration: BoxDecoration(border: Border(top: BorderSide())),
-              title: Padding(
-                  padding: EdgeInsets.only(top: 6),
-                  child: Row(children: [
-                    Text("Wygenerowano z HeartMate dnia ${DateTime.now()}")
-                  ]))),
-        ]);
+        ];
       },
     ),
   );
@@ -89,12 +90,12 @@ Future<Document> generate() async {
 }
 
 Widget buildMonthTable(Context context) {
-  final format = DateFormat.yMd('pl_PL');
+  final format = DateFormat('dd.MM.yyyy', 'pl_PL');
 
   return Table(border: TableBorder.all(), children: [
     buildMonthTableHeader(context),
     ...List.generate(
-        31,
+        120,
         (index) => TableRow(children: [
               Text(
                   format.format(DateTime.now().subtract(Duration(days: index))),
