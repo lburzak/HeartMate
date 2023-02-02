@@ -32,13 +32,15 @@ class JournalPage extends StatelessWidget {
         child: BlocProvider<JournalCubit>(
           create: (context) => container.resolve(),
           child: BlocBuilder<JournalCubit, JournalState>(
-            builder: (context, state) =>
-                Column(
-                  children: [
-                    ActionButton(onPressed: () => TherapyReportWizard.showAsModal(context), label: "Generuj raport", icon: Icons.receipt_long),
-                    JournalView(state: state, cubit: context.read()),
-                  ],
-                ),
+            builder: (context, state) => Column(
+              children: [
+                ActionButton(
+                    onPressed: () => TherapyReportWizard.showAsModal(context),
+                    label: "Generuj raport",
+                    icon: Icons.receipt_long),
+                JournalView(state: state, cubit: context.read()),
+              ],
+            ),
           ),
         ),
       ),

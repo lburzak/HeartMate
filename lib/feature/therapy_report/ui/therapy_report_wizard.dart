@@ -12,11 +12,11 @@ class TherapyReportWizard extends StatefulWidget {
 
   static showAsModal(BuildContext context) {
     showDialog(
-
         context: context,
         builder: (context) => const AlertDialog(
-          content: TherapyReportWizard(),
-        ));
+              title: Text("Generuj raport"),
+              content: TherapyReportWizard(),
+            ));
   }
 }
 
@@ -28,14 +28,22 @@ class _TherapyReportWizardState extends State<TherapyReportWizard> {
   Widget build(BuildContext context) {
     return Wrap(
       children: [
-        DateField(dateTime: periodStart, onDateSelected: selectStartDate),
+        DateField(
+            dateTime: periodStart,
+            onDateSelected: selectStartDate,
+            label: "Od"),
         Padding(
           padding: const EdgeInsets.only(top: 12.0),
-          child: DateField(dateTime: periodEnd, onDateSelected: selectEndDate),
+          child: DateField(
+              dateTime: periodEnd, onDateSelected: selectEndDate, label: "Do"),
         ),
         SizedBox(
           child: ActionButton(
-              onPressed: _goToReportPreview, label: "GENERUJ", icon: Icons.receipt_long, padding: const EdgeInsets.only(top: 12),),
+            onPressed: _goToReportPreview,
+            label: "GENERUJ",
+            icon: Icons.receipt_long,
+            padding: const EdgeInsets.only(top: 12),
+          ),
         ),
       ],
     );

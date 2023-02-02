@@ -5,6 +5,7 @@ class DateField extends StatelessWidget {
   final DateTime dateTime;
   final void Function(DateTime selectedDate) onDateSelected;
   final DateFormat formatter = DateFormat("dd.MM.y");
+  final String? label;
 
   String get dateTimeFormatted => formatter.format(dateTime);
 
@@ -12,6 +13,7 @@ class DateField extends StatelessWidget {
     Key? key,
     required this.dateTime,
     required this.onDateSelected,
+    this.label,
   }) : super(key: key);
 
   @override
@@ -33,9 +35,9 @@ class DateField extends StatelessWidget {
               });
             },
             child: InputDecorator(
-              decoration: const InputDecoration(
-                labelText: "Data rozpoczęcia",
-                enabledBorder: OutlineInputBorder(
+              decoration: InputDecoration(
+                labelText: label,
+                enabledBorder: const OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.blue)),
               ),
               child: Text(dateTimeFormatted),
