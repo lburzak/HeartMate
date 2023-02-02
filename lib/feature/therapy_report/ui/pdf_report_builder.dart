@@ -58,29 +58,31 @@ class _InrChart extends StatelessWidget {
 
   @override
   Widget build(Context context) {
-    return Chart(
-        grid: CartesianGrid(
-            xAxis: FixedAxis(
-              model.inrMeasurements.keys
-                  .map((e) => e.millisecondsSinceEpoch)
-                  .toList(),
-              marginStart: 10,
-              buildLabel: (value) => Text(
-                  DateFormat("dd.MM").format(
-                      DateTime.fromMillisecondsSinceEpoch(value.toInt())),
-                  style: const TextStyle(fontSize: 8)),
-            ),
-            yAxis: FixedAxis([
-              ...List.generate(
-                  model.inrMeasurements.values.reduce(max).ceil() + 1,
-                  (index) => index)
-            ])),
-        datasets: [
-          LineDataSet(data: [
-            ...model.inrMeasurements.entries.map((e) => PointChartValue(
-                e.key.millisecondsSinceEpoch.toDouble(), e.value))
-          ], isCurved: true)
-        ]);
+    return model.inrMeasurements.length < 2
+        ? SizedBox.shrink()
+        : Chart(
+            grid: CartesianGrid(
+                xAxis: FixedAxis(
+                  model.inrMeasurements.keys
+                      .map((e) => e.millisecondsSinceEpoch)
+                      .toList(),
+                  marginStart: 10,
+                  buildLabel: (value) => Text(
+                      DateFormat("dd.MM").format(
+                          DateTime.fromMillisecondsSinceEpoch(value.toInt())),
+                      style: const TextStyle(fontSize: 8)),
+                ),
+                yAxis: FixedAxis([
+                  ...List.generate(
+                      model.inrMeasurements.values.reduce(max).ceil() + 1,
+                      (index) => index)
+                ])),
+            datasets: [
+                LineDataSet(data: [
+                  ...model.inrMeasurements.entries.map((e) => PointChartValue(
+                      e.key.millisecondsSinceEpoch.toDouble(), e.value))
+                ], isCurved: true)
+              ]);
   }
 }
 

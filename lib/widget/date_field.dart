@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 
 class DateField extends StatelessWidget {
   final DateTime dateTime;
+  final DateTime firstDate;
+  final DateTime lastDate;
   final void Function(DateTime selectedDate) onDateSelected;
   final DateFormat formatter = DateFormat("dd.MM.y");
   final String? label;
@@ -14,6 +16,8 @@ class DateField extends StatelessWidget {
     required this.dateTime,
     required this.onDateSelected,
     this.label,
+    required this.firstDate,
+    required this.lastDate,
   }) : super(key: key);
 
   @override
@@ -24,8 +28,8 @@ class DateField extends StatelessWidget {
               showDatePicker(
                 context: context,
                 initialDate: dateTime,
-                firstDate: DateTime.now(),
-                lastDate: DateTime(2050),
+                firstDate: firstDate,
+                lastDate: lastDate,
               ).then((value) {
                 if (value == null) {
                   return;

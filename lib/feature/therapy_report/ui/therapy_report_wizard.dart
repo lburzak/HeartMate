@@ -1,4 +1,6 @@
 import 'package:apkainzynierka/main.dart';
+import 'package:apkainzynierka/util/date.dart';
+import 'package:apkainzynierka/util/time_extensions.dart';
 import 'package:apkainzynierka/widget/action_button.dart';
 import 'package:apkainzynierka/widget/date_field.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +23,8 @@ class TherapyReportWizard extends StatefulWidget {
 }
 
 class _TherapyReportWizardState extends State<TherapyReportWizard> {
-  DateTime periodStart = DateTime.now();
-  DateTime periodEnd = DateTime.now();
+  DateTime periodStart = Date.today();
+  DateTime periodEnd = Date.today();
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +33,17 @@ class _TherapyReportWizardState extends State<TherapyReportWizard> {
         DateField(
             dateTime: periodStart,
             onDateSelected: selectStartDate,
+            firstDate: DateTime(2022),
+            lastDate: DateTime.now(),
             label: "Od"),
         Padding(
           padding: const EdgeInsets.only(top: 12.0),
           child: DateField(
-              dateTime: periodEnd, onDateSelected: selectEndDate, label: "Do"),
+              firstDate: DateTime(2022),
+              lastDate: DateTime.now(),
+              dateTime: periodEnd,
+              onDateSelected: selectEndDate,
+              label: "Do"),
         ),
         SizedBox(
           child: ActionButton(
@@ -62,8 +70,8 @@ class _TherapyReportWizardState extends State<TherapyReportWizard> {
   }
 
   void _goToReportPreview() {
-    final args =
-        TherapyReportPageArgs(periodStart: periodStart, periodEnd: periodEnd);
+    final args = TherapyReportPageArgs(
+        periodStart: periodStart.dayStart, periodEnd: periodEnd.dayEnd);
     context.push("/report/preview?${args.toQueryParams()}");
   }
 }
