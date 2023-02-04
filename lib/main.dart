@@ -1,4 +1,5 @@
 import 'package:apkainzynierka/data/database.dart';
+import 'package:apkainzynierka/feature/dose_reminder/service/local_date_time_factory.dart';
 import 'package:apkainzynierka/feature/main_page/main_view.dart';
 import 'package:apkainzynierka/feature/profile_editor/profile_editor.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/schedule_wizard_page.dart';
@@ -10,13 +11,14 @@ import 'package:apkainzynierka/theme/theme_constants.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/date_symbol_data_local.dart';
 
 void main() async {
   Provider.debugCheckInvalidValueType = null;
   await BoxDatabase.init();
+  await _appContainer.resolve<LocalDateTimeFactory>().initialize();
   initializeDateFormatting("pl_PL", null);
   runApp(const MyApp());
 }
@@ -105,5 +107,6 @@ class AppContainer extends KiwiContainer {
   AppContainer() : super.scoped() {
     registerSingleton((r) => BoxDatabase());
     registerSingleton((r) => EventBus());
+    registerSingleton((r) => LocalDateTimeFactory());
   }
 }
