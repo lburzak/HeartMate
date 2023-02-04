@@ -2,6 +2,8 @@ import 'package:apkainzynierka/data/database.dart';
 import 'package:apkainzynierka/feature/main_page/main_view.dart';
 import 'package:apkainzynierka/feature/profile_editor/profile_editor.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/schedule_wizard_page.dart';
+import 'package:apkainzynierka/feature/therapy_report/ui/therapy_report_page.dart';
+import 'package:apkainzynierka/feature/therapy_report/ui/therapy_report_wizard.dart';
 import 'package:apkainzynierka/feature/welcome/util.dart';
 import 'package:apkainzynierka/feature/welcome/welcome_page.dart';
 import 'package:apkainzynierka/theme/theme_constants.dart';
@@ -50,7 +52,41 @@ final _router = GoRouter(
         builder: (context, state) => Provider<AppContainer>(
             create: (context) => _appContainer, child: const WelcomePage()),
       ),
+      GoRoute(
+        path: '/report',
+        builder: (context, state) => Provider<AppContainer>(
+            create: (context) => _appContainer,
+            child: const TherapyReportWizard()),
+      ),
+      GoRoute(
+        path: '/report/preview',
+        builder: (context, state) => Provider<AppContainer>(
+            create: (context) => _appContainer,
+            child: Builder(builder: (context) {
+              final args =
+                  TherapyReportPageArgs.fromQueryParams(state.queryParams);
+              return TherapyReportPage(
+                  periodStart: args.periodStart, periodEnd: args.periodEnd);
+            })),
+      ),
     ]);
+
+class TherapyReportPageArgs {
+  final DateTime periodStart;
+  final DateTime periodEnd;
+
+  const TherapyReportPageArgs(
+      {required this.periodStart, required this.periodEnd});
+
+  TherapyReportPageArgs.fromQueryParams(Map<String, String> params)
+      : periodStart =
+            DateTime.fromMillisecondsSinceEpoch(int.parse(params['start']!)),
+        periodEnd =
+            DateTime.fromMillisecondsSinceEpoch(int.parse(params['end']!));
+
+  String toQueryParams() =>
+      "start=${periodStart.millisecondsSinceEpoch}&end=${periodEnd.millisecondsSinceEpoch}";
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -58,7 +94,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Flutter Demo',
+      title: 'HeartMate',
       theme: darkTheme,
       routerConfig: _router,
     );

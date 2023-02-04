@@ -14,7 +14,7 @@ class GetDayPreviewsForPeriod {
 
   List<DayPreview> call({required DateTime start, required DateTime end}) {
     final scheduledDosages =
-    _scheduleRepository.getDosagesForPeriod(start: start, end: end);
+     _scheduleRepository.getDosagesForPeriod(start: start, end: end);
     final doses = _doseRepository.findWithinPeriod(start: start, end: end);
 
     final today = Date.today();

@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.1.0-alpha
 
 environment:
   sdk: '>=2.18.2 <3.0.0'
@@ -34,6 +34,8 @@ dependencies:
   google_fonts: ^3.0.1
   table_calendar: ^3.0.8
   path_provider: ^2.0.11
+  printing: ^5.9.0
+  pdf: ^3.8.4
 
 dev_dependencies:
   flutter_test:

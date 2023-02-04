@@ -1,12 +1,12 @@
+import 'package:apkainzynierka/feature/profile_editor/ui/view.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_type.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_wizard_state.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/service/cubit.dart';
 import 'package:apkainzynierka/util/date.dart';
 import 'package:apkainzynierka/util/string.dart';
+import 'package:apkainzynierka/widget/action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-import '../../profile_editor/ui/view.dart';
 
 class ScheduleWizardView extends StatelessWidget {
   final ScheduleWizardState state;
@@ -41,17 +41,11 @@ class ScheduleWizardView extends StatelessWidget {
           ),
           Align(
             alignment: FractionalOffset.bottomCenter,
-            child: SizedBox(
-                width: double.infinity,
-                height: 72,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ActionButton(
-                    onPressed: cubit.save,
-                    label: "ZAPISZ",
-                    icon: Icons.done,
-                  ),
-                )),
+            child: ActionButton(
+              onPressed: cubit.save,
+              label: "ZAPISZ",
+              icon: Icons.done,
+            ),
           )
         ],
       ),
@@ -95,44 +89,6 @@ class ScheduleWizardView extends StatelessWidget {
                         dosage: state.dosages[index],
                       )
                     ])));
-  }
-}
-
-class ActionButton extends StatelessWidget {
-  final void Function() onPressed;
-  final String label;
-  final IconData icon;
-
-  const ActionButton({
-    Key? key,
-    required this.onPressed,
-    required this.label,
-    required this.icon,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-        onPressed: onPressed,
-        child: SizedBox(
-          width: double.infinity,
-          child: Stack(
-            children: [
-              Align(
-                  alignment: Alignment.centerLeft,
-                  child: Icon(
-                    icon,
-                    size: 28,
-                  )),
-              Center(
-                child: Text(
-                  label,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-              )
-            ],
-          ),
-        ));
   }
 }
 
@@ -267,47 +223,5 @@ class _ScheduleTypeOption extends StatelessWidget {
       case ScheduleType.weekly:
         return const Text("Określ dawkę dla każdego dnia tygodnia");
     }
-  }
-}
-
-class _CalendarField extends StatelessWidget {
-  final DateTime dateTime;
-  final void Function(DateTime selectedDate) onDateSelected;
-  final DateFormat formatter = DateFormat("dd.MM.y");
-
-  String get dateTimeFormatted => formatter.format(dateTime);
-
-  _CalendarField({
-    Key? key,
-    required this.dateTime,
-    required this.onDateSelected,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return FormField<int>(
-        builder: (field) => GestureDetector(
-            onTap: () {
-              showDatePicker(
-                context: context,
-                initialDate: dateTime,
-                firstDate: DateTime.now(),
-                lastDate: DateTime(2050),
-              ).then((value) {
-                if (value == null) {
-                  return;
-                }
-
-                onDateSelected(value);
-              });
-            },
-            child: InputDecorator(
-              decoration: const InputDecoration(
-                labelText: "Data rozpoczęcia",
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blue)),
-              ),
-              child: Text(dateTimeFormatted),
-            )));
   }
 }

@@ -38,10 +38,10 @@ class LocalDoseRepository extends DoseRepository {
   }
 
   @override
-  List<Dose> findWithinPeriod(
+  List<Dose>  findWithinPeriod(
       {required DateTime start, required DateTime end}) {
     return doses.values
-        .where((e) => e.dateTaken.isAfter(start) && e.dateTaken.isBefore(end))
+        .where((e) => e.dateTaken.isAfter(start.subtract(const Duration(seconds: 1))) && e.dateTaken.isBefore(end.add(const Duration(seconds: 1))))
         .toList();
   }
 }
