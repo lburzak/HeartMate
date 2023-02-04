@@ -28,8 +28,23 @@ class DoseReminderScheduler {
   const DoseReminderScheduler(this._workManager);
 
   void schedule(int hour, int minute) {
-    _workManager.registerPeriodicTask("thisisveryrandom2", "notify2",
-        frequency: const Duration(days: 1));
+    Future.microtask(() async {
+      await _workManager.cancelAll();
+      final delay = _calculateDurationToNextOccurrence(hour, minute);
+      await _workManager.registerPeriodicTask(
+          "periodic_${DateTime.now().toIso8601String()}", "notify",
+          initialDelay: delay, frequency: const Duration(days: 1));
+    });
+  }
+
+  Duration _calculateDurationToNextOccurrence(int hour, int minute) {
+    final DateTime now = DateTime.now();
+    final DateTime scheduledDate =
+        DateTime(now.year, now.month, now.day, hour, minute, 0);
+    if (scheduledDate.isBefore(now)) {
+      return scheduledDate.add(const Duration(days: 1)).difference(now);
+    }
+    return scheduledDate.difference(now);
   }
 
   void cancel() {
