@@ -1,4 +1,5 @@
 import 'package:apkainzynierka/data/database.dart';
+import 'package:apkainzynierka/feature/dose_reminder/service/dose_reminder_scheduler.dart';
 import 'package:apkainzynierka/feature/dose_reminder/service/local_date_time_factory.dart';
 import 'package:apkainzynierka/feature/main_page/main_view.dart';
 import 'package:apkainzynierka/feature/profile_editor/profile_editor.dart';
@@ -10,6 +11,7 @@ import 'package:apkainzynierka/feature/welcome/welcome_page.dart';
 import 'package:apkainzynierka/theme/theme_constants.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:kiwi/kiwi.dart';
@@ -19,6 +21,7 @@ void main() async {
   Provider.debugCheckInvalidValueType = null;
   await BoxDatabase.init();
   await _appContainer.resolve<LocalDateTimeFactory>().initialize();
+  await _appContainer.resolve<DoseReminderScheduler>().initialize();
   initializeDateFormatting("pl_PL", null);
   runApp(const MyApp());
 }
@@ -108,5 +111,8 @@ class AppContainer extends KiwiContainer {
     registerSingleton((r) => BoxDatabase());
     registerSingleton((r) => EventBus());
     registerSingleton((r) => LocalDateTimeFactory());
+    registerSingleton(
+        (r) => DoseReminderScheduler(r.resolve(), r.resolve(), r.resolve()));
+    registerSingleton((r) => FlutterLocalNotificationsPlugin());
   }
 }

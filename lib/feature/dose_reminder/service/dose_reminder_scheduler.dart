@@ -1,4 +1,6 @@
 import 'package:apkainzynierka/feature/dose_reminder/service/local_date_time_factory.dart';
+import 'package:apkainzynierka/system/startup_event.dart';
+import 'package:event_bus/event_bus.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 const int _reminderNotificationId = 555;
@@ -7,7 +9,11 @@ class DoseReminderScheduler {
   final LocalDateTimeFactory _dateTimeFactory;
   final FlutterLocalNotificationsPlugin plugin;
 
-  const DoseReminderScheduler(this._dateTimeFactory, this.plugin);
+  DoseReminderScheduler(this._dateTimeFactory, this.plugin, EventBus eventBus) {
+    eventBus.on<StartupEvent>().listen((event) {
+      initialize();
+    });
+  }
 
   void schedule(int hour, int minute) {
     plugin.zonedSchedule(
@@ -17,7 +23,7 @@ class DoseReminderScheduler {
         _dateTimeFactory.nextOccurrenceOf(hour, minute),
         _buildNotificationDetails(),
         uiLocalNotificationDateInterpretation:
-        UILocalNotificationDateInterpretation.absoluteTime,
+            UILocalNotificationDateInterpretation.absoluteTime,
         androidAllowWhileIdle: true,
         matchDateTimeComponents: DateTimeComponents.time);
   }
@@ -26,7 +32,7 @@ class DoseReminderScheduler {
     plugin.cancel(_reminderNotificationId);
   }
 
-  void initialize() async {
+  Future<void> initialize() async {
     await plugin.initialize(
       const InitializationSettings(
           android: AndroidInitializationSettings('ic_launcher')),
@@ -40,11 +46,12 @@ class DoseReminderScheduler {
 
   NotificationDetails _buildNotificationDetails() {
     const AndroidNotificationDetails androidNotificationDetails =
-    AndroidNotificationDetails('your channel id', 'your channel name',
-        channelDescription: 'your channel description',
-        importance: Importance.max,
-        priority: Priority.high,
-        ticker: 'ticker');
+        AndroidNotificationDetails('your channel id', 'your channel name',
+            channelDescription: 'your channel description',
+            icon: "ic_launcher",
+            importance: Importance.max,
+            priority: Priority.high,
+            ticker: 'ticker');
     return const NotificationDetails(android: androidNotificationDetails);
   }
 }

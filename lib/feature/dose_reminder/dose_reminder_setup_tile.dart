@@ -1,12 +1,10 @@
 import 'package:apkainzynierka/feature/dose_reminder/model/notification_settings.dart';
 import 'package:apkainzynierka/feature/dose_reminder/service/cubit.dart';
 import 'package:apkainzynierka/feature/dose_reminder/service/dose_reminder_scheduler.dart';
-import 'package:apkainzynierka/feature/dose_reminder/service/local_date_time_factory.dart';
 import 'package:apkainzynierka/feature/dose_reminder/ui/view.dart';
 import 'package:apkainzynierka/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:kiwi/kiwi.dart';
 
 class DoseReminderSetupTile extends StatelessWidget {
@@ -35,8 +33,11 @@ class DoseReminderSetupTile extends StatelessWidget {
 class DoseReminderContainer extends KiwiContainer {
   DoseReminderContainer({required AppContainer appContainer}) : super.scoped() {
     registerFactory((r) => NotificationSetupCubit(r.resolve()));
-    registerFactory((r) => DoseReminderScheduler(r.resolve(), r.resolve()));
-    registerInstance<LocalDateTimeFactory>(appContainer.resolve());
-    registerSingleton((r) => FlutterLocalNotificationsPlugin());
+    registerInstance<DoseReminderScheduler>(appContainer.resolve());
+    // registerFactory(
+    //     (r) => DoseReminderScheduler(r.resolve(), r.resolve(), r.resolve()));
+    // registerInstance<LocalDateTimeFactory>(appContainer.resolve());
+    // registerInstance<EventBus>(appContainer.resolve());
+    // registerSingleton((r) => FlutterLocalNotificationsPlugin());
   }
 }
