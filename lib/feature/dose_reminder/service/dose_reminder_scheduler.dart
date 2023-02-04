@@ -1,68 +1,33 @@
-import 'package:apkainzynierka/feature/dose_reminder/service/local_date_time_factory.dart';
-import 'package:apkainzynierka/system/startup_event.dart';
-import 'package:event_bus/event_bus.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:apkainzynierka/feature/dose_reminder/service/dose_reminder.dart';
+import 'package:apkainzynierka/main.dart';
+import 'package:workmanager/workmanager.dart';
 
-const _reminderNotificationId = 555;
-const _reminderNotificationChannelId = "heartmate_reminder";
-const _reminderNotificationChannelName = "Przyjmij dawkę";
-const _reminderNotificationChannelDescription =
-    "Wyświetla przypomnienie codziennie o godzinie określonej w ustawieniach aplikacji.";
+@pragma('vm:entry-point')
+void callbackDispatcher() {
+  Workmanager().executeTask((task, inputData) async {
+    final appContainer = AppContainer();
+    final doseReminderModule = DoseReminderModule(appContainer);
+    final doseReminder = doseReminderModule.resolve<DoseReminder>();
+    doseReminder.trigger();
+    return true;
+  });
+}
 
 class DoseReminderScheduler {
-  final LocalDateTimeFactory _dateTimeFactory;
-  final FlutterLocalNotificationsPlugin plugin;
+  final Workmanager _workManager;
 
-  DoseReminderScheduler(this._dateTimeFactory, this.plugin, EventBus eventBus) {
-    eventBus.on<StartupEvent>().listen((event) {
-      initialize();
-    });
-  }
+  const DoseReminderScheduler(this._workManager);
 
   void schedule(int hour, int minute) {
-    plugin.zonedSchedule(
-        _reminderNotificationId,
-        "Przyjmij dawkę",
-        "body",
-        _dateTimeFactory.nextOccurrenceOf(hour, minute),
-        _buildNotificationDetails(),
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
-        androidAllowWhileIdle: true,
-        matchDateTimeComponents: DateTimeComponents.time);
+    _workManager.registerPeriodicTask("thisisveryrandom2", "notify2",
+        frequency: const Duration(seconds: 10));
   }
 
   void cancel() {
-    plugin.cancel(_reminderNotificationId);
+    _workManager.cancelAll();
   }
 
-  Future<void> initialize() async {
-    await plugin.initialize(
-      const InitializationSettings(
-          android: AndroidInitializationSettings('ic_launcher')),
-      onDidReceiveNotificationResponse:
-          (NotificationResponse notificationResponse) async {
-        // ...
-      },
-      onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
-    );
-  }
-
-  NotificationDetails _buildNotificationDetails() {
-    const AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails(
-            _reminderNotificationChannelId, _reminderNotificationChannelName,
-            channelDescription: _reminderNotificationChannelDescription,
-            importance: Importance.max,
-            priority: Priority.high,
-            ticker: 'ticker');
-    return const NotificationDetails(android: androidNotificationDetails);
+  Future<void> initialize() {
+    return _workManager.initialize(callbackDispatcher);
   }
 }
-
-@pragma('vm:entry-point')
-void notificationTapBackground(NotificationResponse notificationResponse) {
-  print("action");
-}
-
-void showNotification() async {}
