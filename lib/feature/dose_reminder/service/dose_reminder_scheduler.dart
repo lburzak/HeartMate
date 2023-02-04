@@ -3,7 +3,11 @@ import 'package:apkainzynierka/system/startup_event.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-const int _reminderNotificationId = 555;
+const _reminderNotificationId = 555;
+const _reminderNotificationChannelId = "heartmate_reminder";
+const _reminderNotificationChannelName = "Przyjmij dawkę";
+const _reminderNotificationChannelDescription =
+    "Wyświetla przypomnienie codziennie o godzinie określonej w ustawieniach aplikacji.";
 
 class DoseReminderScheduler {
   final LocalDateTimeFactory _dateTimeFactory;
@@ -18,7 +22,7 @@ class DoseReminderScheduler {
   void schedule(int hour, int minute) {
     plugin.zonedSchedule(
         _reminderNotificationId,
-        "title",
+        "Przyjmij dawkę",
         "body",
         _dateTimeFactory.nextOccurrenceOf(hour, minute),
         _buildNotificationDetails(),
@@ -46,9 +50,9 @@ class DoseReminderScheduler {
 
   NotificationDetails _buildNotificationDetails() {
     const AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails('your channel id', 'your channel name',
-            channelDescription: 'your channel description',
-            icon: "ic_launcher",
+        AndroidNotificationDetails(
+            _reminderNotificationChannelId, _reminderNotificationChannelName,
+            channelDescription: _reminderNotificationChannelDescription,
             importance: Importance.max,
             priority: Priority.high,
             ticker: 'ticker');
