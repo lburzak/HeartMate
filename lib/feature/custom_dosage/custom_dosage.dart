@@ -5,6 +5,7 @@ import 'package:apkainzynierka/data/local_schedule_repository.dart';
 import 'package:apkainzynierka/domain/repository/dose_repository.dart';
 import 'package:apkainzynierka/domain/repository/profile_repository.dart';
 import 'package:apkainzynierka/domain/repository/schedule_repository.dart';
+import 'package:apkainzynierka/domain/usecase/get_today_dosage.dart';
 import 'package:apkainzynierka/domain/usecase/report_dose_taken.dart';
 import 'package:apkainzynierka/feature/custom_dosage/cubit.dart';
 import 'package:apkainzynierka/feature/custom_dosage/custom_dosage_state.dart';
@@ -49,11 +50,12 @@ class CustomDosage extends StatelessWidget {
 class CustomDosageModule extends KiwiContainer {
   CustomDosageModule(AppContainer appContainer, BuildContext context)
       : super.scoped() {
-    registerFactory(
-        (r) => CustomDosageCubit(r.resolve(), r.resolve(), r.resolve()));
+    registerFactory((r) =>
+        CustomDosageCubit(r.resolve(), r.resolve(), r.resolve(), r.resolve()));
     registerFactory<CustomDosageRouting>(
         (r) => MaterialCustomDosageRouting(r.resolve()));
     registerFactory((r) => GetStepDosage(r.resolve()));
+    registerFactory((r) => GetTodayDosage(r.resolve()));
     registerFactory(
         (r) => ReportDoseTaken(r.resolve(), r.resolve(), r.resolve()));
     registerFactory<ScheduleRepository>(
