@@ -14,6 +14,7 @@ const _boxNameSchedules = "schedules";
 const _boxNameLastIds = "lastIds";
 const _boxNameInrMeasurements = "inrMeasurements";
 const _boxNameProfiles = "profiles";
+const _boxNameNotificationSettings = "notificationSettings";
 
 class BoxDatabase {
   static Future<void> init() async {
@@ -28,6 +29,7 @@ class BoxDatabase {
     await Hive.openBox<int>(_boxNameLastIds);
     await Hive.openBox<Profile>(_boxNameProfiles);
     await Hive.openBox<InrMeasurement>(_boxNameInrMeasurements);
+    await Hive.openBox<int>(_boxNameNotificationSettings);
   }
 
   Box<Dose> get dosesBox => Hive.box<Dose>(_boxNameDoses);
@@ -40,6 +42,9 @@ class BoxDatabase {
   Box<int> get lastIdsBox => Hive.box<int>(_boxNameLastIds);
 
   Box<Profile> get profilesBox => Hive.box<Profile>(_boxNameProfiles);
+
+  Box<int> get notificationSettingsBox =>
+      Hive.box<int>(_boxNameNotificationSettings);
 
   int getNextId(Type type) {
     final key = type.toString();

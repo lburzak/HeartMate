@@ -1,6 +1,9 @@
+import 'package:apkainzynierka/data/database.dart';
+import 'package:apkainzynierka/data/local_notification_settings_storage.dart';
 import 'package:apkainzynierka/feature/dose_reminder/model/notification_settings.dart';
 import 'package:apkainzynierka/feature/dose_reminder/service/cubit.dart';
 import 'package:apkainzynierka/feature/dose_reminder/service/dose_reminder_scheduler.dart';
+import 'package:apkainzynierka/feature/dose_reminder/service/notification_settings_storage.dart';
 import 'package:apkainzynierka/feature/dose_reminder/ui/view.dart';
 import 'package:apkainzynierka/feature/dose_reminder/usecase/disable_reminders.dart';
 import 'package:apkainzynierka/feature/dose_reminder/usecase/enable_reminders.dart';
@@ -34,9 +37,13 @@ class DoseReminderSetupTile extends StatelessWidget {
 
 class DoseReminderContainer extends KiwiContainer {
   DoseReminderContainer({required AppContainer appContainer}) : super.scoped() {
-    registerFactory((r) => NotificationSetupCubit(r.resolve(), r.resolve()));
+    registerFactory(
+        (r) => NotificationSetupCubit(r.resolve(), r.resolve(), r.resolve()));
     registerFactory((r) => EnableReminders(r.resolve(), r.resolve()));
     registerFactory((r) => DisableReminders(r.resolve(), r.resolve()));
     registerInstance<DoseReminderScheduler>(appContainer.resolve());
+    registerFactory<NotificationSettingsStorage>((c) =>
+        LocalNotificationSettingsStorage(
+            appContainer.resolve<BoxDatabase>().notificationSettingsBox));
   }
 }
