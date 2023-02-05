@@ -2,14 +2,16 @@ import 'dart:math';
 
 import 'package:apkainzynierka/domain/usecase/report_dose_taken.dart';
 import 'package:apkainzynierka/feature/custom_dosage/custom_dosage_state.dart';
+import 'package:apkainzynierka/feature/custom_dosage/service/routing.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/usecase/get_step_dosage.dart';
 import 'package:bloc/bloc.dart';
 
 class CustomDosageCubit extends Cubit<CustomDosageState> {
   final GetStepDosage _getStepDosage;
   final ReportDoseTaken _reportDoseTaken;
+  final CustomDosageRouting _routing;
 
-  CustomDosageCubit(this._getStepDosage, this._reportDoseTaken)
+  CustomDosageCubit(this._getStepDosage, this._reportDoseTaken, this._routing)
       : super(const CustomDosageState(dosage: 0, step: 0));
 
   void increment() {
@@ -24,5 +26,6 @@ class CustomDosageCubit extends Cubit<CustomDosageState> {
 
   void save() {
     _reportDoseTaken.custom(state.dosage);
+    _routing.close();
   }
 }

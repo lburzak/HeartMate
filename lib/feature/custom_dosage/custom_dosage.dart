@@ -6,9 +6,11 @@ import 'package:apkainzynierka/domain/repository/dose_repository.dart';
 import 'package:apkainzynierka/domain/repository/profile_repository.dart';
 import 'package:apkainzynierka/domain/repository/schedule_repository.dart';
 import 'package:apkainzynierka/domain/usecase/report_dose_taken.dart';
-import 'package:apkainzynierka/feature/custom_dosage/custom_dosage_cubit.dart';
+import 'package:apkainzynierka/feature/custom_dosage/cubit.dart';
 import 'package:apkainzynierka/feature/custom_dosage/custom_dosage_state.dart';
 import 'package:apkainzynierka/feature/custom_dosage/custom_dosage_view.dart';
+import 'package:apkainzynierka/feature/custom_dosage/service/routing.dart';
+import 'package:apkainzynierka/feature/custom_dosage/ui/routing.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/usecase/get_step_dosage.dart';
 import 'package:apkainzynierka/main.dart';
 import 'package:event_bus/event_bus.dart';
@@ -22,7 +24,7 @@ class CustomDosage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final module = CustomDosageModule(context.read());
+    final module = CustomDosageModule(context.read(), context);
     return BlocProvider<CustomDosageCubit>.value(
       value: module.resolve(),
       child: BlocBuilder<CustomDosageCubit, CustomDosageState>(
@@ -45,8 +47,12 @@ class CustomDosage extends StatelessWidget {
 }
 
 class CustomDosageModule extends KiwiContainer {
-  CustomDosageModule(AppContainer appContainer) : super.scoped() {
-    registerFactory((r) => CustomDosageCubit(r.resolve(), r.resolve()));
+  CustomDosageModule(AppContainer appContainer, BuildContext context)
+      : super.scoped() {
+    registerFactory(
+        (r) => CustomDosageCubit(r.resolve(), r.resolve(), r.resolve()));
+    registerFactory<CustomDosageRouting>(
+        (r) => MaterialCustomDosageRouting(r.resolve()));
     registerFactory((r) => GetStepDosage(r.resolve()));
     registerFactory(
         (r) => ReportDoseTaken(r.resolve(), r.resolve(), r.resolve()));
@@ -57,5 +63,6 @@ class CustomDosageModule extends KiwiContainer {
         (r) => LocalProfileRepository(r.resolve()));
     registerInstance(appContainer.resolve<BoxDatabase>());
     registerInstance(appContainer.resolve<EventBus>());
+    registerInstance(context);
   }
 }
