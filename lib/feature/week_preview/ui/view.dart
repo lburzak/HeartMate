@@ -1,5 +1,6 @@
 import 'package:apkainzynierka/feature/week_preview/model/state.dart';
 import 'package:apkainzynierka/feature/week_preview/service/cubit.dart';
+import 'package:apkainzynierka/theme/brand_theme.dart';
 import 'package:apkainzynierka/util/date.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -61,7 +62,7 @@ class DailyDosageCircle extends StatelessWidget {
       child: Material(
         shape: CircleBorder(
             side: BorderSide(
-          color: _borderColor,
+          color: getBorderColor(context),
           width: isToday ? 5 : 2,
         )),
         child: Center(
@@ -76,7 +77,7 @@ class DailyDosageCircle extends StatelessWidget {
     );
   }
 
-  Color get _borderColor {
+  Color getBorderColor(BuildContext context) {
     if (dosage == null) {
       return Colors.transparent;
     }
@@ -86,9 +87,9 @@ class DailyDosageCircle extends StatelessWidget {
     }
 
     if (taken == true) {
-      return Colors.green;
+      return BrandTheme.of(context).goodColor;
     }
 
-    return Colors.red;
+    return BrandTheme.of(context).badColor;
   }
 }

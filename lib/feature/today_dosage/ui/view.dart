@@ -1,5 +1,6 @@
 import 'package:apkainzynierka/feature/today_dosage/model/state.dart';
 import 'package:apkainzynierka/feature/today_dosage/service/cubit.dart';
+import 'package:apkainzynierka/theme/brand_theme.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart' hide Router;
 
@@ -28,7 +29,8 @@ class TodayDosageView extends StatelessWidget {
               children: [
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: backgroundColor, elevation: 0),
+                        backgroundColor: getBackgroundColor(context),
+                        elevation: 0),
                     onLongPress: () => cubit.showCustomDosageScreen(),
                     onPressed: () => cubit.toggleTaken(),
                     child: Center(
@@ -76,13 +78,13 @@ class TodayDosageView extends StatelessWidget {
     }
   }
 
-  Color get backgroundColor {
+  Color? getBackgroundColor(BuildContext context) {
     if (state.scheduleUndefined) {
       return const Color(0xffAD6902);
     }
 
     if (state.taken) {
-      return Colors.green;
+      return BrandTheme.of(context).goodColor;
     }
 
     return Colors.transparent;

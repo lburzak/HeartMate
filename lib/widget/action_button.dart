@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ActionButton extends StatelessWidget {
   final void Function() onPressed;
@@ -32,7 +33,8 @@ class ActionButton extends StatelessWidget {
                   Center(
                     child: Text(
                       label.toUpperCase(),
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      style: GoogleFonts.balooDa2(
+                          fontWeight: FontWeight.w700, fontSize: 16),
                     ),
                   )
                 ],
