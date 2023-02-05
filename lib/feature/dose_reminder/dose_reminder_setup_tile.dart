@@ -35,8 +35,8 @@ class DoseReminderSetupTile extends StatelessWidget {
 class DoseReminderContainer extends KiwiContainer {
   DoseReminderContainer({required AppContainer appContainer}) : super.scoped() {
     registerFactory((r) => NotificationSetupCubit(r.resolve(), r.resolve()));
-    registerFactory((r) => EnableReminders(r.resolve()));
-    registerFactory((r) => DisableReminders(r.resolve()));
+    registerFactory((r) => EnableReminders(r.resolve(), r.resolve()));
+    registerFactory((r) => DisableReminders(r.resolve(), r.resolve()));
     registerInstance<DoseReminderScheduler>(appContainer.resolve());
   }
 }
