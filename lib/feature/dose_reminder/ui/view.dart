@@ -36,6 +36,7 @@ class NotificationSetupView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SwitchListTile(
       title: const Text("Codzienne powiadomienia"),
+      activeColor: Colors.blue,
       subtitle: model.enabled
           ? Text("Powiadomienie wyświetla się o $paddedHours:$paddedMinutes.")
           : const Text("Powiadomienia nie wyświetlają się."),

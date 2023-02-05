@@ -18,7 +18,7 @@ class ActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
         width: double.infinity,
-        height: 72,
+        height: 80,
         child: Padding(
           padding: padding,
           child: ElevatedButton(

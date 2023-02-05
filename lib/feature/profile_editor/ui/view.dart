@@ -5,6 +5,7 @@ import 'package:apkainzynierka/domain/model/inr_range.dart';
 import 'package:apkainzynierka/feature/dose_reminder/dose_reminder_setup_tile.dart';
 import 'package:apkainzynierka/feature/profile_editor/model/state.dart';
 import 'package:apkainzynierka/feature/profile_editor/service/cubit.dart';
+import 'package:apkainzynierka/widget/action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 
@@ -197,17 +198,15 @@ class ProfileEditorView extends StatelessWidget {
                           )),
                   const SizedBox(height: 8),
                   OtherMedicinesPicker(state: state, cubit: cubit),
-                  const DoseReminderSetupTile(),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 24.0),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton.icon(
-                        onPressed: cubit.save,
-                        label: const Text("Zapisz"),
-                        icon: const Icon(Icons.done),
-                      ),
-                    ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8),
+                    child: DoseReminderSetupTile(),
+                  ),
+                  ActionButton(
+                    onPressed: cubit.save,
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    label: "Zapisz",
+                    icon: Icons.done,
                   )
                 ],
               ),
