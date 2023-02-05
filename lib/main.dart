@@ -117,7 +117,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSwatch(),
           chipTheme: ChipThemeData(
               labelStyle: GoogleFonts.balooDa2(
-                  fontSize: 16, fontWeight: FontWeight.bold)),
+                  fontSize: 14, fontWeight: FontWeight.bold)),
           inputDecorationTheme: const InputDecorationTheme(
               floatingLabelStyle: TextStyle(fontSize: 20),
               suffixStyle: TextStyle(fontSize: 16),

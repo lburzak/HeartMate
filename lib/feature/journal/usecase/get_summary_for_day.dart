@@ -38,7 +38,7 @@ class GetSummaryForDay {
         inrRating: inrMeasurement != null
             ? _getRatingForInrMeasurement(inrMeasurement)
             : null,
-        otherMedicines: profile.otherMedicines,
-        anticoagulant: profile.anticoagulant);
+        otherMedicines: profile?.otherMedicines,
+        anticoagulant: profile?.anticoagulant);
   }
 }

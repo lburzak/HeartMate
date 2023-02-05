@@ -50,9 +50,9 @@ class GetTherapyReport {
 
     return JournalEntry(
         date: day,
-        otherMedicines: profile.otherMedicines,
+        otherMedicines: profile?.otherMedicines ?? [],
         scheduledDose: dosages[day],
         takenDose: dose?.potency,
-        anticoagulant: profile.anticoagulant);
+        anticoagulant: profile?.anticoagulant);
   }
 }

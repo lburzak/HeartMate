@@ -2,10 +2,11 @@ import 'package:apkainzynierka/data/adapter/dose_adapter.dart';
 import 'package:apkainzynierka/data/adapter/inr_measurement_adapter.dart';
 import 'package:apkainzynierka/data/adapter/inr_range_adapter.dart';
 import 'package:apkainzynierka/data/adapter/profile_adapter.dart';
+import 'package:apkainzynierka/data/adapter/profile_entry_adapter.dart';
 import 'package:apkainzynierka/data/adapter/schedule_adapter.dart';
+import 'package:apkainzynierka/data/model/profile_entry.dart';
 import 'package:apkainzynierka/domain/model/dose.dart';
 import 'package:apkainzynierka/domain/model/inr_measurement.dart';
-import 'package:apkainzynierka/domain/model/profile.dart';
 import 'package:apkainzynierka/domain/model/schedule.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -24,10 +25,11 @@ class BoxDatabase {
     Hive.registerAdapter(ProfileAdapter());
     Hive.registerAdapter(InrRangeAdapter());
     Hive.registerAdapter(InrMeasurementAdapter());
+    Hive.registerAdapter(ProfileEntryAdapter());
     await Hive.openBox<Dose>(_boxNameDoses);
     await Hive.openBox<Schedule>(_boxNameSchedules);
     await Hive.openBox<int>(_boxNameLastIds);
-    await Hive.openBox<Profile>(_boxNameProfiles);
+    await Hive.openBox<ProfileEntry>(_boxNameProfiles);
     await Hive.openBox<InrMeasurement>(_boxNameInrMeasurements);
     await Hive.openBox<int>(_boxNameNotificationSettings);
   }
@@ -41,7 +43,7 @@ class BoxDatabase {
 
   Box<int> get lastIdsBox => Hive.box<int>(_boxNameLastIds);
 
-  Box<Profile> get profilesBox => Hive.box<Profile>(_boxNameProfiles);
+  Box<ProfileEntry> get profilesBox => Hive.box<ProfileEntry>(_boxNameProfiles);
 
   Box<int> get notificationSettingsBox =>
       Hive.box<int>(_boxNameNotificationSettings);

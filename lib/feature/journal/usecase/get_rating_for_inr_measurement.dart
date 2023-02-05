@@ -7,9 +7,14 @@ class GetRatingForInrMeasurement {
 
   GetRatingForInrMeasurement(this._profileRepository);
 
-  InrRating call(InrMeasurement inrMeasurement) {
+  InrRating? call(InrMeasurement inrMeasurement) {
     final profile =
-        _profileRepository.findForDateTime(inrMeasurement.reportDate);
+    _profileRepository.findForDateTime(inrMeasurement.reportDate);
+
+    if (profile == null) {
+      return null;
+    }
+
     if (inrMeasurement.inr < profile.inrRange.from) {
       return InrRating.tooLow;
     }
