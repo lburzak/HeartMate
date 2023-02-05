@@ -32,25 +32,31 @@ class _TherapyPageState extends State<TherapyPage> {
         children: [
           const TodayDosage(),
           const WeekPreview(),
-          ActionButton(
-            onPressed: () => context.push('/schedules/current'),
-            label: "Dostosuj harmonogram",
-            icon: Icons.calendar_month,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ActionButton(
+              onPressed: () => context.push('/schedules/current'),
+              label: "Dostosuj harmonogram",
+              icon: Icons.calendar_month,
+            ),
           ),
           const SizedBox(height: 150, child: LastInrMeasurements()),
-          ActionButton(
-            onPressed: () {
-              showModalBottomSheet<void>(
-                context: context,
-                builder: (BuildContext _) {
-                  return Provider<AppContainer>.value(
-                      value: context.read(),
-                      builder: (context, child) => const ReportInrDialog());
-                },
-              );
-            },
-            label: "Dodaj pomiar INR",
-            icon: Icons.bloodtype,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ActionButton(
+              onPressed: () {
+                showModalBottomSheet<void>(
+                  context: context,
+                  builder: (BuildContext _) {
+                    return Provider<AppContainer>.value(
+                        value: context.read(),
+                        builder: (context, child) => const ReportInrDialog());
+                  },
+                );
+              },
+              label: "Dodaj pomiar INR",
+              icon: Icons.bloodtype,
+            ),
           ),
         ],
       ),

@@ -204,7 +204,6 @@ class ProfileEditorView extends StatelessWidget {
                   ),
                   ActionButton(
                     onPressed: cubit.save,
-                    padding: const EdgeInsets.symmetric(vertical: 8),
                     label: "Zapisz",
                     icon: Icons.done,
                   )

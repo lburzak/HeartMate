@@ -41,10 +41,13 @@ class ScheduleWizardView extends StatelessWidget {
           ),
           Align(
             alignment: FractionalOffset.bottomCenter,
-            child: ActionButton(
-              onPressed: cubit.save,
-              label: "ZAPISZ",
-              icon: Icons.done,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ActionButton(
+                onPressed: cubit.save,
+                label: "ZAPISZ",
+                icon: Icons.done,
+              ),
             ),
           )
         ],
