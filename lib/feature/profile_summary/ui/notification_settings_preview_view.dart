@@ -1,6 +1,6 @@
 import 'package:apkainzynierka/feature/dose_reminder/model/notification_settings.dart';
-import 'package:apkainzynierka/feature/profile_summary/ui/profile_summary_view.dart';
 import 'package:apkainzynierka/util/time_extensions.dart';
+import 'package:apkainzynierka/widget/summary_row.dart';
 import 'package:flutter/material.dart';
 
 class NotificationSettingsPreviewView extends StatelessWidget {

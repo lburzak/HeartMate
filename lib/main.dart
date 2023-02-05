@@ -115,7 +115,9 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.dark,
           primaryColor: Colors.lightBlue,
           colorScheme: ColorScheme.fromSwatch(),
-          dropdownMenuTheme: DropdownMenuThemeData(),
+          chipTheme: ChipThemeData(
+              labelStyle: GoogleFonts.balooDa2(
+                  fontSize: 16, fontWeight: FontWeight.bold)),
           inputDecorationTheme: const InputDecorationTheme(
               floatingLabelStyle: TextStyle(fontSize: 20),
               suffixStyle: TextStyle(fontSize: 16),
@@ -130,7 +132,13 @@ class MyApp extends StatelessWidget {
                       fontSize: 36, fontWeight: FontWeight.w200)),
           extensions: [
             const BrandTheme(
-                goodColor: Color(0xff2F802D), badColor: Color(0xffF34E4E))
+              goodColor: Color(0xff2F802D),
+              goodTextColor: Color(0xFF62DF00),
+              badColor: Color(0xffF34E4E),
+              badTextColor: Color(0xffFFB4AA),
+              warningColor: Color(0xFF554200),
+              warningTextColor: Color(0xFFDFA100),
+            )
           ]),
       routerConfig: _router,
     );

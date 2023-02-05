@@ -2,6 +2,7 @@ import 'package:apkainzynierka/domain/model/profile.dart';
 import 'package:apkainzynierka/feature/profile_editor/ui/view.dart';
 import 'package:apkainzynierka/feature/profile_summary/notification_settings_preview.dart';
 import 'package:apkainzynierka/util/lang.dart';
+import 'package:apkainzynierka/widget/summary_row.dart';
 import 'package:flutter/material.dart';
 
 class ProfileSummaryView extends StatelessWidget {
@@ -42,28 +43,5 @@ class ProfileSummaryView extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class SummaryRow extends StatelessWidget {
-  final String label;
-  final String value;
-
-  const SummaryRow({
-    super.key,
-    required this.label,
-    required this.value,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-      Expanded(
-          child: Text(
-        label,
-        style: const TextStyle(fontWeight: FontWeight.bold),
-      )),
-      Expanded(child: Text(value))
-    ]);
   }
 }
