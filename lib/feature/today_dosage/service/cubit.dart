@@ -38,6 +38,10 @@ class TodayDosageCubit extends Cubit<TodayDosageState> {
     _subscription = _eventBus.on<ScheduleUpdatedEvent>().listen((event) {
       _fetchData();
     });
+
+    _subscription = _eventBus.on<TodayDoseUpdatedEvent>().listen((event) {
+      _fetchData();
+    });
   }
 
   void toggleTaken() {

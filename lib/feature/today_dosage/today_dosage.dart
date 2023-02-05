@@ -50,7 +50,7 @@ KiwiContainer buildTodayDosageContainer(
 
   c.registerFactory((r) => RevertTodayDose(r()));
   c.registerFactory((r) => GetTodayDosage(r()));
-  c.registerFactory((r) => ReportDoseTaken(r(), r()));
+  c.registerFactory((r) => ReportDoseTaken(r(), r(), r()));
 
   c.registerFactory((r) => Logger());
 

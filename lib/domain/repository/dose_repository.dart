@@ -8,4 +8,6 @@ abstract class DoseRepository {
   Dose? findDoseForDay(DateTime dateTime);
 
   List<Dose> findWithinPeriod({required DateTime start, required DateTime end});
+
+  void updateDose(DateTime dateTime, double potency, bool custom);
 }

@@ -1,4 +1,4 @@
-import 'package:apkainzynierka/feature/custom_dosage/custom_dosage_view.dart';
+import 'package:apkainzynierka/feature/custom_dosage/custom_dosage.dart';
 import 'package:apkainzynierka/feature/today_dosage/service/router.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -10,8 +10,7 @@ class MaterialTodayDosageRouter implements TodayDosageRouter {
 
   @override
   void openCustomDosageScreen() {
-    showModalBottomSheet(
-        context: _context, builder: (_) => const CustomDosageView());
+    CustomDosage.showAsModal(_context);
   }
 
   @override
