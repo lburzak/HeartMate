@@ -1,4 +1,6 @@
 import 'package:apkainzynierka/data/database.dart';
+import 'package:apkainzynierka/feature/dose_reminder/service/dose_reminder_scheduler.dart';
+import 'package:apkainzynierka/feature/dose_reminder/service/notification_service.dart';
 import 'package:apkainzynierka/feature/main_page/main_view.dart';
 import 'package:apkainzynierka/feature/profile_editor/profile_editor.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/schedule_wizard_page.dart';
@@ -9,14 +11,27 @@ import 'package:apkainzynierka/feature/welcome/welcome_page.dart';
 import 'package:apkainzynierka/theme/theme_constants.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/date_symbol_data_local.dart';
+import 'package:workmanager/workmanager.dart';
+
+const AndroidNotificationDetails androidNotificationDetails =
+    AndroidNotificationDetails(
+        "_reminderNotificationChannelId", "_reminderNotificationChannelName",
+        channelDescription: "_reminderNotificationChannelDescription",
+        importance: Importance.max,
+        priority: Priority.high,
+        ticker: 'ticker');
+const det = NotificationDetails(android: androidNotificationDetails);
 
 void main() async {
   Provider.debugCheckInvalidValueType = null;
   await BoxDatabase.init();
+  await _appContainer.resolve<NotificationService>().initialize();
+  await _appContainer.resolve<DoseReminderScheduler>().initialize();
   initializeDateFormatting("pl_PL", null);
   runApp(const MyApp());
 }
@@ -105,5 +120,9 @@ class AppContainer extends KiwiContainer {
   AppContainer() : super.scoped() {
     registerSingleton((r) => BoxDatabase());
     registerSingleton((r) => EventBus());
+    registerSingleton((r) => DoseReminderScheduler(r.resolve()));
+    registerSingleton((r) => FlutterLocalNotificationsPlugin());
+    registerSingleton((r) => NotificationService(r.resolve()));
+    registerSingleton((r) => Workmanager());
   }
 }

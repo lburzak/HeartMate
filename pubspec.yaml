@@ -36,6 +36,10 @@ dependencies:
   path_provider: ^2.0.11
   printing: ^5.9.0
   pdf: ^3.8.4
+  flutter_local_notifications: ^13.0.0
+  timezone: ^0.9.1
+  flutter_native_timezone: ^2.0.0
+  workmanager: ^0.5.1
 
 dev_dependencies:
   flutter_test:
