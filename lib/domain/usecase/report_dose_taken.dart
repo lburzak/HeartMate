@@ -1,11 +1,15 @@
+import 'package:apkainzynierka/domain/event/today_dose_updated_event.dart';
 import 'package:apkainzynierka/domain/repository/dose_repository.dart';
 import 'package:apkainzynierka/domain/repository/schedule_repository.dart';
+import 'package:event_bus/event_bus.dart';
 
 class ReportDoseTaken {
   final ScheduleRepository _scheduleRepository;
   final DoseRepository _doseRepository;
+  final EventBus _eventBus;
 
-  const ReportDoseTaken(this._scheduleRepository, this._doseRepository);
+  const ReportDoseTaken(
+      this._scheduleRepository, this._doseRepository, this._eventBus);
 
   void standard() {
     final now = DateTime.now();
@@ -23,6 +27,8 @@ class ReportDoseTaken {
   void custom(double potency) {
     final now = DateTime.now();
 
-    _doseRepository.insertDoseTaken(now, potency);
+    _doseRepository.updateDose(now, potency, true);
+
+    _eventBus.fire(TodayDoseUpdatedEvent());
   }
 }

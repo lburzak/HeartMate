@@ -4,13 +4,15 @@ import 'package:flutter/material.dart';
 class CustomDosageView extends StatelessWidget {
   final void Function() onDosageIncrement;
   final void Function() onDosageDecrement;
+  final void Function() onSave;
   final double dosage;
 
   const CustomDosageView(
       {super.key,
       required this.onDosageIncrement,
       required this.onDosageDecrement,
-      required this.dosage});
+      required this.dosage,
+      required this.onSave});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class CustomDosageView extends StatelessWidget {
           child: Align(
             alignment: AlignmentDirectional.centerEnd,
             child: TextButton(
-              onPressed: () {},
+              onPressed: onSave,
               child: const Text(
                 "ZAPISZ",
                 style: TextStyle(fontWeight: FontWeight.bold),
