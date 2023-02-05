@@ -8,6 +8,7 @@ import 'package:apkainzynierka/feature/dose_reminder/ui/view.dart';
 import 'package:apkainzynierka/feature/dose_reminder/usecase/disable_reminders.dart';
 import 'package:apkainzynierka/feature/dose_reminder/usecase/enable_reminders.dart';
 import 'package:apkainzynierka/main.dart';
+import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
@@ -39,11 +40,14 @@ class DoseReminderContainer extends KiwiContainer {
   DoseReminderContainer({required AppContainer appContainer}) : super.scoped() {
     registerFactory(
         (r) => NotificationSetupCubit(r.resolve(), r.resolve(), r.resolve()));
-    registerFactory((r) => EnableReminders(r.resolve(), r.resolve()));
-    registerFactory((r) => DisableReminders(r.resolve(), r.resolve()));
+    registerFactory(
+        (r) => EnableReminders(r.resolve(), r.resolve(), r.resolve()));
+    registerFactory(
+        (r) => DisableReminders(r.resolve(), r.resolve(), r.resolve()));
     registerInstance<DoseReminderScheduler>(appContainer.resolve());
     registerFactory<NotificationSettingsStorage>((c) =>
         LocalNotificationSettingsStorage(
             appContainer.resolve<BoxDatabase>().notificationSettingsBox));
+    registerInstance(appContainer.resolve<EventBus>());
   }
 }

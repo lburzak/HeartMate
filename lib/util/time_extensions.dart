@@ -22,6 +22,7 @@ extension Days on DateTime {
 
 extension Day on DateTime {
   DateTime get dayEnd => DateTime(year, month, day + 1, 0, 0, 0, 0, -1);
+
   DateTime get dayStart => DateTime(year, month, day, 0, 0, 0, 0, 0);
 }
 
@@ -31,4 +32,11 @@ bool isSameDay(DateTime? a, DateTime? b) {
   }
 
   return a.year == b.year && a.month == b.month && a.day == b.day;
+}
+
+String formatTime(int hour, int minute) {
+  final paddedMinutes = "$minute".padLeft(2, "0");
+  final paddedHours = "$hour".padLeft(2, "0");
+
+  return "$paddedHours:$paddedMinutes";
 }
