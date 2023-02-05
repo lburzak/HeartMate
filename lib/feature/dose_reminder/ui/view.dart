@@ -12,59 +12,36 @@ class NotificationSetupView extends StatelessWidget {
       required this.onSwitched,
       required this.onTimeChanged});
 
+  String get paddedMinutes => "${model.minute}".padLeft(2, "0");
+
+  String get paddedHours => "${model.hour}".padLeft(2, "0");
+
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: const Text("Codzienne powiadomienia"),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Switch(value: model.enabled, onChanged: onSwitched),
-          TimeField(
-              onChanged: onTimeChanged,
-              enabled: model.enabled,
-              hour: model.hour,
-              minute: model.minute)
-        ],
+    return GestureDetector(
+      child: SwitchListTile(
+        title: const Text("Codzienne powiadomienia"),
+        subtitle: model.enabled
+            ? Text("Powiadomienie wyświetla się o $paddedHours:$paddedMinutes.")
+            : const Text("Powiadomienia nie wyświetlają się."),
+        value: model.enabled,
+        onChanged: (value) {
+          if (model.enabled) {
+            onSwitched(false);
+            return;
+          }
+
+          showTimePicker(
+                  context: context,
+                  initialTime:
+                      TimeOfDay(hour: model.hour, minute: model.minute))
+              .then((value) {
+            if (value != null) {
+              onTimeChanged(value.hour, value.minute);
+            }
+          });
+        },
       ),
     );
-  }
-}
-
-class TimeField extends StatelessWidget {
-  final void Function(int hour, int minute) onChanged;
-  final int hour;
-  final int minute;
-  final String? error;
-  final bool enabled;
-
-  String get paddedMinutes => "$minute".padLeft(2, "0");
-
-  String get paddedHours => "$hour".padLeft(2, "0");
-
-  const TimeField(
-      {super.key,
-      required this.onChanged,
-      this.error,
-      required this.hour,
-      required this.minute,
-      required this.enabled});
-
-  @override
-  Widget build(BuildContext context) {
-    return FormField<int>(
-        builder: (field) => GestureDetector(
-              onTap: enabled
-                  ? () {
-                      showTimePicker(
-                              context: context,
-                              initialTime:
-                                  TimeOfDay(hour: hour, minute: minute))
-                          .then((value) => onChanged(
-                              value?.hour ?? hour, value?.minute ?? minute));
-                    }
-                  : null,
-              child: Text("$paddedHours:$paddedMinutes"),
-            ));
   }
 }
