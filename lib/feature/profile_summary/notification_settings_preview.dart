@@ -5,6 +5,7 @@ import 'package:apkainzynierka/feature/dose_reminder/service/notification_settin
 import 'package:apkainzynierka/feature/profile_summary/service/notification_settings_preview_cubit.dart';
 import 'package:apkainzynierka/feature/profile_summary/ui/notification_settings_preview_view.dart';
 import 'package:apkainzynierka/main.dart';
+import 'package:event_bus/event_bus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
@@ -29,9 +30,11 @@ class NotificationSettingsPreview extends StatelessWidget {
 
 class NotificationSettingsModule extends KiwiContainer {
   NotificationSettingsModule(AppContainer appContainer) : super.scoped() {
-    registerFactory((r) => NotificationSettingsPreviewCubit(r.resolve()));
+    registerFactory(
+        (r) => NotificationSettingsPreviewCubit(r.resolve(), r.resolve()));
     registerFactory<NotificationSettingsStorage>((r) =>
         LocalNotificationSettingsStorage(
             appContainer.resolve<BoxDatabase>().notificationSettingsBox));
+    registerInstance(appContainer.resolve<EventBus>());
   }
 }
