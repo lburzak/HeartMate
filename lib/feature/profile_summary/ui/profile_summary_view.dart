@@ -19,13 +19,22 @@ class ProfileSummaryView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Header(text: "${model.firstName} ${model.lastName}"),
+              Header(text: "${model.firstName ?? ""} ${model.lastName ?? ""}"),
               const Header(text: "Profil"),
               SummaryRow(
                   label: "Rodzaj schorzenia", value: model.illness.readable),
-              SummaryRow(label: "Wiek", value: model.age.toString()),
-              SummaryRow(label: "Waga", value: model.weight.toString()),
-              SummaryRow(label: "Wzrost", value: model.height.toString()),
+              SummaryRow(
+                  label: "Wiek",
+                  value: model.age.toString(),
+                  visible: model.age != null),
+              SummaryRow(
+                  label: "Waga",
+                  value: model.weight.toString(),
+                  visible: model.weight != null),
+              SummaryRow(
+                  label: "Wzrost",
+                  value: model.height.toString(),
+                  visible: model.height != null),
               SummaryRow(label: "Płeć", value: model.gender.readable),
               const Header(text: "Terapia"),
               SummaryRow(

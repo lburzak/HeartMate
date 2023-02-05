@@ -3,21 +3,29 @@ import 'package:flutter/material.dart';
 class SummaryRow extends StatelessWidget {
   final String label;
   final String value;
+  final bool visible;
 
-  const SummaryRow({super.key, required this.label, required this.value});
+  const SummaryRow(
+      {super.key,
+      required this.label,
+      required this.value,
+      this.visible = true});
 
   @override
   Widget build(BuildContext context) {
-    return Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-      Expanded(
-          child: Text(
-        label,
-        style: const TextStyle(fontWeight: FontWeight.bold),
-      )),
-      Expanded(
-        child: Text(value),
-      )
-    ]);
+    return Visibility(
+      visible: visible,
+      child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+        Expanded(
+            child: Text(
+          label,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        )),
+        Expanded(
+          child: Text(value),
+        )
+      ]),
+    );
   }
 }
 
