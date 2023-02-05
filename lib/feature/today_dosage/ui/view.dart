@@ -39,7 +39,6 @@ class TodayDosageView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text("Dzisiejsza dawka"),
-                          const SizedBox(height: 10),
                           Text(
                             hintText,
                             style: const TextStyle(

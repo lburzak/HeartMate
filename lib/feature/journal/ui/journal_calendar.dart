@@ -21,6 +21,7 @@ class JournalCalendar extends StatelessWidget {
       onDaySelected: (selectedDay, focusedDay) => onDaySelected(selectedDay),
       selectedDayPredicate: (day) => isSameDay(day, selectedDay),
       headerStyle: const HeaderStyle(formatButtonVisible: false),
+      daysOfWeekHeight: 32,
       calendarStyle: const CalendarStyle(
           outsideDaysVisible: false, isTodayHighlighted: true),
       focusedDay: selectedDay ?? DateTime.now(),
