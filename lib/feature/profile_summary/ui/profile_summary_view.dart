@@ -1,5 +1,6 @@
 import 'package:apkainzynierka/domain/model/profile.dart';
 import 'package:apkainzynierka/feature/profile_editor/ui/view.dart';
+import 'package:apkainzynierka/feature/profile_summary/notification_settings_preview.dart';
 import 'package:apkainzynierka/util/lang.dart';
 import 'package:flutter/material.dart';
 
@@ -97,12 +98,7 @@ class ProfileSummaryView extends StatelessWidget {
               ),
               Header(text: "Preferencje")
             ]),
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: const [
-              SizedBox(width: 30),
-              Text('Powiadomienia'),
-              SizedBox(width: 100),
-              Text("wyłączone")
-            ]),
+            const NotificationSettingsPreview(),
           ],
         ),
       ),
