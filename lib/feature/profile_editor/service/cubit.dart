@@ -102,7 +102,7 @@ class ProfileEditorCubit extends Cubit<ProfileEditorState> {
       return;
     }
 
-    if (inrRange.from < 1.0 || inrRange.to > 3.0) {
+    if (inrRange.from < 1.0 || inrRange.to > 5.0) {
       emit(state.copyWith(
           inrRange: inrRange, inrRangeError: "Nieprawidłowa wartość zakresu"));
       return;

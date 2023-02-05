@@ -152,7 +152,7 @@ class ProfileEditorView extends StatelessWidget {
                                     DecimalNumberPicker(
                                       itemWidth: 50,
                                       minValue: 0,
-                                      maxValue: 3,
+                                      maxValue: 5,
                                       decimalTextMapper: (numberText) =>
                                           ".$numberText",
                                       onChanged: (value) =>
@@ -166,7 +166,7 @@ class ProfileEditorView extends StatelessWidget {
                                     DecimalNumberPicker(
                                       itemWidth: 50,
                                       minValue: 0,
-                                      maxValue: 3,
+                                      maxValue: 5,
                                       decimalTextMapper: (numberText) =>
                                           ".$numberText",
                                       onChanged: (value) =>
