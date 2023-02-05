@@ -114,9 +114,20 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
           brightness: Brightness.dark,
           primaryColor: Colors.lightBlue,
+          colorScheme: ColorScheme.fromSwatch(),
+          dropdownMenuTheme: DropdownMenuThemeData(),
+          inputDecorationTheme: const InputDecorationTheme(
+              floatingLabelStyle: TextStyle(fontSize: 20),
+              suffixStyle: TextStyle(fontSize: 16),
+              labelStyle: TextStyle(fontSize: 20)),
           textTheme: GoogleFonts.balooDa2TextTheme()
               .apply(bodyColor: Colors.white)
-              .copyWith(bodyMedium: GoogleFonts.balooDa2(fontSize: 16)),
+              .copyWith(
+                  titleMedium: GoogleFonts.balooDa2(fontSize: 20),
+                  bodyMedium: GoogleFonts.balooDa2(fontSize: 16),
+                  bodySmall: GoogleFonts.balooDa2(fontSize: 12),
+                  headlineLarge: GoogleFonts.poppins(
+                      fontSize: 36, fontWeight: FontWeight.w200)),
           extensions: [
             const BrandTheme(
                 goodColor: Color(0xff2F802D), badColor: Color(0xffF34E4E))

@@ -1,4 +1,5 @@
 import 'package:apkainzynierka/feature/dose_reminder/model/notification_settings.dart';
+import 'package:apkainzynierka/feature/profile_summary/ui/profile_summary_view.dart';
 import 'package:apkainzynierka/util/time_extensions.dart';
 import 'package:flutter/material.dart';
 
@@ -9,12 +10,9 @@ class NotificationSettingsPreviewView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-      SizedBox(width: 30),
-      Text('Powiadomienia'),
-      SizedBox(width: 100),
-      Text(model.enabled ? formatTime(model.hour, model.minute) : "wyłączone")
-    ]);
+    return SummaryRow(
+        label: "Powiadomienia",
+        value:
+            model.enabled ? formatTime(model.hour, model.minute) : "wyłączone");
   }
-
 }

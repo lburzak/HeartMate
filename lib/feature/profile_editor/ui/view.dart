@@ -263,10 +263,10 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0, top: 8),
+      padding: const EdgeInsets.only(top: 12, bottom: 4),
       child: Text(
         text,
-        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
+        style: Theme.of(context).textTheme.headlineLarge,
       ),
     );
   }
@@ -467,27 +467,26 @@ class SelectorField<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 59,
-      child: DropdownButtonFormField<T>(
-        style: const TextStyle(fontSize: 14),
-        value: option,
-        onChanged: onChanged,
-        autofocus: false,
-        items: options
-            .map((e) => DropdownMenuItem<T>(
-                  value: e,
-                  child: Text(optionAdapter(e)),
-                ))
-            .toList(),
-        decoration: InputDecoration(
-            labelText: label,
-            focusedBorder: const UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.blue)),
-            enabledBorder: const UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.blue)),
-            filled: true),
-      ),
+    return DropdownButtonFormField<T>(
+      value: option,
+      onChanged: onChanged,
+      autofocus: false,
+      items: options
+          .map((e) => DropdownMenuItem<T>(
+                value: e,
+                child: Text(
+                  optionAdapter(e),
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ))
+          .toList(),
+      decoration: InputDecoration(
+          labelText: label,
+          focusedBorder: const UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.blue)),
+          enabledBorder: const UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.blue)),
+          filled: true),
     );
   }
 }
