@@ -9,7 +9,7 @@ part of 'profile_entry.dart';
 _$_ProfileEntry _$$_ProfileEntryFromJson(Map<String, dynamic> json) =>
     _$_ProfileEntry(
       createdAt: DateTime.parse(json['createdAt'] as String),
-      profile: Profile.fromJson(json['profile'] as Map<String, dynamic>),
+      profile: json['profile'],
     );
 
 Map<String, dynamic> _$$_ProfileEntryToJson(_$_ProfileEntry instance) =>

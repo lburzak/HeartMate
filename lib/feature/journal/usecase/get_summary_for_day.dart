@@ -4,6 +4,7 @@ import 'package:apkainzynierka/domain/repository/profile_repository.dart';
 import 'package:apkainzynierka/domain/repository/schedule_repository.dart';
 import 'package:apkainzynierka/feature/journal/model/day_summary.dart';
 import 'package:apkainzynierka/feature/journal/usecase/get_rating_for_inr_measurement.dart';
+import 'package:apkainzynierka/util/time_extensions.dart';
 
 class GetSummaryForDay {
   final DoseRepository _doseRepository;
@@ -29,7 +30,7 @@ class GetSummaryForDay {
 
     final inrMeasurement = _inrMeasurementRepository.findForDay(day);
 
-    final profile = _profileRepository.findForDateTime(day);
+    final profile = _profileRepository.findForDateTime(day.dayEnd);
 
     return DaySummary(
         dosage: dose?.potency ?? dosage,
