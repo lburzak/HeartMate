@@ -112,6 +112,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'HeartMate',
+      locale: const Locale("pl_PL"),
       theme: ThemeData.dark().copyWith(
           brightness: Brightness.dark,
           primaryColor: Colors.lightBlue,

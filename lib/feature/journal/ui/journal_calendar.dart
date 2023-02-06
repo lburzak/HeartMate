@@ -18,6 +18,7 @@ class JournalCalendar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TableCalendar(
+      locale: "pl_PL",
       onDaySelected: (selectedDay, focusedDay) => onDaySelected(selectedDay),
       selectedDayPredicate: (day) => isSameDay(day, selectedDay),
       headerStyle: const HeaderStyle(formatButtonVisible: false),

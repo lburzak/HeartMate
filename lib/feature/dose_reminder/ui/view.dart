@@ -25,7 +25,11 @@ class NotificationSetupView extends StatelessWidget {
       return;
     }
 
-    showTimePicker(context: context, initialTime: initialTime).then((value) {
+    showTimePicker(
+            context: context,
+            initialTime: initialTime,
+            helpText: "Wybierz godzinę powiadomienia".toUpperCase())
+        .then((value) {
       if (value != null) {
         onEnabled(value.hour, value.minute);
       }
