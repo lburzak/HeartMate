@@ -25,7 +25,7 @@ class PdfReportBuilder {
           return [
             Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Expanded(
-                  child: SizedBox(height: 100, child: _InrChart(model: model))),
+                  child: SizedBox(height: 130, child: _InrChart(model: model))),
               SizedBox(width: 20),
               _ProfileTable(model: model)
             ]),
@@ -62,34 +62,37 @@ class _InrChart extends StatelessWidget {
   Widget build(Context context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text("Wykres pomiarów INR", style: Theme.of(context).header3),
+      SizedBox(height: 12),
       model.inrMeasurements.length < 2
           ? Text("W podanym okresie wykonano mniej niż 2 pomiary.",
               style: Theme.of(context)
                   .defaultTextStyle
                   .copyWith(fontStyle: FontStyle.italic))
-          : Chart(
-              grid: CartesianGrid(
-                  xAxis: FixedAxis(
-                    model.inrMeasurements.keys
-                        .map((e) => e.millisecondsSinceEpoch)
-                        .toList(),
-                    marginStart: 10,
-                    buildLabel: (value) => Text(
-                        DateFormat("dd.MM").format(
-                            DateTime.fromMillisecondsSinceEpoch(value.toInt())),
-                        style: const TextStyle(fontSize: 8)),
-                  ),
-                  yAxis: FixedAxis([
-                    ...List.generate(
-                        model.inrMeasurements.values.reduce(max).ceil() + 1,
-                        (index) => index)
-                  ])),
-              datasets: [
+          : Expanded(
+              child: Chart(
+                  grid: CartesianGrid(
+                      xAxis: FixedAxis(
+                        model.inrMeasurements.keys
+                            .map((e) => e.millisecondsSinceEpoch)
+                            .toList(),
+                        marginStart: 10,
+                        buildLabel: (value) => Text(
+                            DateFormat("dd.MM").format(
+                                DateTime.fromMillisecondsSinceEpoch(
+                                    value.toInt())),
+                            style: const TextStyle(fontSize: 8)),
+                      ),
+                      yAxis: FixedAxis([
+                        ...List.generate(
+                            model.inrMeasurements.values.reduce(max).ceil() + 1,
+                            (index) => index)
+                      ])),
+                  datasets: [
                   LineDataSet(data: [
                     ...model.inrMeasurements.entries.map((e) => PointChartValue(
                         e.key.millisecondsSinceEpoch.toDouble(), e.value))
                   ], isCurved: true)
-                ])
+                ]))
     ]);
   }
 }
@@ -129,7 +132,7 @@ class _ProfileTable extends StatelessWidget {
     }
 
     final propertiesTable =
-        Table(defaultColumnWidth: const FixedColumnWidth(70), children: [
+        Table(defaultColumnWidth: const FixedColumnWidth(90), children: [
       TableRow(children: [
         Text("Płeć", style: headerStyle),
         Text(model.gender.readable)
