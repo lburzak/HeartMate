@@ -31,7 +31,10 @@ class _TherapyPageState extends State<TherapyPage> {
       child: Column(
         children: [
           const TodayDosage(),
-          const WeekPreview(),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 12, left: 8, right: 8),
+            child: WeekPreview(),
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ActionButton(
