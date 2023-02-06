@@ -128,7 +128,7 @@ class MyApp extends StatelessWidget {
                   bodyMedium: GoogleFonts.balooDa2(fontSize: 16),
                   bodySmall: GoogleFonts.balooDa2(fontSize: 12),
                   headlineLarge: GoogleFonts.poppins(
-                      fontSize: 36, fontWeight: FontWeight.w200)),
+                      fontSize: 26, fontWeight: FontWeight.w200)),
           extensions: [
             const BrandTheme(
               goodColor: Color(0xff2F802D),
