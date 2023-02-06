@@ -28,40 +28,46 @@ class _TherapyPageState extends State<TherapyPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Column(
-        children: [
-          const TodayDosage(),
-          const Padding(
-            padding: EdgeInsets.only(bottom: 12, left: 8, right: 8),
-            child: WeekPreview(),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ActionButton(
-              onPressed: () => context.push('/schedules/current'),
-              label: "Dostosuj harmonogram",
-              icon: Icons.calendar_month,
-            ),
-          ),
-          const SizedBox(height: 150, child: LastInrMeasurements()),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ActionButton(
-              onPressed: () {
-                showModalBottomSheet<void>(
-                  context: context,
-                  builder: (BuildContext _) {
-                    return Provider<AppContainer>.value(
-                        value: context.read(),
-                        builder: (context, child) => const ReportInrDialog());
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              const TodayDosage(),
+              const Padding(
+                padding: EdgeInsets.only(bottom: 12, left: 8, right: 8),
+                child: WeekPreview(),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ActionButton(
+                  onPressed: () => context.push('/schedules/current'),
+                  label: "Dostosuj harmonogram",
+                  icon: Icons.calendar_month,
+                ),
+              ),
+              const SizedBox(height: 150, child: LastInrMeasurements()),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ActionButton(
+                  onPressed: () {
+                    showModalBottomSheet<void>(
+                      context: context,
+                      builder: (BuildContext _) {
+                        return Provider<AppContainer>.value(
+                            value: context.read(),
+                            builder: (context, child) =>
+                                const ReportInrDialog());
+                      },
+                    );
                   },
-                );
-              },
-              label: "Dodaj pomiar INR",
-              icon: Icons.bloodtype,
-            ),
+                  label: "Dodaj pomiar INR",
+                  icon: Icons.bloodtype,
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
