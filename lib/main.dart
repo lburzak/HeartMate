@@ -114,7 +114,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
           brightness: Brightness.dark,
           primaryColor: Colors.lightBlue,
-          colorScheme: ColorScheme.fromSwatch(),
           chipTheme: ChipThemeData(
               labelStyle: GoogleFonts.balooDa2(
                   fontSize: 14, fontWeight: FontWeight.bold)),
