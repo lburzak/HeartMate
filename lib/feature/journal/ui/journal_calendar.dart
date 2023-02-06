@@ -51,6 +51,10 @@ class JournalCalendar extends StatelessWidget {
             break;
         }
 
+        if (dayHighlights.hasNote) {
+          markers.add(const Marker.hasNote());
+        }
+
         return MarkersContainer(markers: markers);
       }),
     );
@@ -109,6 +113,10 @@ class Marker extends StatelessWidget {
   const Marker.inrMeasured({super.key, required bool positive})
       : icon = Icons.circle,
         color = positive ? Colors.blue : Colors.red;
+
+  const Marker.hasNote({super.key})
+      : icon = Icons.note,
+        color = const Color(0xffeeeeee);
 
   @override
   Widget build(BuildContext context) {

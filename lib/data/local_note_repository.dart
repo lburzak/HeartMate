@@ -18,4 +18,10 @@ class LocalNoteRepository extends NoteRepository {
     final key = day.encodeDay();
     _notesBox.put(key, content);
   }
+
+  @override
+  bool existsNoteForDay(DateTime day) {
+    final key = day.encodeDay();
+    return _notesBox.get(key) != null;
+  }
 }

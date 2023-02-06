@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$DayHighlight {
   bool get doseMissed => throw _privateConstructorUsedError;
   InrStatus get inrStatus => throw _privateConstructorUsedError;
+  bool get hasNote => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $DayHighlightCopyWith<DayHighlight> get copyWith =>
@@ -30,7 +31,7 @@ abstract class $DayHighlightCopyWith<$Res> {
           DayHighlight value, $Res Function(DayHighlight) then) =
       _$DayHighlightCopyWithImpl<$Res, DayHighlight>;
   @useResult
-  $Res call({bool doseMissed, InrStatus inrStatus});
+  $Res call({bool doseMissed, InrStatus inrStatus, bool hasNote});
 }
 
 /// @nodoc
@@ -48,6 +49,7 @@ class _$DayHighlightCopyWithImpl<$Res, $Val extends DayHighlight>
   $Res call({
     Object? doseMissed = null,
     Object? inrStatus = null,
+    Object? hasNote = null,
   }) {
     return _then(_value.copyWith(
       doseMissed: null == doseMissed
@@ -58,6 +60,10 @@ class _$DayHighlightCopyWithImpl<$Res, $Val extends DayHighlight>
           ? _value.inrStatus
           : inrStatus // ignore: cast_nullable_to_non_nullable
               as InrStatus,
+      hasNote: null == hasNote
+          ? _value.hasNote
+          : hasNote // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -70,7 +76,7 @@ abstract class _$$_DayHighlightCopyWith<$Res>
       __$$_DayHighlightCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool doseMissed, InrStatus inrStatus});
+  $Res call({bool doseMissed, InrStatus inrStatus, bool hasNote});
 }
 
 /// @nodoc
@@ -86,6 +92,7 @@ class __$$_DayHighlightCopyWithImpl<$Res>
   $Res call({
     Object? doseMissed = null,
     Object? inrStatus = null,
+    Object? hasNote = null,
   }) {
     return _then(_$_DayHighlight(
       doseMissed: null == doseMissed
@@ -96,6 +103,10 @@ class __$$_DayHighlightCopyWithImpl<$Res>
           ? _value.inrStatus
           : inrStatus // ignore: cast_nullable_to_non_nullable
               as InrStatus,
+      hasNote: null == hasNote
+          ? _value.hasNote
+          : hasNote // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -103,16 +114,21 @@ class __$$_DayHighlightCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_DayHighlight implements _DayHighlight {
-  const _$_DayHighlight({required this.doseMissed, required this.inrStatus});
+  const _$_DayHighlight(
+      {required this.doseMissed,
+      required this.inrStatus,
+      required this.hasNote});
 
   @override
   final bool doseMissed;
   @override
   final InrStatus inrStatus;
+  @override
+  final bool hasNote;
 
   @override
   String toString() {
-    return 'DayHighlight(doseMissed: $doseMissed, inrStatus: $inrStatus)';
+    return 'DayHighlight(doseMissed: $doseMissed, inrStatus: $inrStatus, hasNote: $hasNote)';
   }
 
   @override
@@ -123,11 +139,12 @@ class _$_DayHighlight implements _DayHighlight {
             (identical(other.doseMissed, doseMissed) ||
                 other.doseMissed == doseMissed) &&
             (identical(other.inrStatus, inrStatus) ||
-                other.inrStatus == inrStatus));
+                other.inrStatus == inrStatus) &&
+            (identical(other.hasNote, hasNote) || other.hasNote == hasNote));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, doseMissed, inrStatus);
+  int get hashCode => Object.hash(runtimeType, doseMissed, inrStatus, hasNote);
 
   @JsonKey(ignore: true)
   @override
@@ -139,12 +156,15 @@ class _$_DayHighlight implements _DayHighlight {
 abstract class _DayHighlight implements DayHighlight {
   const factory _DayHighlight(
       {required final bool doseMissed,
-      required final InrStatus inrStatus}) = _$_DayHighlight;
+      required final InrStatus inrStatus,
+      required final bool hasNote}) = _$_DayHighlight;
 
   @override
   bool get doseMissed;
   @override
   InrStatus get inrStatus;
+  @override
+  bool get hasNote;
   @override
   @JsonKey(ignore: true)
   _$$_DayHighlightCopyWith<_$_DayHighlight> get copyWith =>

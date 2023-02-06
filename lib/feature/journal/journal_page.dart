@@ -70,7 +70,8 @@ class JournalContainer extends KiwiContainer {
     registerFactory<NoteRepository>(
         (r) => LocalNoteRepository(r.resolve<BoxDatabase>().notesBox));
     registerFactory((r) => GetRatingForInrMeasurement(r()));
-    registerFactory((r) => GetHighlightsForMonth(r(), r(), r(), r()));
+    registerFactory(
+        (r) => GetHighlightsForMonth(r(), r(), r(), r(), r.resolve()));
     registerFactory((r) => GetSummaryForDay(r(), r(), r(), r(), r(), r()));
     registerFactory((r) => r.resolve<BoxDatabase>().inrMeasurementsBox);
     registerInstance<BoxDatabase>(appContainer.resolve());
