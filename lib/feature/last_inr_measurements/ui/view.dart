@@ -14,21 +14,22 @@ class InrChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return SfCartesianChart(
         primaryXAxis: DateTimeAxis(
-          majorGridLines: const MajorGridLines(width: 0),
-          interval: 1,
-          intervalType: DateTimeIntervalType.days,
-          minimum: DateTime.now().subtract(const Duration(days: 30)),
-          maximum: DateTime.now(),
-        ),
+            majorGridLines: const MajorGridLines(width: 0),
+            interval: 1,
+            intervalType: DateTimeIntervalType.days,
+            minimum: DateTime.now().subtract(const Duration(days: 31)),
+            maximum: DateTime.now().add(const Duration(days: 1)),
+            edgeLabelPlacement: EdgeLabelPlacement.shift,
+            plotOffset: 0),
         primaryYAxis: NumericAxis(
-            interval: 0.2,
+            interval: 0.5,
             plotBands: [
               _createLineBand(state.therapeuticInrBottom),
               _createLineBand(state.therapeuticInrTop),
             ],
-            axisLabelFormatter: (axisLabelRenderArgs) =>
-                ChartAxisLabel("", axisLabelRenderArgs.textStyle),
-            majorTickLines: const MajorTickLines(width: 0),
+            plotOffset: 0,
+            maximumLabelWidth: 10,
+            majorTickLines: const MajorTickLines(width: 1),
             majorGridLines: const MajorGridLines(width: 0)),
         series: <ChartSeries<Measurement, DateTime>>[
           ColumnSeries<Measurement, DateTime>(
