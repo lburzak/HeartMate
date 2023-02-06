@@ -29,6 +29,7 @@ const AndroidNotificationDetails androidNotificationDetails =
 const det = NotificationDetails(android: androidNotificationDetails);
 
 void main() async {
+  GoogleFonts.config.allowRuntimeFetching = false;
   Provider.debugCheckInvalidValueType = null;
   await BoxDatabase.init();
   await _appContainer.resolve<NotificationService>().initialize();
