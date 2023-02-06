@@ -1,6 +1,7 @@
 import 'package:apkainzynierka/feature/last_inr_measurements/last_inr_measurements.dart';
 import 'package:apkainzynierka/feature/report_inr/report_inr.dart';
 import 'package:apkainzynierka/feature/today_dosage/today_dosage.dart';
+import 'package:apkainzynierka/feature/today_note/today_note.dart';
 import 'package:apkainzynierka/feature/week_preview/week_preview.dart';
 import 'package:apkainzynierka/main.dart';
 import 'package:apkainzynierka/widget/action_button.dart';
@@ -65,6 +66,7 @@ class _TherapyPageState extends State<TherapyPage> {
                   icon: Icons.bloodtype,
                 ),
               ),
+              const TodayNote()
             ],
           ),
         ),
