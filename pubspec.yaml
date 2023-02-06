@@ -67,3 +67,5 @@ flutter:
         - asset: fonts/BalooDa2-Bold.ttf
           weight: 700
         - asset: fonts/BalooDa2-Regular.ttf
+  assets:
+    - assets/ic_launcher.png
