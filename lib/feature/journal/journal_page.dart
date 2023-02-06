@@ -33,18 +33,21 @@ class JournalPage extends StatelessWidget {
           create: (context) => container.resolve(),
           child: BlocBuilder<JournalCubit, JournalState>(
             builder: (context, state) => SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ActionButton(
-                        onPressed: () =>
-                            TherapyReportWizard.showAsModal(context),
-                        label: "Generuj raport",
-                        icon: Icons.receipt_long),
-                  ),
-                  JournalView(state: state, cubit: context.read()),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ActionButton(
+                          onPressed: () =>
+                              TherapyReportWizard.showAsModal(context),
+                          label: "Generuj raport",
+                          icon: Icons.receipt_long),
+                    ),
+                    JournalView(state: state, cubit: context.read()),
+                  ],
+                ),
               ),
             ),
           ),
