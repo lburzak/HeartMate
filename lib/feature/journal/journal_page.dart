@@ -1,10 +1,12 @@
 import 'package:apkainzynierka/data/database.dart';
 import 'package:apkainzynierka/data/local_dose_repository.dart';
 import 'package:apkainzynierka/data/local_inr_measurement_repository.dart';
+import 'package:apkainzynierka/data/local_note_repository.dart';
 import 'package:apkainzynierka/data/local_profile_repository.dart';
 import 'package:apkainzynierka/data/local_schedule_repository.dart';
 import 'package:apkainzynierka/domain/repository/dose_repository.dart';
 import 'package:apkainzynierka/domain/repository/inr_measurement_repository.dart';
+import 'package:apkainzynierka/domain/repository/note_repository.dart';
 import 'package:apkainzynierka/domain/repository/profile_repository.dart';
 import 'package:apkainzynierka/domain/repository/schedule_repository.dart';
 import 'package:apkainzynierka/feature/journal/model/state.dart';
@@ -65,9 +67,11 @@ class JournalContainer extends KiwiContainer {
     registerFactory<InrMeasurementRepository>(
         (r) => LocalInrMeasurementRepository(r()));
     registerFactory<ProfileRepository>((r) => LocalProfileRepository(r()));
+    registerFactory<NoteRepository>(
+        (r) => LocalNoteRepository(r.resolve<BoxDatabase>().notesBox));
     registerFactory((r) => GetRatingForInrMeasurement(r()));
     registerFactory((r) => GetHighlightsForMonth(r(), r(), r(), r()));
-    registerFactory((r) => GetSummaryForDay(r(), r(), r(), r(), r()));
+    registerFactory((r) => GetSummaryForDay(r(), r(), r(), r(), r(), r()));
     registerFactory((r) => r.resolve<BoxDatabase>().inrMeasurementsBox);
     registerInstance<BoxDatabase>(appContainer.resolve());
   }

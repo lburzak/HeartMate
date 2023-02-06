@@ -47,7 +47,10 @@ class DaySummaryView extends StatelessWidget {
                   model.otherMedicines!.isNotEmpty,
               child: TriSummaryRow(
                   label: "Inne leki",
-                  value: model.otherMedicines?.join(", ") ?? ""))
+                  value: model.otherMedicines?.join(", ") ?? "")),
+          Visibility(
+              visible: model.note != null,
+              child: TriSummaryRow(label: "Notatka", value: model.note ?? ""))
         ],
       ),
     );

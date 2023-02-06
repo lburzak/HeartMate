@@ -39,17 +39,22 @@ class TriSummaryRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-      Expanded(
-          child: Text(
-        label,
-        style: const TextStyle(fontWeight: FontWeight.bold),
-      )),
-      Expanded(
-        flex: trailing != null ? 1 : 2,
-        child: Text(value),
-      ),
-      trailing != null ? Expanded(child: trailing!) : const SizedBox.shrink()
-    ]);
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+              child: Text(
+            label,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          )),
+          Expanded(
+            flex: trailing != null ? 1 : 2,
+            child: Text(value),
+          ),
+          trailing != null
+              ? Expanded(child: trailing!)
+              : const SizedBox.shrink()
+        ]);
   }
 }

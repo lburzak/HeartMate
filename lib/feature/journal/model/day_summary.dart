@@ -11,7 +11,8 @@ class DaySummary with _$DaySummary {
       bool? taken,
       List<String>? otherMedicines,
       double? inr,
-      InrRating? inrRating}) = _DaySummary;
+      InrRating? inrRating,
+      String? note}) = _DaySummary;
 }
 
 enum InrRating { tooLow, tooHigh, balanced }

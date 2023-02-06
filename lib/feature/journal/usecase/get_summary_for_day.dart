@@ -1,5 +1,6 @@
 import 'package:apkainzynierka/domain/repository/dose_repository.dart';
 import 'package:apkainzynierka/domain/repository/inr_measurement_repository.dart';
+import 'package:apkainzynierka/domain/repository/note_repository.dart';
 import 'package:apkainzynierka/domain/repository/profile_repository.dart';
 import 'package:apkainzynierka/domain/repository/schedule_repository.dart';
 import 'package:apkainzynierka/feature/journal/model/day_summary.dart';
@@ -12,13 +13,14 @@ class GetSummaryForDay {
   final InrMeasurementRepository _inrMeasurementRepository;
   final ProfileRepository _profileRepository;
   final GetRatingForInrMeasurement _getRatingForInrMeasurement;
+  final NoteRepository _noteRepository;
 
-  GetSummaryForDay(
-      this._doseRepository,
+  GetSummaryForDay(this._doseRepository,
       this._scheduleRepository,
       this._inrMeasurementRepository,
       this._profileRepository,
-      this._getRatingForInrMeasurement);
+      this._getRatingForInrMeasurement,
+      this._noteRepository);
 
   DaySummary call(DateTime day) {
     final scheduleId = _scheduleRepository.getScheduleIdForDay(day);
@@ -32,6 +34,8 @@ class GetSummaryForDay {
 
     final profile = _profileRepository.findForDateTime(day.dayEnd);
 
+    final note = _noteRepository.getNoteForDay(day);
+
     return DaySummary(
         dosage: dose?.potency ?? dosage,
         taken: dose != null,
@@ -40,6 +44,7 @@ class GetSummaryForDay {
             ? _getRatingForInrMeasurement(inrMeasurement)
             : null,
         otherMedicines: profile?.otherMedicines,
-        anticoagulant: profile?.anticoagulant);
+        anticoagulant: profile?.anticoagulant,
+        note: note);
   }
 }
