@@ -12,9 +12,9 @@ import 'package:apkainzynierka/theme/brand_theme.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:provider/provider.dart';
 import 'package:workmanager/workmanager.dart';
@@ -34,7 +34,6 @@ void main() async {
   await BoxDatabase.init();
   await _appContainer.resolve<NotificationService>().initialize();
   await _appContainer.resolve<DoseReminderScheduler>().initialize();
-  initializeDateFormatting("pl_PL", null);
   runApp(const MyApp());
 }
 
@@ -112,7 +111,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'HeartMate',
-      locale: const Locale("pl_PL"),
+      locale: const Locale("pl"),
+      supportedLocales: const [Locale("pl")],
+      localizationsDelegates: const [GlobalMaterialLocalizations.delegate],
       theme: ThemeData.dark().copyWith(
           brightness: Brightness.dark,
           primaryColor: Colors.lightBlue,

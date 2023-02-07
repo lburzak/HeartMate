@@ -26,7 +26,6 @@ class DateField extends StatelessWidget {
         builder: (field) => GestureDetector(
             onTap: () {
               showDatePicker(
-                helpText: "WYBIERZ DATĘ",
                 context: context,
                 initialDate: dateTime,
                 firstDate: firstDate,

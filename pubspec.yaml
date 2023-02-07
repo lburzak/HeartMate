@@ -40,6 +40,8 @@ dependencies:
   timezone: ^0.9.1
   flutter_native_timezone: ^2.0.0
   workmanager: ^0.5.1
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
