@@ -5,6 +5,7 @@ import 'package:apkainzynierka/domain/model/dose.dart';
 import 'package:apkainzynierka/domain/model/inr_measurement.dart';
 import 'package:apkainzynierka/domain/repository/dose_repository.dart';
 import 'package:apkainzynierka/domain/repository/inr_measurement_repository.dart';
+import 'package:apkainzynierka/domain/repository/note_repository.dart';
 import 'package:apkainzynierka/domain/repository/schedule_repository.dart';
 import 'package:apkainzynierka/feature/journal/model/day_highlight.dart';
 import 'package:apkainzynierka/feature/journal/model/day_summary.dart';
@@ -17,12 +18,17 @@ class GetHighlightsForMonth {
   final InrMeasurementRepository _inrMeasurementRepository;
   final ScheduleRepository _scheduleRepository;
   final GetRatingForInrMeasurement _getRatingForInrMeasurement;
+  final NoteRepository _noteRepository;
 
   late List<Dose> _doses;
   late List<InrMeasurement> _inrMeasurements;
 
-  GetHighlightsForMonth(this._doseRepository, this._inrMeasurementRepository,
-      this._getRatingForInrMeasurement, this._scheduleRepository);
+  GetHighlightsForMonth(
+      this._doseRepository,
+      this._inrMeasurementRepository,
+      this._getRatingForInrMeasurement,
+      this._scheduleRepository,
+      this._noteRepository);
 
   Map<DateTime, DayHighlight> call(DateTime month) {
     _doses = _doseRepository.findWithinPeriod(
@@ -39,10 +45,11 @@ class GetHighlightsForMonth {
     final now = DateTime.now();
 
     for (final day
-    in month.daysOfMonth.takeWhile((value) => value.isBefore(now))) {
+        in month.daysOfMonth.takeWhile((value) => value.isBefore(now))) {
       map[day] = DayHighlight(
           doseMissed: _determineIfDoseWasMissedForDay(day),
-          inrStatus: _determineInrStatusForDay(day));
+          inrStatus: _determineInrStatusForDay(day),
+          hasNote: _noteRepository.existsNoteForDay(day));
     }
 
     return map;

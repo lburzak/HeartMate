@@ -22,7 +22,7 @@ dependencies:
   bottom_navy_bar: ^6.0.0
   dotted_border: ^2.0.0+3
   hive: ^2.2.3
-  json_annotation: ^4.7.0
+  json_annotation: ^4.8.0
   hive_flutter: ^1.1.0
   kiwi: ^4.0.3
   syncfusion_flutter_charts: ^20.3.59
@@ -40,15 +40,34 @@ dependencies:
   timezone: ^0.9.1
   flutter_native_timezone: ^2.0.0
   workmanager: ^0.5.1
+  flutter_localizations:
+    sdk: flutter
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
   build_runner: ^2.3.2
-  freezed: ^2.2.1
-  json_serializable: ^6.5.4
+  freezed: ^2.3.2
+  json_serializable: ^6.6.1
   kiwi_generator: ^4.0.3
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: fonts/Poppins-Regular.ttf
+        - asset: fonts/Poppins-Italic.ttf
+          style: italic
+        - asset: fonts/Poppins-Bold.ttf
+          weight: 700
+        - asset: fonts/Poppins-ExtraLight.ttf
+          weight: 200
+    - family: BalooDa2
+      fonts:
+        - asset: fonts/BalooDa2-Bold.ttf
+          weight: 700
+        - asset: fonts/BalooDa2-Regular.ttf
+  assets:
+    - assets/ic_launcher.png

@@ -8,12 +8,13 @@ import 'package:apkainzynierka/feature/therapy_report/ui/therapy_report_page.dar
 import 'package:apkainzynierka/feature/therapy_report/ui/therapy_report_wizard.dart';
 import 'package:apkainzynierka/feature/welcome/util.dart';
 import 'package:apkainzynierka/feature/welcome/welcome_page.dart';
-import 'package:apkainzynierka/theme/theme_constants.dart';
+import 'package:apkainzynierka/theme/brand_theme.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/date_symbol_data_local.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:provider/provider.dart';
 import 'package:workmanager/workmanager.dart';
@@ -28,11 +29,11 @@ const AndroidNotificationDetails androidNotificationDetails =
 const det = NotificationDetails(android: androidNotificationDetails);
 
 void main() async {
+  GoogleFonts.config.allowRuntimeFetching = false;
   Provider.debugCheckInvalidValueType = null;
   await BoxDatabase.init();
   await _appContainer.resolve<NotificationService>().initialize();
   await _appContainer.resolve<DoseReminderScheduler>().initialize();
-  initializeDateFormatting("pl_PL", null);
   runApp(const MyApp());
 }
 
@@ -110,7 +111,38 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'HeartMate',
-      theme: darkTheme,
+      locale: const Locale("pl"),
+      supportedLocales: const [Locale("pl")],
+      localizationsDelegates: const [GlobalMaterialLocalizations.delegate],
+      theme: ThemeData.dark().copyWith(
+          brightness: Brightness.dark,
+          primaryColor: Colors.lightBlue,
+          accentColor: Colors.blue,
+          chipTheme: ChipThemeData(
+              labelStyle: GoogleFonts.balooDa2(
+                  fontSize: 14, fontWeight: FontWeight.bold)),
+          inputDecorationTheme: const InputDecorationTheme(
+              floatingLabelStyle: TextStyle(fontSize: 20),
+              suffixStyle: TextStyle(fontSize: 16),
+              labelStyle: TextStyle(fontSize: 20)),
+          textTheme: GoogleFonts.balooDa2TextTheme()
+              .apply(bodyColor: Colors.white)
+              .copyWith(
+                  titleMedium: GoogleFonts.balooDa2(fontSize: 20),
+                  bodyMedium: GoogleFonts.balooDa2(fontSize: 16),
+                  bodySmall: GoogleFonts.balooDa2(fontSize: 12),
+                  headlineLarge: GoogleFonts.poppins(
+                      fontSize: 26, fontWeight: FontWeight.w200)),
+          extensions: [
+            const BrandTheme(
+              goodColor: Color(0xff2F802D),
+              goodTextColor: Color(0xFF62DF00),
+              badColor: Color(0xffF34E4E),
+              badTextColor: Color(0xffFFB4AA),
+              warningColor: Color(0xFF554200),
+              warningTextColor: Color(0xFFDFA100),
+            )
+          ]),
       routerConfig: _router,
     );
   }

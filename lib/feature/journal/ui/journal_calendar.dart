@@ -1,4 +1,5 @@
 import 'package:apkainzynierka/feature/journal/model/day_highlight.dart';
+import 'package:apkainzynierka/theme/brand_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -18,9 +19,11 @@ class JournalCalendar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TableCalendar(
+      locale: "pl_PL",
       onDaySelected: (selectedDay, focusedDay) => onDaySelected(selectedDay),
       selectedDayPredicate: (day) => isSameDay(day, selectedDay),
       headerStyle: const HeaderStyle(formatButtonVisible: false),
+      daysOfWeekHeight: 32,
       calendarStyle: const CalendarStyle(
           outsideDaysVisible: false, isTodayHighlighted: true),
       focusedDay: selectedDay ?? DateTime.now(),
@@ -29,25 +32,29 @@ class JournalCalendar extends StatelessWidget {
       currentDay: DateTime.now(),
       onPageChanged: onDayFocused,
       calendarBuilders: CalendarBuilders(markerBuilder: (context, day, events) {
-        final List<Marker> markers = [];
+        final List<Widget> markers = [];
         final dayHighlights = selectedMonthHighlights?[day];
         if (dayHighlights == null) {
           return const SizedBox.shrink();
         }
 
         if (dayHighlights.doseMissed) {
-          markers.add(const Marker.doseMissed());
+          markers.add(const DoseMissedMarker());
         }
 
         switch (dayHighlights.inrStatus) {
           case InrStatus.balanced:
-            markers.add(const Marker.inrMeasured(positive: true));
+            markers.add(const InrMeasuredMarker(positive: true));
             break;
           case InrStatus.imbalanced:
-            markers.add(const Marker.inrMeasured(positive: false));
+            markers.add(const InrMeasuredMarker(positive: false));
             break;
           case InrStatus.notMeasured:
             break;
+        }
+
+        if (dayHighlights.hasNote) {
+          markers.add(const HasNoteMarker());
         }
 
         return MarkersContainer(markers: markers);
@@ -87,7 +94,7 @@ class DayCell extends StatelessWidget {
 }
 
 class MarkersContainer extends StatelessWidget {
-  final List<Marker> markers;
+  final List<Widget> markers;
 
   const MarkersContainer({super.key, required this.markers});
 
@@ -97,24 +104,43 @@ class MarkersContainer extends StatelessWidget {
   }
 }
 
-class Marker extends StatelessWidget {
-  final IconData icon;
-  final Color color;
+class HasNoteMarker extends StatelessWidget {
+  const HasNoteMarker({super.key});
 
-  const Marker.doseMissed({super.key})
-      : icon = Icons.close,
-        color = Colors.red;
+  @override
+  Widget build(BuildContext context) {
+    return const Icon(
+      Icons.note,
+      size: 16,
+      color: Color(0xffeeeeee),
+    );
+  }
+}
 
-  const Marker.inrMeasured({super.key, required bool positive})
-      : icon = Icons.circle,
-        color = positive ? Colors.blue : Colors.red;
+class DoseMissedMarker extends StatelessWidget {
+  const DoseMissedMarker({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Icon(
-      icon,
+      Icons.close,
       size: 16,
-      color: color,
+      color: BrandTheme.of(context).badColor,
+    );
+  }
+}
+
+class InrMeasuredMarker extends StatelessWidget {
+  final bool positive;
+
+  const InrMeasuredMarker({super.key, required this.positive});
+
+  @override
+  Widget build(BuildContext context) {
+    return Icon(
+      Icons.bloodtype,
+      size: 16,
+      color: positive ? Colors.blue : BrandTheme.of(context).badColor,
     );
   }
 }

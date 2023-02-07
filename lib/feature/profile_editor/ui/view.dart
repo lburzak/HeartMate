@@ -5,6 +5,7 @@ import 'package:apkainzynierka/domain/model/inr_range.dart';
 import 'package:apkainzynierka/feature/dose_reminder/dose_reminder_setup_tile.dart';
 import 'package:apkainzynierka/feature/profile_editor/model/state.dart';
 import 'package:apkainzynierka/feature/profile_editor/service/cubit.dart';
+import 'package:apkainzynierka/widget/action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 
@@ -151,7 +152,7 @@ class ProfileEditorView extends StatelessWidget {
                                     DecimalNumberPicker(
                                       itemWidth: 50,
                                       minValue: 0,
-                                      maxValue: 3,
+                                      maxValue: 5,
                                       decimalTextMapper: (numberText) =>
                                           ".$numberText",
                                       onChanged: (value) =>
@@ -165,7 +166,7 @@ class ProfileEditorView extends StatelessWidget {
                                     DecimalNumberPicker(
                                       itemWidth: 50,
                                       minValue: 0,
-                                      maxValue: 3,
+                                      maxValue: 5,
                                       decimalTextMapper: (numberText) =>
                                           ".$numberText",
                                       onChanged: (value) =>
@@ -197,17 +198,14 @@ class ProfileEditorView extends StatelessWidget {
                           )),
                   const SizedBox(height: 8),
                   OtherMedicinesPicker(state: state, cubit: cubit),
-                  const DoseReminderSetupTile(),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 24.0),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton.icon(
-                        onPressed: cubit.save,
-                        label: const Text("Zapisz"),
-                        icon: const Icon(Icons.done),
-                      ),
-                    ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8),
+                    child: DoseReminderSetupTile(),
+                  ),
+                  ActionButton(
+                    onPressed: cubit.save,
+                    label: "Zapisz",
+                    icon: Icons.done,
                   )
                 ],
               ),
@@ -265,10 +263,10 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0, top: 8),
+      padding: const EdgeInsets.only(top: 12, bottom: 4),
       child: Text(
         text,
-        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w300),
+        style: Theme.of(context).textTheme.headlineLarge,
       ),
     );
   }
@@ -469,27 +467,26 @@ class SelectorField<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 59,
-      child: DropdownButtonFormField<T>(
-        style: const TextStyle(fontSize: 14),
-        value: option,
-        onChanged: onChanged,
-        autofocus: false,
-        items: options
-            .map((e) => DropdownMenuItem<T>(
-                  value: e,
-                  child: Text(optionAdapter(e)),
-                ))
-            .toList(),
-        decoration: InputDecoration(
-            labelText: label,
-            focusedBorder: const UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.blue)),
-            enabledBorder: const UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.blue)),
-            filled: true),
-      ),
+    return DropdownButtonFormField<T>(
+      value: option,
+      onChanged: onChanged,
+      autofocus: false,
+      items: options
+          .map((e) => DropdownMenuItem<T>(
+                value: e,
+                child: Text(
+                  optionAdapter(e),
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ))
+          .toList(),
+      decoration: InputDecoration(
+          labelText: label,
+          focusedBorder: const UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.blue)),
+          enabledBorder: const UnderlineInputBorder(
+              borderSide: BorderSide(color: Colors.blue)),
+          filled: true),
     );
   }
 }

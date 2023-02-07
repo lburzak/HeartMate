@@ -66,7 +66,14 @@ class ScheduleWizardCubit extends Cubit<ScheduleWizardState> {
       return;
     }
 
-    _createSchedule(startDate: state.startDate, dosages: state.dosages);
+    if (state.dosages.length > 1) {
+      final wrapIndex = DateTime.daysPerWeek - DateTime.now().weekday + 1;
+      _createSchedule(
+          startDate: state.startDate,
+          dosages: state.dosages.wrapAround(wrapIndex));
+    } else {
+      _createSchedule(startDate: state.startDate, dosages: state.dosages);
+    }
 
     _eventBus.fire(ScheduleUpdatedEvent());
 
@@ -98,4 +105,18 @@ extension ListTransformations<T> on List<T> {
     newList[index] = transform(elementAt(index));
     return newList;
   }
+}
+
+extension WrapIndex<T> on List<T> {
+  List<T> wrapAround(int index) {
+    final newList = List<dynamic>.filled(length, dynamic);
+    for (int i = 0; i < length; i++) {
+      newList[i] = this[(i + length - index) % length];
+    }
+    return newList.cast();
+  }
+}
+
+void main() {
+  print([1, 2, 3, 4, 5, 6, 7].wrapAround(1));
 }

@@ -1,15 +1,21 @@
 import 'package:apkainzynierka/domain/model/inr_measurement.dart';
 import 'package:apkainzynierka/domain/repository/profile_repository.dart';
 import 'package:apkainzynierka/feature/journal/model/day_summary.dart';
+import 'package:apkainzynierka/util/time_extensions.dart';
 
 class GetRatingForInrMeasurement {
   final ProfileRepository _profileRepository;
 
   GetRatingForInrMeasurement(this._profileRepository);
 
-  InrRating call(InrMeasurement inrMeasurement) {
+  InrRating? call(InrMeasurement inrMeasurement) {
     final profile =
-        _profileRepository.findForDateTime(inrMeasurement.reportDate);
+        _profileRepository.findForDateTime(inrMeasurement.reportDate.dayEnd);
+
+    if (profile == null) {
+      return null;
+    }
+
     if (inrMeasurement.inr < profile.inrRange.from) {
       return InrRating.tooLow;
     }

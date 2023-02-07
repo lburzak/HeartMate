@@ -17,38 +17,37 @@ class ScheduleWizardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const SafeArea(
-              child: Padding(
-            padding: EdgeInsets.all(18.0),
-            child: Header(
-              text: "Dostosuj harmonogram",
-            ),
-          )),
-          _ScheduleTypeSelector(
-            selectedType: state.scheduleType,
-            onTypeSelected: (type) => cubit.setScheduleType(type!),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const SafeArea(
+            child: Padding(
+          padding: EdgeInsets.all(18.0),
+          child: Header(
+            text: "Dostosuj harmonogram",
           ),
-          Padding(
-            padding:
-                const EdgeInsets.only(left: 24, right: 24, top: 12, bottom: 12),
-            child: state.scheduleType == ScheduleType.weekly
-                ? buildRowWeekly()
-                : buildRowDaily(),
+        )),
+        _ScheduleTypeSelector(
+          selectedType: state.scheduleType,
+          onTypeSelected: (type) => cubit.setScheduleType(type!),
+        ),
+        Padding(
+          padding:
+              const EdgeInsets.only(left: 24, right: 24, top: 12, bottom: 12),
+          child: state.scheduleType == ScheduleType.weekly
+              ? buildRowWeekly()
+              : buildRowDaily(),
+        ),
+        const Spacer(),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ActionButton(
+            onPressed: cubit.save,
+            label: "ZAPISZ",
+            icon: Icons.done,
           ),
-          Align(
-            alignment: FractionalOffset.bottomCenter,
-            child: ActionButton(
-              onPressed: cubit.save,
-              label: "ZAPISZ",
-              icon: Icons.done,
-            ),
-          )
-        ],
-      ),
+        )
+      ],
     );
   }
 

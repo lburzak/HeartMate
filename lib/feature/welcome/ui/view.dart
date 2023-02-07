@@ -1,6 +1,5 @@
 import 'package:apkainzynierka/feature/welcome/service/cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class WelcomeView extends StatelessWidget {
   final WelcomeCubit cubit;
@@ -9,62 +8,62 @@ class WelcomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: Stack(
-          children: [
-            Positioned(
-              bottom: 360,
-              left: 40,
-              child: Text(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(48.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              const Text(
                 "Witaj!",
-                style: GoogleFonts.balooDa2(
-                  textStyle: const TextStyle(fontSize: 32.0),
+                style: TextStyle(fontSize: 32.0),
+              ),
+              const Text(
+                "Przed rozpoczęciem korzystania z aplikacji uzupełnij swój profil.",
+                style: TextStyle(color: Colors.grey, fontSize: 16.0),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 64),
+                child: Row(
+                  children: const [
+                    Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Icon(
+                        Icons.info_outline,
+                        size: 16,
+                      ),
+                    ),
+                    Flexible(
+                      child: Text(
+                        "Ustawienia profilu możesz edytować w dowolnej chwili w zakładce \"Profil\".",
+                        style: TextStyle(
+                            fontSize: 13.0, fontWeight: FontWeight.bold),
+                      ),
+                    )
+                  ],
                 ),
               ),
-            ),
-            Positioned(
-              bottom: 300,
-              left: 40,
-              child: SizedBox(
-                width: 250,
-                child: Text(
-                  "Przed rozpoczęciem korzystania z aplikacji uzupełnij swój profil.",
-                  style: GoogleFonts.balooDa2(
-                    textStyle:
-                        const TextStyle(color: Colors.grey, fontSize: 16.0),
-                  ),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 36, bottom: 36),
+                  child: IconButton(
+                      color: Colors.blue,
+                      icon: const Icon(
+                        Icons.arrow_forward,
+                        size: 32,
+                      ),
+                      onPressed: cubit.onNext),
                 ),
               ),
-            ),
-            const Positioned(
-              bottom: 215,
-              left: 40,
-              child: Icon(Icons.info_outline),
-            ),
-            Positioned(
-              bottom: 200,
-              left: 80,
-              child: SizedBox(
-                width: 300,
-                child: Text(
-                  "Ustawienia profilu możesz edytować w dowolnej chwili w zakładce \"Profil\".",
-                  style: GoogleFonts.balooDa2(
-                    textStyle: const TextStyle(fontSize: 16.0),
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              bottom: 40,
-              right: 40,
-              child: IconButton(
-                  color: Colors.blue,
-                  icon: const Icon(Icons.arrow_forward),
-                  onPressed: cubit.onNext),
-            ),
-          ],
-        ));
+            ],
+          ),
+        )
+      ],
+    );
   }
 }

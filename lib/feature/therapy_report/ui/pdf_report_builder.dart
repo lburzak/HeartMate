@@ -3,10 +3,10 @@ import 'dart:math';
 import 'package:apkainzynierka/feature/therapy_report/model/journal_entry.dart';
 import 'package:apkainzynierka/feature/therapy_report/model/therapy_report.dart';
 import 'package:apkainzynierka/util/lang.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
-import 'package:printing/printing.dart';
 
 class PdfReportBuilder {
   final TherapyReport model;
@@ -23,9 +23,9 @@ class PdfReportBuilder {
         footer: (context) => _GeneratedWithFooter(),
         build: (context) {
           return [
-            Row(children: [
+            Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Expanded(
-                  child: SizedBox(height: 100, child: _InrChart(model: model))),
+                  child: SizedBox(height: 130, child: _InrChart(model: model))),
               SizedBox(width: 20),
               _ProfileTable(model: model)
             ]),
@@ -40,14 +40,16 @@ class PdfReportBuilder {
   }
 
   Future<ThemeData> _buildTheme() async {
-    final lightFont = await PdfGoogleFonts.poppinsRegular();
-    final boldFont = await PdfGoogleFonts.poppinsBold();
-    final icons = await PdfGoogleFonts.materialIcons();
-    final base = ThemeData.withFont(base: lightFont, bold: boldFont);
+    final lightFont =
+        Font.ttf(await rootBundle.load("fonts/BalooDa2-Regular.ttf"));
+    final boldFont = Font.ttf(await rootBundle.load("fonts/BalooDa2-Bold.ttf"));
+    final italicFont =
+        Font.ttf(await rootBundle.load("fonts/Poppins-Italic.ttf"));
+    final base =
+        ThemeData.withFont(base: lightFont, bold: boldFont, italic: italicFont);
     return base.copyWith(
         header0: base.header0.copyWith(fontWeight: FontWeight.bold),
-        defaultTextStyle: base.defaultTextStyle.copyWith(fontSize: 10),
-        iconTheme: IconThemeData(font: icons, color: PdfColors.black));
+        defaultTextStyle: base.defaultTextStyle.copyWith(fontSize: 10));
   }
 }
 
@@ -58,31 +60,40 @@ class _InrChart extends StatelessWidget {
 
   @override
   Widget build(Context context) {
-    return model.inrMeasurements.length < 2
-        ? SizedBox.shrink()
-        : Chart(
-            grid: CartesianGrid(
-                xAxis: FixedAxis(
-                  model.inrMeasurements.keys
-                      .map((e) => e.millisecondsSinceEpoch)
-                      .toList(),
-                  marginStart: 10,
-                  buildLabel: (value) => Text(
-                      DateFormat("dd.MM").format(
-                          DateTime.fromMillisecondsSinceEpoch(value.toInt())),
-                      style: const TextStyle(fontSize: 8)),
-                ),
-                yAxis: FixedAxis([
-                  ...List.generate(
-                      model.inrMeasurements.values.reduce(max).ceil() + 1,
-                      (index) => index)
-                ])),
-            datasets: [
-                LineDataSet(data: [
-                  ...model.inrMeasurements.entries.map((e) => PointChartValue(
-                      e.key.millisecondsSinceEpoch.toDouble(), e.value))
-                ], isCurved: true)
-              ]);
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Text("Wykres pomiarów INR", style: Theme.of(context).header3),
+      SizedBox(height: 12),
+      model.inrMeasurements.length < 2
+          ? Text("W podanym okresie wykonano mniej niż 2 pomiary.",
+              style: Theme.of(context)
+                  .defaultTextStyle
+                  .copyWith(fontStyle: FontStyle.italic))
+          : Expanded(
+              child: Chart(
+                  grid: CartesianGrid(
+                      xAxis: FixedAxis(
+                        model.inrMeasurements.keys
+                            .map((e) => e.millisecondsSinceEpoch)
+                            .toList(),
+                        marginStart: 10,
+                        buildLabel: (value) => Text(
+                            DateFormat("dd.MM").format(
+                                DateTime.fromMillisecondsSinceEpoch(
+                                    value.toInt())),
+                            style: const TextStyle(fontSize: 8)),
+                      ),
+                      yAxis: FixedAxis([
+                        ...List.generate(
+                            model.inrMeasurements.values.reduce(max).ceil() + 1,
+                            (index) => index)
+                      ])),
+                  datasets: [
+                  LineDataSet(data: [
+                    ...model.inrMeasurements.entries.map((e) => PointChartValue(
+                        e.key.millisecondsSinceEpoch.toDouble(), e.value))
+                  ], isCurved: true)
+                ]))
+    ]);
   }
 }
 
@@ -97,36 +108,50 @@ class _ProfileTable extends StatelessWidget {
         .defaultTextStyle
         .copyWith(fontWeight: FontWeight.bold, color: PdfColors.grey700);
 
+    List<TableRow> rows = [];
+
+    if (model.height != null) {
+      rows.add(TableRow(children: [
+        Text("Wzrost", style: headerStyle),
+        Text("${model.height} cm")
+      ]));
+    }
+
+    if (model.weight != null) {
+      rows.add(TableRow(children: [
+        Text("Waga", style: headerStyle),
+        Text("${model.weight} kg")
+      ]));
+    }
+
+    if (model.age != null) {
+      rows.add(TableRow(children: [
+        Text("Wiek", style: headerStyle),
+        Text("${model.age} lat")
+      ]));
+    }
+
     final propertiesTable =
-        Table(defaultColumnWidth: const FixedColumnWidth(70), children: [
+        Table(defaultColumnWidth: const FixedColumnWidth(90), children: [
       TableRow(children: [
         Text("Płeć", style: headerStyle),
         Text(model.gender.readable)
       ]),
       TableRow(children: [
-        Text("Wzrost", style: headerStyle),
-        Text("${model.height} cm")
-      ]),
-      TableRow(children: [
-        Text("Waga", style: headerStyle),
-        Text("${model.weight} kg")
-      ]),
-      TableRow(children: [
-        Text("Wiek", style: headerStyle),
-        Text("${model.age} lat")
-      ]),
-      TableRow(children: [
         Text("Schorzenie", style: headerStyle),
         Text(model.illness.readable)
       ]),
+      ...rows
     ]);
 
     return Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("${model.firstName} ${model.lastName}",
-              style: Theme.of(context).header3),
+          model.firstName != null || model.lastName != null
+              ? Text("${model.firstName ?? ""} ${model.lastName ?? ""}",
+                  style: Theme.of(context).header3)
+              : SizedBox.shrink(),
           propertiesTable
         ]);
   }
@@ -159,31 +184,46 @@ class _JournalTable extends StatelessWidget {
   @override
   Widget build(Context context) {
     return Table(border: TableBorder.all(), children: [
-      _buildHeader(),
+      _buildHeader(context),
       ...model.journalEntries
           .map((e) => _buildDataRow(context: context, entry: e))
     ]);
   }
 
-  TableRow _buildHeader() {
+  TableRow _buildHeader(Context context) {
+    final style = Theme.of(context).tableHeader;
+
     return TableRow(children: [
-      Text("Data"),
-      Text("Antykoagulant"),
-      Text("Planowana dawka"),
-      Text("Przyjęta dawka"),
-      Text("Inne leki")
+      TableCell("Data", style: style),
+      TableCell("Antykoagulant", style: style),
+      TableCell("Planowana dawka", style: style),
+      TableCell("Przyjęta dawka", style: style),
+      TableCell("Inne leki", style: style)
     ]);
   }
 
   TableRow _buildDataRow(
       {required Context context, required JournalEntry entry}) {
     return TableRow(children: [
-      Text(_journalDateFormat.format(entry.date),
-          style: Theme.of(context).tableHeader),
-      Text(entry.anticoagulant?.readable ?? "-"),
-      Text(entry.scheduledDose?.toString() ?? "-"),
-      Text(entry.takenDose?.toString() ?? "-"),
-      Text(entry.otherMedicines.join(", ")),
+      TableCell(_journalDateFormat.format(entry.date)),
+      TableCell(entry.anticoagulant?.readable ?? "-"),
+      TableCell(entry.scheduledDose?.toString() ?? "-"),
+      TableCell(entry.takenDose?.toString() ?? "-"),
+      TableCell(entry.otherMedicines.join(", ")),
     ]);
+  }
+}
+
+class TableCell extends StatelessWidget {
+  final String content;
+  final TextStyle? style;
+
+  TableCell(this.content, {this.style});
+
+  @override
+  Widget build(Context context) {
+    return Padding(
+        padding: const EdgeInsets.all(2),
+        child: Text(content, style: style ?? const TextStyle()));
   }
 }

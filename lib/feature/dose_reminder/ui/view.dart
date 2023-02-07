@@ -25,7 +25,11 @@ class NotificationSetupView extends StatelessWidget {
       return;
     }
 
-    showTimePicker(context: context, initialTime: initialTime).then((value) {
+    showTimePicker(
+            context: context,
+            initialTime: initialTime,
+            helpText: "Wybierz godzinę powiadomienia".toUpperCase())
+        .then((value) {
       if (value != null) {
         onEnabled(value.hour, value.minute);
       }
@@ -36,6 +40,7 @@ class NotificationSetupView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SwitchListTile(
       title: const Text("Codzienne powiadomienia"),
+      activeColor: Colors.blue,
       subtitle: model.enabled
           ? Text("Powiadomienie wyświetla się o $paddedHours:$paddedMinutes.")
           : const Text("Powiadomienia nie wyświetlają się."),

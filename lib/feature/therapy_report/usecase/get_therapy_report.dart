@@ -23,10 +23,10 @@ class GetTherapyReport {
     final now = DateTime.now();
     final days = Period(start: start, end: end).days;
     final dosages =
-        _scheduleRepository.getDosagesForPeriod(start: start, end: end);
+    _scheduleRepository.getDosagesForPeriod(start: start, end: end);
     final doses = _doseRepository.findWithinPeriod(start: start, end: end);
     final measurements =
-        _inrMeasurementRepository.findWithinPeriod(start: start, end: end);
+    _inrMeasurementRepository.findWithinPeriod(start: start, end: end);
 
     return TherapyReport(
         reportDate: now,
@@ -38,21 +38,21 @@ class GetTherapyReport {
         illness: profile.illness,
         weight: profile.weight,
         journalEntries:
-            days.map((day) => _buildJournalEntry(day, doses, dosages)).toList(),
+        days.map((day) => _buildJournalEntry(day, doses, dosages)).toList(),
         inrMeasurements: Map.fromEntries(
             measurements.map((e) => MapEntry(e.reportDate, e.inr))));
   }
 
-  JournalEntry _buildJournalEntry(
-      DateTime day, List<Dose> doses, Map<DateTime, double?> dosages) {
+  JournalEntry _buildJournalEntry(DateTime day, List<Dose> doses,
+      Map<DateTime, double?> dosages) {
     final dose = doses.firstWhereOrNull((e) => e.dateTaken.isSameDayAs(day));
-    final profile = _profileRepository.findForDateTime(day);
+    final profile = _profileRepository.findForDateTime(day.dayEnd);
 
     return JournalEntry(
         date: day,
-        otherMedicines: profile.otherMedicines,
+        otherMedicines: profile?.otherMedicines ?? [],
         scheduledDose: dosages[day],
         takenDose: dose?.potency,
-        anticoagulant: profile.anticoagulant);
+        anticoagulant: profile?.anticoagulant);
   }
 }

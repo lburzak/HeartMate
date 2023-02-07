@@ -46,11 +46,13 @@ class _TherapyReportWizardState extends State<TherapyReportWizard> {
               label: "Do"),
         ),
         SizedBox(
-          child: ActionButton(
-            onPressed: _goToReportPreview,
-            label: "GENERUJ",
-            icon: Icons.receipt_long,
-            padding: const EdgeInsets.only(top: 12),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: ActionButton(
+              onPressed: _goToReportPreview,
+              label: "GENERUJ",
+              icon: Icons.receipt_long,
+            ),
           ),
         ),
       ],

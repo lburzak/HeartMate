@@ -22,6 +22,7 @@ mixin _$DaySummary {
   List<String>? get otherMedicines => throw _privateConstructorUsedError;
   double? get inr => throw _privateConstructorUsedError;
   InrRating? get inrRating => throw _privateConstructorUsedError;
+  String? get note => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $DaySummaryCopyWith<DaySummary> get copyWith =>
@@ -40,7 +41,8 @@ abstract class $DaySummaryCopyWith<$Res> {
       bool? taken,
       List<String>? otherMedicines,
       double? inr,
-      InrRating? inrRating});
+      InrRating? inrRating,
+      String? note});
 }
 
 /// @nodoc
@@ -62,6 +64,7 @@ class _$DaySummaryCopyWithImpl<$Res, $Val extends DaySummary>
     Object? otherMedicines = freezed,
     Object? inr = freezed,
     Object? inrRating = freezed,
+    Object? note = freezed,
   }) {
     return _then(_value.copyWith(
       dosage: freezed == dosage
@@ -88,6 +91,10 @@ class _$DaySummaryCopyWithImpl<$Res, $Val extends DaySummary>
           ? _value.inrRating
           : inrRating // ignore: cast_nullable_to_non_nullable
               as InrRating?,
+      note: freezed == note
+          ? _value.note
+          : note // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -106,7 +113,8 @@ abstract class _$$_DaySummaryCopyWith<$Res>
       bool? taken,
       List<String>? otherMedicines,
       double? inr,
-      InrRating? inrRating});
+      InrRating? inrRating,
+      String? note});
 }
 
 /// @nodoc
@@ -126,6 +134,7 @@ class __$$_DaySummaryCopyWithImpl<$Res>
     Object? otherMedicines = freezed,
     Object? inr = freezed,
     Object? inrRating = freezed,
+    Object? note = freezed,
   }) {
     return _then(_$_DaySummary(
       dosage: freezed == dosage
@@ -152,6 +161,10 @@ class __$$_DaySummaryCopyWithImpl<$Res>
           ? _value.inrRating
           : inrRating // ignore: cast_nullable_to_non_nullable
               as InrRating?,
+      note: freezed == note
+          ? _value.note
+          : note // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -165,7 +178,8 @@ class _$_DaySummary implements _DaySummary {
       this.taken,
       final List<String>? otherMedicines,
       this.inr,
-      this.inrRating})
+      this.inrRating,
+      this.note})
       : _otherMedicines = otherMedicines;
 
   @override
@@ -188,10 +202,12 @@ class _$_DaySummary implements _DaySummary {
   final double? inr;
   @override
   final InrRating? inrRating;
+  @override
+  final String? note;
 
   @override
   String toString() {
-    return 'DaySummary(dosage: $dosage, anticoagulant: $anticoagulant, taken: $taken, otherMedicines: $otherMedicines, inr: $inr, inrRating: $inrRating)';
+    return 'DaySummary(dosage: $dosage, anticoagulant: $anticoagulant, taken: $taken, otherMedicines: $otherMedicines, inr: $inr, inrRating: $inrRating, note: $note)';
   }
 
   @override
@@ -207,12 +223,20 @@ class _$_DaySummary implements _DaySummary {
                 .equals(other._otherMedicines, _otherMedicines) &&
             (identical(other.inr, inr) || other.inr == inr) &&
             (identical(other.inrRating, inrRating) ||
-                other.inrRating == inrRating));
+                other.inrRating == inrRating) &&
+            (identical(other.note, note) || other.note == note));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, dosage, anticoagulant, taken,
-      const DeepCollectionEquality().hash(_otherMedicines), inr, inrRating);
+  int get hashCode => Object.hash(
+      runtimeType,
+      dosage,
+      anticoagulant,
+      taken,
+      const DeepCollectionEquality().hash(_otherMedicines),
+      inr,
+      inrRating,
+      note);
 
   @JsonKey(ignore: true)
   @override
@@ -228,7 +252,8 @@ abstract class _DaySummary implements DaySummary {
       final bool? taken,
       final List<String>? otherMedicines,
       final double? inr,
-      final InrRating? inrRating}) = _$_DaySummary;
+      final InrRating? inrRating,
+      final String? note}) = _$_DaySummary;
 
   @override
   double? get dosage;
@@ -242,6 +267,8 @@ abstract class _DaySummary implements DaySummary {
   double? get inr;
   @override
   InrRating? get inrRating;
+  @override
+  String? get note;
   @override
   @JsonKey(ignore: true)
   _$$_DaySummaryCopyWith<_$_DaySummary> get copyWith =>
