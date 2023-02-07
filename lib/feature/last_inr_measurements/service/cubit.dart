@@ -5,6 +5,7 @@ import 'package:apkainzynierka/domain/repository/inr_measurement_repository.dart
 import 'package:apkainzynierka/domain/repository/profile_repository.dart';
 import 'package:apkainzynierka/feature/last_inr_measurements/model/measurement.dart';
 import 'package:apkainzynierka/feature/last_inr_measurements/model/state.dart';
+import 'package:apkainzynierka/util/time_extensions.dart';
 import 'package:bloc/bloc.dart';
 import 'package:event_bus/event_bus.dart';
 
@@ -43,6 +44,7 @@ class LastInrMeasurementsCubit extends Cubit<LastInrMeasurementsState> {
     final measurements = _measurementRepository
         .findWithinPeriod(start: past30Days, end: now)
         .map((e) => e.toMeasurement(therapeuticInrRange))
+        .map((e) => e.copyWith(reportedAt: e.reportedAt.dayStart))
         .toList();
 
     emit(state.copyWith(
