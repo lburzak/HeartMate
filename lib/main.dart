@@ -113,7 +113,7 @@ class MyApp extends StatelessWidget {
       title: 'HeartMate',
       locale: const Locale("pl"),
       supportedLocales: const [Locale("pl")],
-      localizationsDelegates: const [GlobalMaterialLocalizations.delegate],
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
       theme: ThemeData.dark().copyWith(
           brightness: Brightness.dark,
           primaryColor: Colors.lightBlue,
