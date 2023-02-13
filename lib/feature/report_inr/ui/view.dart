@@ -20,7 +20,7 @@ class ReportInrView extends StatelessWidget {
           children: [
             const Padding(
               padding: EdgeInsets.all(8.0),
-              child: Header(text: "Dodaj pomiar"),
+              child: FormHeader(text: "Dodaj pomiar"),
             ),
             const SizedBox(
               height: 10,

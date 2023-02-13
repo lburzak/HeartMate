@@ -23,7 +23,7 @@ class CustomDosageView extends StatelessWidget {
       children: [
         const Padding(
           padding: EdgeInsets.only(top: 8.0, left: 28),
-          child: Header(text: "Niestandardowa dawka"),
+          child: FormHeader(text: "Niestandardowa dawka"),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 32, bottom: 8),

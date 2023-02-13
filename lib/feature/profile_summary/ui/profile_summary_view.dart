@@ -19,8 +19,9 @@ class ProfileSummaryView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Header(text: "${model.firstName ?? ""} ${model.lastName ?? ""}"),
-              const Header(text: "Profil"),
+              FormHeader(
+                  text: "${model.firstName ?? ""} ${model.lastName ?? ""}"),
+              const FormHeader(text: "Profil"),
               SummaryRow(
                   label: "Rodzaj schorzenia", value: model.illness.readable),
               SummaryRow(
@@ -36,7 +37,7 @@ class ProfileSummaryView extends StatelessWidget {
                   value: model.height.toString(),
                   visible: model.height != null),
               SummaryRow(label: "Płeć", value: model.gender.readable),
-              const Header(text: "Terapia"),
+              const FormHeader(text: "Terapia"),
               SummaryRow(
                   label: "Przyjmowany antykoagulant",
                   value: model.anticoagulant.readable),
@@ -45,7 +46,7 @@ class ProfileSummaryView extends StatelessWidget {
                   value: "${model.inrRange.from} - ${model.inrRange.to}"),
               SummaryRow(
                   label: "Inne leki", value: model.otherMedicines.join(", ")),
-              const Header(text: "Preferencje"),
+              const FormHeader(text: "Preferencje"),
               const NotificationSettingsPreview(),
             ],
           ),
