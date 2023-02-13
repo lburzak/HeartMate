@@ -17,7 +17,7 @@ class TodayDosageView extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: DottedBorder(
-          color: borderColor,
+          color: getBorderColor(context),
           borderPadding: const EdgeInsets.all(2),
           strokeCap: StrokeCap.round,
           borderType: BorderType.RRect,
@@ -44,12 +44,15 @@ class TodayDosageView extends StatelessWidget {
                             style: const TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
-                          const Text(
-                            "Przytrzymaj, aby dodać niestandardową dawkę",
-                            style: TextStyle(
-                                color: Color(0xff999999),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12),
+                          Visibility(
+                            visible: !state.taken,
+                            child: const Text(
+                              "Przytrzymaj, aby dodać niestandardową dawkę",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12),
+                            ),
                           )
                         ],
                       ),
@@ -93,14 +96,10 @@ class TodayDosageView extends StatelessWidget {
       return BrandTheme.of(context).goodColor;
     }
 
-    return Colors.transparent;
+    return BrandTheme.of(context).badColor;
   }
 
-  Color get borderColor {
-    if (!state.taken && !state.scheduleUndefined) {
-      return Colors.white;
-    }
-
+  Color getBorderColor(BuildContext context) {
     return Colors.transparent;
   }
 
