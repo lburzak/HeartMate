@@ -43,6 +43,13 @@ class TodayDosageView extends StatelessWidget {
                             hintText,
                             style: const TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          const Text(
+                            "Przytrzymaj, aby dodać niestandardową dawkę",
+                            style: TextStyle(
+                                color: Color(0xff999999),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12),
                           )
                         ],
                       ),
