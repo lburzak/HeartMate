@@ -12,52 +12,66 @@ class TodayDosageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 120,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: DottedBorder(
-          color: borderColor,
-          borderPadding: const EdgeInsets.all(2),
-          strokeCap: StrokeCap.round,
-          borderType: BorderType.RRect,
-          radius: const Radius.circular(6),
-          dashPattern: const [6, 10],
-          strokeWidth: state.taken ? 0 : 3,
-          child: SizedBox.expand(
-            child: Stack(
-              children: [
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: getBackgroundColor(context),
-                        elevation: 0),
-                    onLongPress: () => cubit.showCustomDosageScreen(),
-                    onPressed: () => cubit.toggleTaken(),
-                    child: Center(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text("Dzisiejsza dawka"),
-                          Text(
-                            hintText,
-                            style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          )
-                        ],
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 100),
+      child: SizedBox(
+        key: UniqueKey(),
+        height: 120,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: DottedBorder(
+            color: getBorderColor(context),
+            borderPadding: const EdgeInsets.all(2),
+            strokeCap: StrokeCap.round,
+            borderType: BorderType.RRect,
+            radius: const Radius.circular(6),
+            dashPattern: const [6, 10],
+            strokeWidth: state.taken ? 0 : 3,
+            child: SizedBox.expand(
+              child: Stack(
+                children: [
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: getBackgroundColor(context),
+                          elevation: 0),
+                      onLongPress: () => cubit.showCustomDosageScreen(),
+                      onPressed: () => cubit.toggleTaken(),
+                      child: Center(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text("Dzisiejsza dawka"),
+                            Text(
+                              hintText,
+                              style: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                            Visibility(
+                              visible: !state.taken,
+                              child: const Text(
+                                "Przytrzymaj, aby dodać niestandardową dawkę",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12),
+                              ),
+                            )
+                          ],
+                        ),
+                      )),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Icon(
+                        icon,
+                        size: 36,
                       ),
-                    )),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Padding(
-                    padding: const EdgeInsets.all(24.0),
-                    child: Icon(
-                      icon,
-                      size: 36,
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -86,14 +100,10 @@ class TodayDosageView extends StatelessWidget {
       return BrandTheme.of(context).goodColor;
     }
 
-    return Colors.transparent;
+    return BrandTheme.of(context).badColor;
   }
 
-  Color get borderColor {
-    if (!state.taken && !state.scheduleUndefined) {
-      return Colors.white;
-    }
-
+  Color getBorderColor(BuildContext context) {
     return Colors.transparent;
   }
 
