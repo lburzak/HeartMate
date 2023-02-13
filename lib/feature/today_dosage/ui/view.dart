@@ -80,15 +80,15 @@ class TodayDosageView extends StatelessWidget {
   }
 
   String get hintText {
+    if (state.taken) {
+      return "Przyjęto dawkę ${state.potency} mg";
+    }
+
     if (state.scheduleUndefined) {
       return "Brak harmonogramu!";
     }
 
-    if (state.taken) {
-      return "Przyjęto dawkę ${state.potency} mg";
-    } else {
-      return "Przyjmij dawkę ${state.potency} mg";
-    }
+    return "Przyjmij dawkę ${state.potency} mg";
   }
 
   Color? getBackgroundColor(BuildContext context) {
@@ -97,10 +97,14 @@ class TodayDosageView extends StatelessWidget {
     }
 
     if (state.taken) {
-      return BrandTheme.of(context).goodColor;
+      return BrandTheme
+          .of(context)
+          .goodColor;
     }
 
-    return BrandTheme.of(context).badColor;
+    return BrandTheme
+        .of(context)
+        .badColor;
   }
 
   Color getBorderColor(BuildContext context) {

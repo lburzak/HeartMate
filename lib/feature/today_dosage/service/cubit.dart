@@ -62,6 +62,10 @@ class TodayDosageCubit extends Cubit<TodayDosageState> {
   }
 
   void showCustomDosageScreen() {
+    if (state.taken) {
+      return;
+    }
+
     _router.openCustomDosageScreen();
   }
 
