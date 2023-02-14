@@ -92,14 +92,16 @@ class TodayDosageView extends StatelessWidget {
   }
 
   Color? getBackgroundColor(BuildContext context) {
-    if (state.scheduleUndefined) {
-      return const Color(0xffAD6902);
-    }
-
     if (state.taken) {
       return BrandTheme
           .of(context)
           .goodColor;
+    }
+
+    if (state.scheduleUndefined) {
+      return BrandTheme
+          .of(context)
+          .warningColor;
     }
 
     return BrandTheme
@@ -112,12 +114,12 @@ class TodayDosageView extends StatelessWidget {
   }
 
   IconData get icon {
-    if (state.scheduleUndefined) {
-      return Icons.warning;
-    }
-
     if (state.taken) {
       return Icons.done;
+    }
+
+    if (state.scheduleUndefined) {
+      return Icons.warning;
     }
 
     return Icons.medication;
