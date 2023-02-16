@@ -48,7 +48,7 @@ KiwiContainer buildTodayDosageContainer(
   c.registerFactory((r) => TodayDosageCubit(r(), r(), r(), r(), r(), r(), r()));
   c.registerFactory<TodayDosageRouter>((r) => MaterialTodayDosageRouter(r()));
 
-  c.registerFactory((r) => RevertTodayDose(r()));
+  c.registerFactory((r) => RevertTodayDose(r(), r()));
   c.registerFactory((r) => GetTodayDosage(r()));
   c.registerFactory((r) => ReportDoseTaken(r(), r(), r()));
 

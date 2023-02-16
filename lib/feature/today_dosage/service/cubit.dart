@@ -57,8 +57,6 @@ class TodayDosageCubit extends Cubit<TodayDosageState> {
       _revertDoseTaken();
       emit(state.copyWith(taken: false));
     }
-
-    _eventBus.fire(TodayDoseUpdatedEvent());
   }
 
   void showCustomDosageScreen() {
