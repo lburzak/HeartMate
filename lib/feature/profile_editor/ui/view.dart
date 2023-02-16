@@ -325,6 +325,7 @@ class _OtherMedicinesPickerState extends State<OtherMedicinesPicker> {
                     .map((e) => Chip(
                           label: Text(e),
                           backgroundColor: Colors.blue,
+                          onDeleted: () => widget.cubit.removeOtherMedicine(e),
                         ))
                     .toList()),
             Row(
