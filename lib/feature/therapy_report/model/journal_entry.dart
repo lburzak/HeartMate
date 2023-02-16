@@ -10,6 +10,7 @@ class JournalEntry with _$JournalEntry {
     Anticoagulant? anticoagulant,
     double? scheduledDose,
     double? takenDose,
-    required List<String> otherMedicines
+    required List<String> otherMedicines,
+    double? inr
 }) = _JournalEntry;
 }
