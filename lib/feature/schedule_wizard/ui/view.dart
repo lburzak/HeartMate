@@ -1,10 +1,10 @@
-import 'package:apkainzynierka/feature/profile_editor/ui/view.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_type.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/model/schedule_wizard_state.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/service/cubit.dart';
 import 'package:apkainzynierka/util/date.dart';
 import 'package:apkainzynierka/util/string.dart';
 import 'package:apkainzynierka/widget/action_button.dart';
+import 'package:apkainzynierka/widget/header.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -17,37 +17,38 @@ class ScheduleWizardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        const SafeArea(
-            child: Padding(
-          padding: EdgeInsets.all(18.0),
-          child: Header(
-            text: "Dostosuj harmonogram",
-          ),
-        )),
-        _ScheduleTypeSelector(
-          selectedType: state.scheduleType,
-          onTypeSelected: (type) => cubit.setScheduleType(type!),
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: const [
+                BackButton(),
+                SizedBox(width: 8),
+                Header(text: "Dostosuj harmonogram"),
+              ],
+            ),
+            _ScheduleTypeSelector(
+              selectedType: state.scheduleType,
+              onTypeSelected: (type) => cubit.setScheduleType(type!),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: state.scheduleType == ScheduleType.weekly
+                  ? buildRowWeekly()
+                  : buildRowDaily(),
+            ),
+            const Spacer(),
+            ActionButton(
+              onPressed: cubit.save,
+              label: "ZAPISZ",
+              icon: Icons.done,
+            )
+          ],
         ),
-        Padding(
-          padding:
-              const EdgeInsets.only(left: 24, right: 24, top: 12, bottom: 12),
-          child: state.scheduleType == ScheduleType.weekly
-              ? buildRowWeekly()
-              : buildRowDaily(),
-        ),
-        const Spacer(),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ActionButton(
-            onPressed: cubit.save,
-            label: "ZAPISZ",
-            icon: Icons.done,
-          ),
-        )
-      ],
+      ),
     );
   }
 

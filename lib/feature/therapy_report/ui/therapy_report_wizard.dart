@@ -3,6 +3,7 @@ import 'package:apkainzynierka/util/date.dart';
 import 'package:apkainzynierka/util/time_extensions.dart';
 import 'package:apkainzynierka/widget/action_button.dart';
 import 'package:apkainzynierka/widget/date_field.dart';
+import 'package:apkainzynierka/widget/header.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -16,7 +17,7 @@ class TherapyReportWizard extends StatefulWidget {
     showDialog(
         context: context,
         builder: (context) => const AlertDialog(
-              title: Text("Generuj raport"),
+              title: Header(text: "Generuj raport"),
               content: TherapyReportWizard(),
             ));
   }

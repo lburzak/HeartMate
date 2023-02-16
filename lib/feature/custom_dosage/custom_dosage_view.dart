@@ -1,3 +1,4 @@
+import 'package:apkainzynierka/feature/profile_editor/ui/view.dart';
 import 'package:apkainzynierka/feature/schedule_wizard/ui/view.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,10 @@ class CustomDosageView extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Text("Niestandardowa dawka"),
+        const Padding(
+          padding: EdgeInsets.only(top: 8.0, left: 28),
+          child: FormHeader(text: "Niestandardowa dawka"),
+        ),
         Padding(
           padding: const EdgeInsets.only(top: 32, bottom: 8),
           child: Center(

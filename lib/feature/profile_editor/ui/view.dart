@@ -6,6 +6,7 @@ import 'package:apkainzynierka/feature/dose_reminder/dose_reminder_setup_tile.da
 import 'package:apkainzynierka/feature/profile_editor/model/state.dart';
 import 'package:apkainzynierka/feature/profile_editor/service/cubit.dart';
 import 'package:apkainzynierka/widget/action_button.dart';
+import 'package:apkainzynierka/widget/header.dart';
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 
@@ -29,7 +30,7 @@ class ProfileEditorView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Header(text: "Dane osobowe"),
+                  const FormHeader(text: "Dane osobowe"),
                   TextFormField(
                     style: const TextStyle(fontSize: 14),
                     initialValue: state.firstName,
@@ -54,7 +55,7 @@ class ProfileEditorView extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const Header(text: "Parametry ciała"),
+                  const FormHeader(text: "Parametry ciała"),
                   Row(
                     children: [
                       Expanded(
@@ -115,7 +116,7 @@ class ProfileEditorView extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  const Header(text: "Leczenie"),
+                  const FormHeader(text: "Leczenie"),
                   Row(
                     children: [
                       Expanded(
@@ -202,10 +203,24 @@ class ProfileEditorView extends StatelessWidget {
                     padding: EdgeInsets.symmetric(vertical: 8),
                     child: DoseReminderSetupTile(),
                   ),
-                  ActionButton(
-                    onPressed: cubit.save,
-                    label: "Zapisz",
-                    icon: Icons.done,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedActionButton(
+                          onPressed: () => Navigator.pop(context),
+                          label: "Anuluj",
+                          icon: Icons.close,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: ActionButton(
+                          onPressed: cubit.save,
+                          label: "Zapisz",
+                          icon: Icons.done,
+                        ),
+                      ),
+                    ],
                   )
                 ],
               ),
@@ -252,10 +267,10 @@ class ProfileEditorView extends StatelessWidget {
   }
 }
 
-class Header extends StatelessWidget {
+class FormHeader extends StatelessWidget {
   final String text;
 
-  const Header({
+  const FormHeader({
     Key? key,
     required this.text,
   }) : super(key: key);
@@ -264,10 +279,7 @@ class Header extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 12, bottom: 4),
-      child: Text(
-        text,
-        style: Theme.of(context).textTheme.headlineLarge,
-      ),
+      child: Header(text: text),
     );
   }
 }

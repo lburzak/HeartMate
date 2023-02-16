@@ -91,7 +91,7 @@ class _InrChart extends StatelessWidget {
                   LineDataSet(data: [
                     ...model.inrMeasurements.entries.map((e) => PointChartValue(
                         e.key.millisecondsSinceEpoch.toDouble(), e.value))
-                  ], isCurved: true)
+                  ])
                 ]))
     ]);
   }
@@ -183,7 +183,10 @@ class _JournalTable extends StatelessWidget {
 
   @override
   Widget build(Context context) {
-    return Table(border: TableBorder.all(), children: [
+    return Table(border: TableBorder.all(), columnWidths: {
+      2: const FixedColumnWidth(30),
+      3: const FixedColumnWidth(30)
+    }, children: [
       _buildHeader(context),
       ...model.journalEntries
           .map((e) => _buildDataRow(context: context, entry: e))
