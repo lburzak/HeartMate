@@ -7,32 +7,16 @@ import 'package:apkainzynierka/data/adapter/schedule_adapter.dart';
 import 'package:apkainzynierka/data/database.dart';
 import 'package:apkainzynierka/feature/dose_reminder/service/dose_reminder_scheduler.dart';
 import 'package:apkainzynierka/feature/dose_reminder/service/notification_service.dart';
-import 'package:apkainzynierka/feature/main_page/main_view.dart';
-import 'package:apkainzynierka/feature/profile_editor/profile_editor.dart';
-import 'package:apkainzynierka/feature/schedule_wizard/schedule_wizard_page.dart';
-import 'package:apkainzynierka/feature/therapy_report/ui/therapy_report_page.dart';
-import 'package:apkainzynierka/feature/therapy_report/ui/therapy_report_wizard.dart';
-import 'package:apkainzynierka/feature/welcome/util.dart';
-import 'package:apkainzynierka/feature/welcome/welcome_page.dart';
+import 'package:apkainzynierka/theme/app_router.dart';
 import 'package:apkainzynierka/theme/brand_theme.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:provider/provider.dart';
 import 'package:workmanager/workmanager.dart';
-
-const AndroidNotificationDetails androidNotificationDetails =
-AndroidNotificationDetails(
-    "_reminderNotificationChannelId", "_reminderNotificationChannelName",
-    channelDescription: "_reminderNotificationChannelDescription",
-    importance: Importance.max,
-    priority: Priority.high,
-    ticker: 'ticker');
-const det = NotificationDetails(android: androidNotificationDetails);
 
 void main() async {
   GoogleFonts.config.allowRuntimeFetching = false;
@@ -41,62 +25,8 @@ void main() async {
   await appContainer.resolve<BoxDatabase>().initialize();
   await appContainer.resolve<NotificationService>().initialize();
   await appContainer.resolve<DoseReminderScheduler>().initialize();
-  final ShouldShowWelcomePage shouldShowWelcomePage =
-  ShouldShowWelcomePage(appContainer);
-  final router = GoRouter(
-      initialLocation: shouldShowWelcomePage() ? '/welcome' : '/',
-      routes: [
-        GoRoute(
-          path: '/',
-          builder: (context, state) =>
-              Provider<AppContainer>(
-                  create: (context) => appContainer, child: const MainView()),
-        ),
-        GoRoute(
-          path: '/schedules/current',
-          builder: (context, state) =>
-              Provider<AppContainer>(
-                  create: (context) => appContainer,
-                  child: const ScheduleWizardPage()),
-        ),
-        GoRoute(
-          path: '/profile/editor',
-          builder: (context, state) =>
-              Provider<AppContainer>(
-                  create: (context) => appContainer,
-                  child: const Scaffold(
-                    body: ProfileEditor(),
-                  )),
-        ),
-        GoRoute(
-          path: '/welcome',
-          builder: (context, state) =>
-              Provider<AppContainer>(
-                  create: (context) => appContainer,
-                  child: const WelcomePage()),
-        ),
-        GoRoute(
-          path: '/report',
-          builder: (context, state) =>
-              Provider<AppContainer>(
-                  create: (context) => appContainer,
-                  child: const TherapyReportWizard()),
-        ),
-        GoRoute(
-          path: '/report/preview',
-          builder: (context, state) =>
-              Provider<AppContainer>(
-                  create: (context) => appContainer,
-                  child: Builder(builder: (context) {
-                    final args =
-                    TherapyReportPageArgs.fromQueryParams(state.queryParams);
-                    return TherapyReportPage(
-                        periodStart: args.periodStart,
-                        periodEnd: args.periodEnd);
-                  })),
-        ),
-      ]);
-  runApp(MyApp(router: router));
+  final resolve = AppRouterModule(appContainer);
+  runApp(MyApp(router: resolve()));
 }
 
 class TherapyReportPageArgs {
@@ -118,7 +48,7 @@ class TherapyReportPageArgs {
 }
 
 class MyApp extends StatelessWidget {
-  final GoRouter router;
+  final AppRouter router;
 
   const MyApp({super.key, required this.router});
 
