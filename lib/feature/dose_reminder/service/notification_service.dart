@@ -1,4 +1,8 @@
+import 'package:apkainzynierka/feature/dose_reminder/service/dose_reminder_action_handler.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+const actionSnoozeId = "action_snooze";
+const actionTakeDoseId = "action_take_dose";
 
 class NotificationService {
   final FlutterLocalNotificationsPlugin _plugin;
@@ -16,23 +20,18 @@ class NotificationService {
         body,
         NotificationDetails(
             android: AndroidNotificationDetails(channelName, channelName,
-                channelDescription: channelDescription)));
+                channelDescription: channelDescription, actions: [
+                  const AndroidNotificationAction(actionSnoozeId, "Przypomnij później"),
+                  const AndroidNotificationAction(actionTakeDoseId, "Przyjęto dawkę", showsUserInterface: true),
+                ])));
   }
 
   Future<void> initialize() async {
     await _plugin.initialize(
       const InitializationSettings(
           android: AndroidInitializationSettings('ic_launcher')),
-      onDidReceiveNotificationResponse:
-          (NotificationResponse notificationResponse) async {
-        // ...
-      },
       onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
+      onDidReceiveNotificationResponse: notificationTapBackground,
     );
   }
-}
-
-@pragma('vm:entry-point')
-void notificationTapBackground(NotificationResponse notificationResponse) {
-  print("action");
 }

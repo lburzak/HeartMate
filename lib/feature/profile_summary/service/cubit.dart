@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:apkainzynierka/domain/event/profile_updated_event.dart';
 import 'package:apkainzynierka/domain/model/anticoagulant.dart';
 import 'package:apkainzynierka/domain/model/inr_range.dart';
@@ -15,12 +17,13 @@ const placeholderProfile = Profile(
 class ProfileSummaryCubit extends Cubit<Profile> {
   final ProfileRepository _profileRepository;
   final EventBus _eventBus;
+  StreamSubscription? _subscription;
 
   ProfileSummaryCubit(this._profileRepository, this._eventBus)
       : super(placeholderProfile) {
     _fetchData();
 
-    _eventBus.on<ProfileUpdatedEvent>().listen((event) {
+    _subscription = _eventBus.on<ProfileUpdatedEvent>().listen((event) {
       _fetchData();
     });
   }
@@ -28,5 +31,11 @@ class ProfileSummaryCubit extends Cubit<Profile> {
   void _fetchData() {
     final profile = _profileRepository.getCurrent();
     emit(profile);
+  }
+
+  @override
+  Future<void> close() async {
+    _subscription?.cancel();
+    return super.close();
   }
 }

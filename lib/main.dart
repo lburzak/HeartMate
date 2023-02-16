@@ -1,3 +1,9 @@
+import 'package:apkainzynierka/data/adapter/dose_adapter.dart';
+import 'package:apkainzynierka/data/adapter/inr_measurement_adapter.dart';
+import 'package:apkainzynierka/data/adapter/inr_range_adapter.dart';
+import 'package:apkainzynierka/data/adapter/profile_adapter.dart';
+import 'package:apkainzynierka/data/adapter/profile_entry_adapter.dart';
+import 'package:apkainzynierka/data/adapter/schedule_adapter.dart';
 import 'package:apkainzynierka/data/database.dart';
 import 'package:apkainzynierka/feature/dose_reminder/service/dose_reminder_scheduler.dart';
 import 'package:apkainzynierka/feature/dose_reminder/service/notification_service.dart';
@@ -20,72 +26,78 @@ import 'package:provider/provider.dart';
 import 'package:workmanager/workmanager.dart';
 
 const AndroidNotificationDetails androidNotificationDetails =
-    AndroidNotificationDetails(
-        "_reminderNotificationChannelId", "_reminderNotificationChannelName",
-        channelDescription: "_reminderNotificationChannelDescription",
-        importance: Importance.max,
-        priority: Priority.high,
-        ticker: 'ticker');
+AndroidNotificationDetails(
+    "_reminderNotificationChannelId", "_reminderNotificationChannelName",
+    channelDescription: "_reminderNotificationChannelDescription",
+    importance: Importance.max,
+    priority: Priority.high,
+    ticker: 'ticker');
 const det = NotificationDetails(android: androidNotificationDetails);
 
 void main() async {
   GoogleFonts.config.allowRuntimeFetching = false;
   Provider.debugCheckInvalidValueType = null;
-  await BoxDatabase.init();
-  await _appContainer.resolve<NotificationService>().initialize();
-  await _appContainer.resolve<DoseReminderScheduler>().initialize();
-  runApp(const MyApp());
+  final AppContainer appContainer = AppContainer();
+  await appContainer.resolve<BoxDatabase>().initialize();
+  await appContainer.resolve<NotificationService>().initialize();
+  await appContainer.resolve<DoseReminderScheduler>().initialize();
+  final ShouldShowWelcomePage shouldShowWelcomePage =
+  ShouldShowWelcomePage(appContainer);
+  final router = GoRouter(
+      initialLocation: shouldShowWelcomePage() ? '/welcome' : '/',
+      routes: [
+        GoRoute(
+          path: '/',
+          builder: (context, state) =>
+              Provider<AppContainer>(
+                  create: (context) => appContainer, child: const MainView()),
+        ),
+        GoRoute(
+          path: '/schedules/current',
+          builder: (context, state) =>
+              Provider<AppContainer>(
+                  create: (context) => appContainer,
+                  child: const ScheduleWizardPage()),
+        ),
+        GoRoute(
+          path: '/profile/editor',
+          builder: (context, state) =>
+              Provider<AppContainer>(
+                  create: (context) => appContainer,
+                  child: const Scaffold(
+                    body: ProfileEditor(),
+                  )),
+        ),
+        GoRoute(
+          path: '/welcome',
+          builder: (context, state) =>
+              Provider<AppContainer>(
+                  create: (context) => appContainer,
+                  child: const WelcomePage()),
+        ),
+        GoRoute(
+          path: '/report',
+          builder: (context, state) =>
+              Provider<AppContainer>(
+                  create: (context) => appContainer,
+                  child: const TherapyReportWizard()),
+        ),
+        GoRoute(
+          path: '/report/preview',
+          builder: (context, state) =>
+              Provider<AppContainer>(
+                  create: (context) => appContainer,
+                  child: Builder(builder: (context) {
+                    final args =
+                    TherapyReportPageArgs.fromQueryParams(state.queryParams);
+                    return TherapyReportPage(
+                        periodStart: args.periodStart,
+                        periodEnd: args.periodEnd);
+                  })),
+        ),
+      ]);
+  runApp(MyApp(router: router));
 }
-
-final AppContainer _appContainer = AppContainer();
-final ShouldShowWelcomePage _shouldShowWelcomePage =
-    ShouldShowWelcomePage(_appContainer);
-
-final _router = GoRouter(
-    initialLocation: _shouldShowWelcomePage() ? '/welcome' : '/',
-    routes: [
-      GoRoute(
-        path: '/',
-        builder: (context, state) => Provider<AppContainer>(
-            create: (context) => _appContainer, child: const MainView()),
-      ),
-      GoRoute(
-        path: '/schedules/current',
-        builder: (context, state) => Provider<AppContainer>(
-            create: (context) => _appContainer,
-            child: const ScheduleWizardPage()),
-      ),
-      GoRoute(
-        path: '/profile/editor',
-        builder: (context, state) => Provider<AppContainer>(
-            create: (context) => _appContainer,
-            child: const Scaffold(
-              body: ProfileEditor(),
-            )),
-      ),
-      GoRoute(
-        path: '/welcome',
-        builder: (context, state) => Provider<AppContainer>(
-            create: (context) => _appContainer, child: const WelcomePage()),
-      ),
-      GoRoute(
-        path: '/report',
-        builder: (context, state) => Provider<AppContainer>(
-            create: (context) => _appContainer,
-            child: const TherapyReportWizard()),
-      ),
-      GoRoute(
-        path: '/report/preview',
-        builder: (context, state) => Provider<AppContainer>(
-            create: (context) => _appContainer,
-            child: Builder(builder: (context) {
-              final args =
-                  TherapyReportPageArgs.fromQueryParams(state.queryParams);
-              return TherapyReportPage(
-                  periodStart: args.periodStart, periodEnd: args.periodEnd);
-            })),
-      ),
-    ]);
 
 class TherapyReportPageArgs {
   final DateTime periodStart;
@@ -96,16 +108,19 @@ class TherapyReportPageArgs {
 
   TherapyReportPageArgs.fromQueryParams(Map<String, String> params)
       : periodStart =
-            DateTime.fromMillisecondsSinceEpoch(int.parse(params['start']!)),
+  DateTime.fromMillisecondsSinceEpoch(int.parse(params['start']!)),
         periodEnd =
-            DateTime.fromMillisecondsSinceEpoch(int.parse(params['end']!));
+        DateTime.fromMillisecondsSinceEpoch(int.parse(params['end']!));
 
   String toQueryParams() =>
-      "start=${periodStart.millisecondsSinceEpoch}&end=${periodEnd.millisecondsSinceEpoch}";
+      "start=${periodStart.millisecondsSinceEpoch}&end=${periodEnd
+          .millisecondsSinceEpoch}";
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final GoRouter router;
+
+  const MyApp({super.key, required this.router});
 
   @override
   Widget build(BuildContext context) {
@@ -128,11 +143,11 @@ class MyApp extends StatelessWidget {
           textTheme: GoogleFonts.balooDa2TextTheme()
               .apply(bodyColor: Colors.white)
               .copyWith(
-                  titleMedium: GoogleFonts.balooDa2(fontSize: 20),
-                  bodyMedium: GoogleFonts.balooDa2(fontSize: 16),
-                  bodySmall: GoogleFonts.balooDa2(fontSize: 12),
-                  headlineLarge: GoogleFonts.poppins(
-                      fontSize: 26, fontWeight: FontWeight.w200)),
+              titleMedium: GoogleFonts.balooDa2(fontSize: 20),
+              bodyMedium: GoogleFonts.balooDa2(fontSize: 16),
+              bodySmall: GoogleFonts.balooDa2(fontSize: 12),
+              headlineLarge: GoogleFonts.poppins(
+                  fontSize: 26, fontWeight: FontWeight.w200)),
           extensions: [
             const BrandTheme(
               goodColor: Color(0xff2F802D),
@@ -143,14 +158,22 @@ class MyApp extends StatelessWidget {
               warningTextColor: Color(0xFFDFA100),
             )
           ]),
-      routerConfig: _router,
+      routerConfig: router,
     );
   }
 }
 
 class AppContainer extends KiwiContainer {
   AppContainer() : super.scoped() {
-    registerSingleton((r) => BoxDatabase());
+    registerSingleton((r) => BoxDatabase([
+      DoseAdapter(),
+      ScheduleAdapter(),
+      ProfileAdapter(),
+      InrRangeAdapter(),
+      InrMeasurementAdapter(),
+      ProfileEntryAdapter()
+    ]));
+
     registerSingleton((r) => EventBus());
     registerSingleton((r) => DoseReminderScheduler(r.resolve()));
     registerSingleton((r) => FlutterLocalNotificationsPlugin());

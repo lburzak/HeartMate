@@ -1,9 +1,10 @@
+import 'package:apkainzynierka/data/adapter/registrable_adapter.dart';
 import 'package:apkainzynierka/data/adapter/type_ids.dart';
 import 'package:apkainzynierka/domain/model/inr_range.dart';
 import 'package:apkainzynierka/domain/model/profile.dart';
 import 'package:hive/hive.dart';
 
-class ProfileAdapter extends TypeAdapter<Profile> {
+class ProfileAdapter extends RegistrableAdapter<Profile> {
   @override
   Profile read(BinaryReader reader) {
     final json = Map<String, Object?>.from(reader.readMap());

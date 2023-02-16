@@ -1,8 +1,9 @@
+import 'package:apkainzynierka/data/adapter/registrable_adapter.dart';
 import 'package:apkainzynierka/data/adapter/type_ids.dart';
 import 'package:apkainzynierka/domain/model/schedule.dart';
 import 'package:hive/hive.dart';
 
-class ScheduleAdapter extends TypeAdapter<Schedule> {
+class ScheduleAdapter extends RegistrableAdapter<Schedule> {
   @override
   int get typeId => typeIdSchedule;
 
