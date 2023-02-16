@@ -22,6 +22,7 @@ class ReportDoseTaken {
     final dosage = _scheduleRepository.getDosageForDay(scheduleId, now);
 
     _doseRepository.insertDoseTaken(now, dosage);
+    _eventBus.fire(TodayDoseUpdatedEvent());
   }
 
   void custom(double potency) {

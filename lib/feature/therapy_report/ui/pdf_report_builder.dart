@@ -201,7 +201,8 @@ class _JournalTable extends StatelessWidget {
       TableCell("Antykoagulant", style: style),
       TableCell("Planowana dawka", style: style),
       TableCell("Przyjęta dawka", style: style),
-      TableCell("Inne leki", style: style)
+      TableCell("Inne leki", style: style),
+      TableCell("INR", style: style),
     ]);
   }
 
@@ -213,6 +214,7 @@ class _JournalTable extends StatelessWidget {
       TableCell(entry.scheduledDose?.toString() ?? "-"),
       TableCell(entry.takenDose?.toString() ?? "-"),
       TableCell(entry.otherMedicines.join(", ")),
+      TableCell(entry.inr?.toString() ?? "-"),
     ]);
   }
 }

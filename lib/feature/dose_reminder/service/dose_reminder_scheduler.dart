@@ -9,7 +9,7 @@ void callbackDispatcher() {
   Workmanager().executeTask((task, inputData) async {
     try {
       final appContainer = AppContainer();
-      await BoxDatabase.init();
+      await appContainer.resolve<BoxDatabase>().initialize();
       final doseReminderModule = DoseReminderModule(appContainer);
       final doseReminder = doseReminderModule.resolve<DoseReminder>();
       doseReminder.trigger();
@@ -33,7 +33,16 @@ class DoseReminderScheduler {
       final delay = _calculateDurationToNextOccurrence(hour, minute);
       await _workManager.registerPeriodicTask(
           "periodic_${DateTime.now().toIso8601String()}", "notify",
-          initialDelay: delay, frequency: const Duration(days: 1));
+          frequency: const Duration(days: 1), initialDelay: delay);
+    });
+  }
+
+  void scheduleIn(Duration duration) {
+    Future.microtask(() async {
+      await _workManager.cancelAll();
+      await _workManager.registerOneOffTask(
+          "periodic_${DateTime.now().toIso8601String()}", "notify",
+          initialDelay: duration);
     });
   }
 

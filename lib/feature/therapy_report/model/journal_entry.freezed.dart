@@ -21,6 +21,7 @@ mixin _$JournalEntry {
   double? get scheduledDose => throw _privateConstructorUsedError;
   double? get takenDose => throw _privateConstructorUsedError;
   List<String> get otherMedicines => throw _privateConstructorUsedError;
+  double? get inr => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $JournalEntryCopyWith<JournalEntry> get copyWith =>
@@ -38,7 +39,8 @@ abstract class $JournalEntryCopyWith<$Res> {
       Anticoagulant? anticoagulant,
       double? scheduledDose,
       double? takenDose,
-      List<String> otherMedicines});
+      List<String> otherMedicines,
+      double? inr});
 }
 
 /// @nodoc
@@ -59,6 +61,7 @@ class _$JournalEntryCopyWithImpl<$Res, $Val extends JournalEntry>
     Object? scheduledDose = freezed,
     Object? takenDose = freezed,
     Object? otherMedicines = null,
+    Object? inr = freezed,
   }) {
     return _then(_value.copyWith(
       date: null == date
@@ -81,6 +84,10 @@ class _$JournalEntryCopyWithImpl<$Res, $Val extends JournalEntry>
           ? _value.otherMedicines
           : otherMedicines // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      inr: freezed == inr
+          ? _value.inr
+          : inr // ignore: cast_nullable_to_non_nullable
+              as double?,
     ) as $Val);
   }
 }
@@ -98,7 +105,8 @@ abstract class _$$_JournalEntryCopyWith<$Res>
       Anticoagulant? anticoagulant,
       double? scheduledDose,
       double? takenDose,
-      List<String> otherMedicines});
+      List<String> otherMedicines,
+      double? inr});
 }
 
 /// @nodoc
@@ -117,6 +125,7 @@ class __$$_JournalEntryCopyWithImpl<$Res>
     Object? scheduledDose = freezed,
     Object? takenDose = freezed,
     Object? otherMedicines = null,
+    Object? inr = freezed,
   }) {
     return _then(_$_JournalEntry(
       date: null == date
@@ -139,6 +148,10 @@ class __$$_JournalEntryCopyWithImpl<$Res>
           ? _value._otherMedicines
           : otherMedicines // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      inr: freezed == inr
+          ? _value.inr
+          : inr // ignore: cast_nullable_to_non_nullable
+              as double?,
     ));
   }
 }
@@ -151,7 +164,8 @@ class _$_JournalEntry implements _JournalEntry {
       this.anticoagulant,
       this.scheduledDose,
       this.takenDose,
-      required final List<String> otherMedicines})
+      required final List<String> otherMedicines,
+      this.inr})
       : _otherMedicines = otherMedicines;
 
   @override
@@ -171,8 +185,11 @@ class _$_JournalEntry implements _JournalEntry {
   }
 
   @override
+  final double? inr;
+
+  @override
   String toString() {
-    return 'JournalEntry(date: $date, anticoagulant: $anticoagulant, scheduledDose: $scheduledDose, takenDose: $takenDose, otherMedicines: $otherMedicines)';
+    return 'JournalEntry(date: $date, anticoagulant: $anticoagulant, scheduledDose: $scheduledDose, takenDose: $takenDose, otherMedicines: $otherMedicines, inr: $inr)';
   }
 
   @override
@@ -188,7 +205,8 @@ class _$_JournalEntry implements _JournalEntry {
             (identical(other.takenDose, takenDose) ||
                 other.takenDose == takenDose) &&
             const DeepCollectionEquality()
-                .equals(other._otherMedicines, _otherMedicines));
+                .equals(other._otherMedicines, _otherMedicines) &&
+            (identical(other.inr, inr) || other.inr == inr));
   }
 
   @override
@@ -198,7 +216,8 @@ class _$_JournalEntry implements _JournalEntry {
       anticoagulant,
       scheduledDose,
       takenDose,
-      const DeepCollectionEquality().hash(_otherMedicines));
+      const DeepCollectionEquality().hash(_otherMedicines),
+      inr);
 
   @JsonKey(ignore: true)
   @override
@@ -213,7 +232,8 @@ abstract class _JournalEntry implements JournalEntry {
       final Anticoagulant? anticoagulant,
       final double? scheduledDose,
       final double? takenDose,
-      required final List<String> otherMedicines}) = _$_JournalEntry;
+      required final List<String> otherMedicines,
+      final double? inr}) = _$_JournalEntry;
 
   @override
   DateTime get date;
@@ -225,6 +245,8 @@ abstract class _JournalEntry implements JournalEntry {
   double? get takenDose;
   @override
   List<String> get otherMedicines;
+  @override
+  double? get inr;
   @override
   @JsonKey(ignore: true)
   _$$_JournalEntryCopyWith<_$_JournalEntry> get copyWith =>

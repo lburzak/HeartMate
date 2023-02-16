@@ -7,17 +7,16 @@ import 'journal_entry.dart';
 part 'therapy_report.freezed.dart';
 
 @freezed
-class TherapyReport with _$TherapyReportState {
-  const factory TherapyReport({
-    String? firstName,
-    String? lastName,
-    int? height,
-    int? weight,
-    int? age,
-    Gender? gender,
-    Illness? illness,
-    required DateTime reportDate,
-    required List<JournalEntry> journalEntries,
-    required Map<DateTime, double> inrMeasurements
-  }) = _TherapyReportState;
+class TherapyReport with _$TherapyReport {
+  const factory TherapyReport(
+      {String? firstName,
+      String? lastName,
+      int? height,
+      int? weight,
+      int? age,
+      Gender? gender,
+      Illness? illness,
+      required DateTime reportDate,
+      required List<JournalEntry> journalEntries,
+      required Map<DateTime, double> inrMeasurements}) = _TherapyReportState;
 }

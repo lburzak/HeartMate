@@ -15,7 +15,7 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$TherapyReportState {
+mixin _$TherapyReport {
   String? get firstName => throw _privateConstructorUsedError;
   String? get lastName => throw _privateConstructorUsedError;
   int? get height => throw _privateConstructorUsedError;
@@ -29,15 +29,15 @@ mixin _$TherapyReportState {
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $TherapyReportStateCopyWith<TherapyReport> get copyWith =>
+  $TherapyReportCopyWith<TherapyReport> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $TherapyReportStateCopyWith<$Res> {
-  factory $TherapyReportStateCopyWith(
+abstract class $TherapyReportCopyWith<$Res> {
+  factory $TherapyReportCopyWith(
           TherapyReport value, $Res Function(TherapyReport) then) =
-      _$TherapyReportStateCopyWithImpl<$Res, TherapyReport>;
+      _$TherapyReportCopyWithImpl<$Res, TherapyReport>;
   @useResult
   $Res call(
       {String? firstName,
@@ -53,9 +53,9 @@ abstract class $TherapyReportStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TherapyReportStateCopyWithImpl<$Res, $Val extends TherapyReport>
-    implements $TherapyReportStateCopyWith<$Res> {
-  _$TherapyReportStateCopyWithImpl(this._value, this._then);
+class _$TherapyReportCopyWithImpl<$Res, $Val extends TherapyReport>
+    implements $TherapyReportCopyWith<$Res> {
+  _$TherapyReportCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -123,7 +123,7 @@ class _$TherapyReportStateCopyWithImpl<$Res, $Val extends TherapyReport>
 
 /// @nodoc
 abstract class _$$_TherapyReportStateCopyWith<$Res>
-    implements $TherapyReportStateCopyWith<$Res> {
+    implements $TherapyReportCopyWith<$Res> {
   factory _$$_TherapyReportStateCopyWith(_$_TherapyReportState value,
           $Res Function(_$_TherapyReportState) then) =
       __$$_TherapyReportStateCopyWithImpl<$Res>;
@@ -144,7 +144,7 @@ abstract class _$$_TherapyReportStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_TherapyReportStateCopyWithImpl<$Res>
-    extends _$TherapyReportStateCopyWithImpl<$Res, _$_TherapyReportState>
+    extends _$TherapyReportCopyWithImpl<$Res, _$_TherapyReportState>
     implements _$$_TherapyReportStateCopyWith<$Res> {
   __$$_TherapyReportStateCopyWithImpl(
       _$_TherapyReportState _value, $Res Function(_$_TherapyReportState) _then)
@@ -260,7 +260,7 @@ class _$_TherapyReportState implements _TherapyReportState {
 
   @override
   String toString() {
-    return 'TherapyReportState(firstName: $firstName, lastName: $lastName, height: $height, weight: $weight, age: $age, gender: $gender, illness: $illness, reportDate: $reportDate, journalEntries: $journalEntries, inrMeasurements: $inrMeasurements)';
+    return 'TherapyReport(firstName: $firstName, lastName: $lastName, height: $height, weight: $weight, age: $age, gender: $gender, illness: $illness, reportDate: $reportDate, journalEntries: $journalEntries, inrMeasurements: $inrMeasurements)';
   }
 
   @override

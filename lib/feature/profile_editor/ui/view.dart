@@ -312,7 +312,7 @@ class _OtherMedicinesPickerState extends State<OtherMedicinesPicker> {
     return InputDecorator(
         decoration: const InputDecoration(
             contentPadding: EdgeInsets.only(left: 12, top: 12, bottom: 12),
-            labelText: "Przyjmowane leki",
+            labelText: "Przyjmowane inne leki",
             enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.blue)),
             filled: true),
@@ -325,6 +325,7 @@ class _OtherMedicinesPickerState extends State<OtherMedicinesPicker> {
                     .map((e) => Chip(
                           label: Text(e),
                           backgroundColor: Colors.blue,
+                          onDeleted: () => widget.cubit.removeOtherMedicine(e),
                         ))
                     .toList()),
             Row(

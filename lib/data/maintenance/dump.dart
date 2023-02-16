@@ -1,6 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:apkainzynierka/data/adapter/dose_adapter.dart';
+import 'package:apkainzynierka/data/adapter/inr_measurement_adapter.dart';
+import 'package:apkainzynierka/data/adapter/inr_range_adapter.dart';
+import 'package:apkainzynierka/data/adapter/profile_adapter.dart';
+import 'package:apkainzynierka/data/adapter/profile_entry_adapter.dart';
+import 'package:apkainzynierka/data/adapter/schedule_adapter.dart';
 import 'package:apkainzynierka/data/database.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
@@ -12,8 +18,13 @@ Future<String> get _localPath async {
 }
 
 Future<Map<String, dynamic>> dumpData() async {
-  await BoxDatabase.init();
-  final database = BoxDatabase();
+  final database = BoxDatabase([DoseAdapter(),
+    ScheduleAdapter(),
+    ProfileAdapter(),
+    InrRangeAdapter(),
+    InrMeasurementAdapter(),
+    ProfileEntryAdapter()]);
+  await database.initialize();
   return {
     "doses": database.dosesBox.values.map((e) => e.toJson()).toList(),
     "schedules": database.schedulesBox.values.map((e) => e.toJson()).toList(),

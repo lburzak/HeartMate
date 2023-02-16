@@ -1,8 +1,9 @@
+import 'package:apkainzynierka/data/adapter/registrable_adapter.dart';
 import 'package:apkainzynierka/data/adapter/type_ids.dart';
 import 'package:apkainzynierka/domain/model/inr_range.dart';
 import 'package:hive/hive.dart';
 
-class InrRangeAdapter extends TypeAdapter<InrRange> {
+class InrRangeAdapter extends RegistrableAdapter<InrRange> {
   @override
   int get typeId => typeIdInrRange;
 
